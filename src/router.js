@@ -40,6 +40,11 @@ const routers = {
                     name: 'home'
                 }
             ]
+        },
+        {
+            path: '/videoSurveillance',
+            component: resolve => require(['./views/VideoSurveillance/index.vue'], resolve),
+            name: 'VideoSurveillance'
         }
     ]
 };
@@ -47,11 +52,12 @@ const routers = {
 const router = new Router(routers);
 
 router.beforeEach((to, from, next) => {
-    if (to.name == 'home' || to.name == 'score' || to.name == 'login' || to.name == 'pastScoreDetail') {
-        NProgress.remove();
-    } else {
-        NProgress.start();
-    }
+    // if (to.name == 'home') {
+    //     NProgress.remove();
+    // } else {
+    //     NProgress.start();
+    // }
+    NProgress.start();
     next();
 })
 router.afterEach(transition => {
