@@ -1,0 +1,80 @@
+//颜色规范
+@mainBlue: #3399ff; //主色调
+@mainSucc: #57DA6D;
+@mainWarn: #FFBB00;
+@mainDanger: #FF6666;
+@baseText01: #333; //一级文字
+@baseText02: #666; //二级文字
+@baseText03: #999; //三级文字
+@baseText04: #c9d0d6;
+@baseBorder: #eee; //分割线
+@baseBG01: #f2f2f2; //页面背景色
+@baseBG02: #f8f8f8; //二级背景色
+@baseMasking: rgba(0, 0, 0, 0.50); //遮罩层统一色
+
+@blueColor: #2CABFF;
+@successColor: #259b24;
+@dangerColor: #FF4949;
+@warningColor: #F7BA2A;
+@primaryColor: #2cabff;
+@redColor: #FF7F5B;
+
+@textBase: #232323;
+@textRed: #FE6A6A;
+@textWarning: #FFBD19;
+@textSucc: #3ECC7A;
+@textBlue: #0398FF;
+@textGray: #A0A0A0;
+@textLGray: #C9D0D6;
+@textLB: #606060; //浅黑
+
+@bgColor: #EFEEF4;
+@bgBlue: #299FFF;
+@bgWhite: #fff;
+@bgGray: #F2F2F2;
+@bgLGray: #FAFAFA;
+@bgDisabled: #96A4AF;
+@borderColor: #d9d9d9;
+@borderBlue: #2CABFF;
+@borderGray: #D3D3D3;
+@signRed: #ff3939;
+
+//size
+@radiusS: 2px;
+@radiusM: 4px;
+@baseShadow: 0 2px 6px 0 rgba(201, 209, 217, 0.50);
+@cellPadding: 0 14px;
+@cellPaddingL: 0 14px 0 18px;
+@fontWeight: 600;
+@bg-size: 892px auto;
+@disabled-bg: #bcbec0;
+@headerTop: 0px;
+@headerHeight: 44px;
+
+//函数
+//0.5px边框
+.border-top(@color) {
+  .border-init(0);
+}
+
+.border-btm(@color) {
+  .border-init(200%);
+}
+
+.border-init(@height) {
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200%;
+    height: @height;
+    box-sizing: border-box;
+    transform: scale(.5, .5);
+    -webkit-transform: scale(.5, .5);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    border-bottom: 1px solid @color;
+  }
+}

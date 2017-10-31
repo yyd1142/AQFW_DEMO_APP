@@ -1,0 +1,483 @@
+@import "../../config.less";
+.home-wrap {
+    padding-bottom: 0;
+}
+
+.fen-wrap {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #a9acb1;
+    padding: 20px 0;
+}
+
+.fen-company {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0 0 0;
+    color: #fff;
+}
+
+.fen-value {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    margin: 20px auto;
+    line-height: 100px;
+    text-align: CENTER;
+    font-size: 30px;
+    color: #5a5a5a;
+}
+
+.fen-level {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin: 0 auto 20px auto;
+}
+
+.fen-jb {
+    width: 100%;
+    text-align: CENTER;
+    font-size: 13px;
+}
+
+.total-name {
+    width: 100%;
+    text-align: center;
+    display: block;
+    font-size: 20px;
+    margin-top: 42px;
+}
+
+.total-value {
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    span {
+        font-size: 35px;
+    }
+}
+
+.today-wrap {
+    width: 100%;
+    margin: 0 auto;
+    height: 140px;
+    border-bottom: 1px solid #ddd;
+}
+
+.actions-table-view {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 0 auto;
+    width: 100%;
+}
+
+.actions-table-cell {
+    width: 100% / 3;
+    display: inline-table;
+    text-align: center;
+    height: 90px;
+    background-color: #ffffff;
+    margin: 0;
+    i {
+        display: block;
+        margin: 20px auto 0 auto;
+        width: 52px;
+        height: 32px;
+    }
+    .jibenxinxi-icon {
+        background: url('/static/icons/resource.png') -353px -100px no-repeat;
+        background-size: 892px auto;
+    }
+    .peixun-icon {
+        background: url('/static/icons/resource.png') -246px -100px no-repeat;
+        background-size: 892px auto;
+    }
+    .yinhuan-icon {
+        background: url('/static/icons/resource.png') -190px -100px no-repeat;
+        background-size: 892px auto;
+    }
+    .has-yinhuan-icon {
+        background: url('/static/icons/resource.png') -190px -133px no-repeat;
+        background-size: 892px auto;
+    }
+    .shipin-icon {
+        background: url('/static/icons/resource.png') -461px -100px no-repeat;
+        background-size: 892px auto;
+    }
+    .dianqi-icon {
+        background: url('/static/icons/resource.png') -514.5px -100px no-repeat;
+        background-size: 892px auto;
+    }
+    .sheshi-icon {
+        background: url('/static/icons/resource.png') -407px -100px no-repeat;
+        background-size: 892px auto;
+    }
+    .tongzhigonggao-icon {
+        background: url('/static/icons/resource.png') -298px -100px no-repeat;
+        background-size: 892px auto;
+    }
+    .has-tongzhigonggao-icon {
+        background: url('/static/icons/resource.png') -298px -130px no-repeat;
+        background-size: 892px auto;
+    }
+    span {
+        font-size: 12px;
+        float: left;
+        width: 100%;
+        text-align: center;
+        color: #737F89;
+        margin-top: 8px;
+    }
+}
+
+.actions-table-cell:nth-child(3),
+.actions-table-cell:nth-child(6) {
+    border-right: none !important;
+}
+
+.actions-table-cell:nth-child(4),
+.actions-table-cell:nth-child(5),
+.actions-table-cell:nth-child(6) {
+    border-bottom: none !important;
+}
+
+.page-infinite-list {
+    width: 100%;
+    list-style: none;
+    box-sizing: border-box;
+    .page-infinite-listitem {
+        width: 100%;
+        margin: 0;
+        background-color: #fff;
+        border-bottom: 1px solid #d8d8d8;
+        min-height: 76px;
+        position: relative;
+        padding: 8px 0;
+        img {
+            width: 100px;
+            position: absolute;
+            height: 76px;
+            top: 8px;
+            left: 10px;
+        }
+        .news-title {
+            width: 100%;
+            display: block;
+            font-size: 18px;
+            margin-left: 0;
+            padding: 0 10px 0 120px;
+            color: #4B4B4B;
+            line-height: 24px;
+        }
+        .news-date {
+            width: 100%;
+            position: ABSOLUTE;
+            padding: 0 0 0 120px;
+            font-size: 12px;
+            color: #B5B5B5;
+            bottom: 8px;
+        }
+    }
+}
+
+.page-infinite-loading {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #818181;
+}
+
+.action-item {
+    margin: 0 11vw 4vw 11vw
+}
+
+.home-header-wrap {
+    //background: #ac8af0;
+    font-size: 18px;
+    color: #ffffff;
+    top: @headerTop;
+}
+
+.tasks-home-wrap {
+    width: 100%;
+    height: auto;
+    margin: 0 auto 0 auto;
+    position: relative;
+    img {
+        width: 100%;
+        display: block;
+        margin: -15px auto 0 auto;
+    }
+    .tasks-item {
+        left: 30px;
+        color: #fff;
+        position: absolute;
+        right: 30px;
+        margin: auto;
+        top: 0;
+        z-index: 10;
+        height: 84px;
+        bottom: 0;
+        .tasks-date-wrap {
+            display: table;
+            width: 100%;
+            .tasks-date {
+                width: 100%;
+                margin: 0 auto;
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+                height: 24px;
+                line-height: 24px;
+                font-size: 12px;
+                background: rgba(0, 0, 0, 0.20);
+                border-radius: 4px 4px 0 0;
+            }
+        }
+        .tasks-main {
+            width: 100%;
+            height: 60px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.10);
+            border-radius: 0 0 4px 4px;
+            padding: 3px 0;
+            .tasks-name {
+                width: 100%;
+                margin: 0 auto;
+                height: 33px;
+                line-height: 33px;
+                padding: 0 10px;
+                span:first-child {
+                    float: left;
+                    font-size: 20px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    width: 70%;
+                }
+                span:last-child {
+                    font-size: 24px;
+                    float: right;
+                    text-align: right;
+                    width: 30%;
+                }
+            }
+            .tasks-time {
+                width: 100%;
+                font-size: 12px;
+                padding: 0 10px;
+                height: 17px;
+                line-height: 17px;
+                span:first-child {
+                    float: left;
+                }
+                span:last-child {
+                    float: right;
+                    text-align: right;
+                }
+            }
+        }
+    }
+}
+
+.home-banner-wrap {
+    width: 100%;
+    margin: @headerTop auto 0 auto;
+    padding: 0;
+    img {
+        width: 100%;
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+.home-message-icon {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.today-todo-wrap {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    height: 124px;
+    padding-top: 30px;
+    .main-admin {
+        width: 100%;
+        margin: 0 auto;
+        height: 72px;
+        .action-cell {
+            width: 33.333%;
+            float: left;
+        }
+        .action-cell:last-child {
+            margin-right: 0;
+        }
+        .task-icon {
+            background: url('/static/icons/resource.png') -422px -50px no-repeat;
+            background-size: 892px auto;
+        }
+        .notice-icon {
+            background: url('/static/icons/resource.png') -364px -50px no-repeat;
+            background-size: 892px auto;
+        }
+        .admin-has-data-icon {
+            background-position-y: 0;
+        }
+        .activity-icon {
+            background: url('/static/icons/resource.png') -306px -50px no-repeat;
+            background-size: 892px auto;
+        }
+        .action-image {
+            width: 58px;
+            height: 50px;
+            display: block;
+            margin: 0 auto;
+        }
+        .action-font {
+            font-size: 12px;
+            float: left;
+            width: 100%;
+            text-align: center;
+            color: #737F89;
+            margin-top: 8px;
+        }
+    }
+    .main {
+        width: 250px;
+        margin: 0 auto;
+        height: 64px;
+        .today-xuncha {
+            width: 50%;
+            float: left;
+        }
+        .today-zhiban {
+            width: 50%;
+            float: right;
+        }
+        .today-image {
+            width: 58px;
+            height: 50px;
+            display: block;
+            margin: 0 auto;
+        }
+        .today-yh-icon {
+            background: url('/static/icons/resource.png') -423px -186px no-repeat;
+            background-size: 892px auto;
+        }
+        .today-tasks-icon {
+            background: url('/static/icons/resource.png') -365px -186px no-repeat;
+            background-size: 892px auto;
+        }
+        .today-not-yh-icon {
+            background: url('/static/icons/resource.png') -423px -236px no-repeat;
+            background-size: 892px auto;
+        }
+        .today-not-tasks-icon {
+            background: url('/static/icons/resource.png') -365px -236px no-repeat;
+            background-size: 892px auto;
+        }
+        .today-font {
+            font-size: 12px;
+            float: left;
+            width: 100%;
+            text-align: center;
+            color: #737F89;
+            margin-top: 8px;
+        }
+    }
+}
+
+.jibenxinxi-color {
+    color: #95D3CB;
+}
+
+.tongzhigonggao-color {
+    color: #F8D339;
+}
+
+.jiaoyupeixun-color {
+    color: #C1E973;
+}
+
+.news-table-view {
+    width: 100%;
+    margin: 14px auto 0 auto;
+    display: table;
+    background-color: #F4F4F6;
+    .news-table-cell {
+        width: 25%;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        color: #4B4B4B;
+        font-size: 14px;
+        height: 50px;
+        line-height: 50px;
+    }
+    .news-table-actived {
+        color: @blueColor;
+        font-size: 18px;
+    }
+}
+
+.page-loader {
+    width: auto;
+}
+
+.xiaoxizhongxin-icon {
+    background: url('/static/icons/resource.png') -194px -166px no-repeat;
+    background-size: 892px auto;
+    width: 15px;
+    height: 17px;
+    display: block;
+    right: 14px;
+    position: absolute;
+    top: 0;
+    margin: auto;
+    bottom: 0;
+}
+
+.loading-item {
+    text-align: center;
+    color: #818181;
+    font-size: 12px;
+}
+
+.has-message-data {
+    background-position-y: -188px;
+}
+
+.placeholder-item {
+    height: 21px;
+}
+
+.home-blue-color {
+    //background-color: #56c1da !important;
+}
+
+.home-purple-color {
+    background-color: #ac8af0 !important;
+}
+
+.not-task-item {
+    width: 100%;
+    text-align: center !important;
+    margin-top: 10px;
+}
+
+.not-data-home {
+    text-align: center;
+    width: 100%;
+    font-size: 12px;
+    color: #a0a0a0;
+    margin-top: 44px;
+}
+
+.not-task-item {
+    span {
+        width: 100% !important;
+    }
+}
