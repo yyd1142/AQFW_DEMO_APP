@@ -40,12 +40,14 @@ export default {
                 { class: 'notice-icon ', text: '通知公告', url: '/notice' },  //admin-has-data-icon
                 { class: 'activity-icon', text: '安全活动', url: '/safe_activity' }],
             actions: [
-                { class: 'jibenxinxi-icon', text: '基本信息', url: '/basic_info' },
+                // { class: 'jibenxinxi-icon', text: '基本信息', url: '/basic_info' },
                 { class: 'peixun-icon', text: '教育培训', url: '/train' },
                 { class: 'yinhuan-icon', text: '风险管理', url: '/hidden_danger' },
-                { class: 'shipin-icon', text: '视频监控', url: 'disabled' },
-                { class: 'dianqi-icon', text: '电气监测', url: 'disabled' },
-                { class: 'sheshi-icon', text: '设施设备', url: '/device' }],
+                { class: 'sheshi-icon', text: '设施设备', url: '/device' },
+                { class: 'shipin-icon', text: '视频监控', url: '/monitorVideo' },
+                { class: 'dianqi-icon', text: '电气监测', url: '/monitorDq' },
+                { class: 'dianqi-icon', text: '水系统监测', url: '/monitorSxt' }
+                ],
             aq_actions: [
                 { class: 'jibenxinxi-icon', text: '基本信息', url: '/basic_info' },
                 { class: 'tongzhigonggao-icon', text: '通知公告', url: '/notice' },
