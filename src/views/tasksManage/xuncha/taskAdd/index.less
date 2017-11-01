@@ -1,0 +1,115 @@
+@import "../../../../config.less";
+
+.xc-task-add-wrap {
+    background-color: #fff;
+
+    .masking-wrap {
+        position: fixed;
+        top: @headerHeight+@headerTop;
+        bottom: 0;
+        width: 100%;
+        z-index: 10;
+        background-color: #fff;
+        .masking {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: @baseMasking;
+        }
+        .body {
+            position: relative;
+            z-index: 11;
+        }
+    }
+    .header-sign {
+        width: 34px;
+        height: 34px;
+        line-height: 34px;
+        border-radius: 50%;
+        font-size: 14px;
+        text-align: center;
+        background-color: #ccc;
+        color: #fff;
+        &.succ {
+            background-color: @mainSucc;
+        }
+    }
+    .fold-wrap {
+        background-color: @baseBG02;
+        padding-bottom: 14px;
+        &:before {
+            display: table;
+            content: '';
+        }
+    }
+
+    .no-data-hint {
+        line-height: 14px;
+        font-size: 14px;
+        letter-spacing: 0;
+        color: @baseText03;
+        .no-data-sign {
+            margin: 0 auto 30px;
+            width: 35px;
+            height: 50px;
+            background: url('/static/icons/resource.png') -668px -237px no-repeat;
+            background-size: @bg-size;
+            display: block;
+        }
+    }
+    .desc {
+        margin: 0 14px;
+        line-height: 16px;
+        font-size: 12px;
+        letter-spacing: 0;
+        color: @baseText03;
+    }
+
+    .mko-button {
+        margin: 14px auto 0;
+    }
+    .mko-form-cell {
+        background-color: @baseBG02;
+        .cell {
+            .title {
+                flex: 0 0 81px;
+                -webkit-flex: 0 0 81px;
+                width: 81px;
+            }
+            input {
+                background-color: @baseBG02;
+            }
+            .sel {
+                text-align: right;
+                color: @mainBlue;
+            }
+            .form-btn {
+                padding-top: 10px;
+                padding-right: 4px;
+                line-height: 44px;
+                color: @mainBlue;
+            }
+        }
+    }
+    .mko-double-cell {
+        .mko-number-button {
+            float: right;
+        }
+    }
+    .mko-select-box {
+        .sel-btn .icon {
+            position: relative;
+            top: 2px;
+        }
+    }
+    .mko-text-area {
+        .body {
+            background-color: @baseBG01;
+            .text-area {
+                background-color: @baseBG01;
+            }
+        }
+
+    }
+}

@@ -1,8 +1,7 @@
 <template>
     <div>
         <nav class="home-tabs-wrap">
-            <div class="home-tab-item" :class="actived == item.name ? 'actived' : null" @click="tab(item, index)"
-                 v-for="(item, index) in tabs">
+            <div class="home-tab-item" :class="actived == item.name ? 'actived' : null" @click="tab(item, index)" v-for="(item, index) in tabs" >
                 <i :class="item.icon"></i>
                 <span>{{item.text}}</span>
             </div>
@@ -12,7 +11,6 @@
 
 <style lang="less" scoped>
     @import "../../config.less";
-
     .home-icon(@x, @y) {
         background: url('/static/icons/resource.png') @x @y no-repeat;
         background-size: @bg-size;
@@ -29,19 +27,19 @@
             color: @blueColor !important;
             .shouye-zhengchang {
                 .home-icon(-796px,
-                    -262px) !important;
+                -262px) !important;
             }
             .renwu-zhengchang {
                 .home-icon(-820px,
-                    -262px) !important;
+                -262px) !important;
             }
             .tongxunlu-zhengchang {
                 .home-icon(-844px,
-                    -262px) !important;
+                -262px) !important;
             }
             .wode-zhengchang {
                 .home-icon(-869px,
-                    -262px) !important;
+                -262px) !important;
             }
         }
         .home-tab-item {
@@ -58,19 +56,19 @@
                 margin: 0 auto 2px auto;
                 &.shouye-zhengchang {
                     .home-icon(-796px,
-                        -238px);
+                    -238px);
                 }
                 &.renwu-zhengchang {
                     .home-icon(-820px,
-                        -238px);
+                    -238px);
                 }
                 &.tongxunlu-zhengchang {
                     .home-icon(-844px,
-                        -238px);
+                    -238px);
                 }
                 &.wode-zhengchang {
                     .home-icon(-869px,
-                        -238px);
+                    -238px);
                 }
             }
             span {
@@ -117,8 +115,8 @@
         },
         activated() {
             let isAdmin = this.$store.state.user.isAdmin;
-            for (let tab of this.tabs) {
-                if (tab.name === 'tasks') {
+            for(let tab of this.tabs) {
+                if(tab.name === 'tasks') {
                     tab.url = isAdmin ? '/enter/tasks_manage' : '/taskComply';
                 }
             }

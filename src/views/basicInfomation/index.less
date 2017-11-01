@@ -1,0 +1,64 @@
+@import "../../config.less";
+
+.dw-data-wrap {
+  .message-table-view {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding-left: 14px;
+    .message-table-cell {
+      width: 100%;
+      margin: 0 auto;
+      display: table;
+      .border-btm(@borderColor);
+      //border-bottom: 1px solid @borderColor;
+      .is-not-read {
+        background-color: @blueColor;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+      }
+      .message-jiantou {
+        background: url('/static/icons/resource.png') -111px -234px no-repeat;
+        background-size: 892px auto;
+        float: right;
+        margin: 15px 14px 0 0;
+        width: 9px;
+        height: 14px;
+      }
+      .message-item {
+        font-size: 14px;
+        color: #232323;
+        height: 44px;
+        line-height: 44px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 60%;
+        display: table-cell;
+        vertical-align: middle;
+      }
+      .message-time {
+        font-size: 14px;
+        color: #606060;
+        float: right;
+        line-height: 44px;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .unit-btn {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    background: none;
+    color: #232323;
+    text-align: right;
+    padding-right: 35px;
+  }
+}
+

@@ -1,0 +1,65 @@
+@import "../../../../config.less";
+
+.xc-task-edit-wrap {
+
+    .module-wrap {
+        margin-top: 14px;
+        background-color: #fff;
+    }
+    .no-data-hint {
+        padding-top: 14px;
+        font-size: 12px;
+    }
+
+    .spot-sel-btn {
+        position: relative;
+        margin: 14px;
+        width: 92.8%;
+        height: 100px;
+        border-radius: 4px;
+        background-color: #eee;
+
+    }
+
+    .mko-button {
+        margin: 14px auto 0;
+    }
+    .mko-form-cell {
+        .cell {
+            .title {
+                //flex: 0 0 81px;
+                //-webkit-flex: 0 0 81px;
+                //width: 81px;
+            }
+            .form-btn {
+                padding-top: 10px;
+                padding-right: 4px;
+                line-height: 44px;
+                color: @mainBlue;
+                .icon-arrow-up, .icon-arrow-down {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .mko-select-box {
+        .sel-btn .icon {
+            position: relative;
+            top: 2px;
+        }
+        &:last-child {
+            padding-bottom: 4px;
+        }
+    }
+    .mko-text-area {
+        background-color: #fff;
+        .body {
+            background-color: @baseBG01;
+            .text-area {
+                background-color: @baseBG01;
+            }
+        }
+
+    }
+}
