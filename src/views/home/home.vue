@@ -3,7 +3,8 @@
     <div class="placeholder-item" :class="isAdmin ? '' : 'home-purple-color'" :style="{backgroundColor:calcHeadColor(score)}"></div>
     <mko-header title="安全服务云" :background-color="calcHeadColor(score)" :right-icon="hasMessageDataClass" @handleRightClick="goMessage"></mko-header>
     <mt-loadmore style="margin-top: 40px;" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="bottomAllLoaded" ref="loadmore" :auto-fill="autoFill">
-      <div class="page-wrap home-wrap" ref="wrapper" :style="{ marginTop: 0 }" v-if="!resError">
+      <!--<div class="page-wrap home-wrap" ref="wrapper" :style="{ marginTop: 0 }" v-if="!resError">-->
+      <div class="page-wrap home-wrap" ref="wrapper" :style="{ marginTop: 0 }">
         <div class="tasks-home-wrap"  v-if="!isAdmin" @click="goTaskInfo()">
           <img src="/static/icons/banner_bg.png" />
           <div class="tasks-item">
@@ -77,7 +78,7 @@
       </div>
     </mt-loadmore>
     <tabs actived="home"></tabs>
-    <res-error v-if="resError"></res-error>
+    <!--<res-error v-if="resError"></res-error>-->
   </div>
 </template>
 

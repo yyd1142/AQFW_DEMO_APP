@@ -131,6 +131,15 @@ const ReviewTmpQiandaoXuncha = resolve => require(['./views/tasksManage/xuncha/t
 const ReviewTmpDeviceXunch = resolve => require(['./views/tasksManage/xuncha/tmpXuncha/ReviewTmpDeviceXunch.vue'], resolve)
 const ReviewDailyXunchaQiandao = resolve => require(['./views/tasksManage/xuncha/dailyXuncha/ReviewDailyXunchaQiandao.vue'], resolve)
 const ReviewDailyXunchaDevice = resolve => require(['./views/tasksManage/xuncha/dailyXuncha/ReviewDailyXunchaDevice.vue'], resolve)
+
+//视频监控
+const monitorVideo = resolve => require(['./views/monitorVideo/index.vue'], resolve);
+//电气监测
+const monitorDq = resolve => require(['./views/monitorDq/index.vue'], resolve);
+//水系统监测
+const monitorSxt = resolve => require(['./views/monitorSxt/index.vue'], resolve);
+
+
 Vue.use(Router)
 
 const routers = {
@@ -739,7 +748,25 @@ const routers = {
             path: '/reviewDailyXunchaDevice/:id',
             name: 'ReviewDailyXunchaDevice',
             component: ReviewDailyXunchaDevice
-        }
+        },
+        //视频监控
+        {
+            path: '/monitorVideo',
+            name: 'MonitorVideo',
+            component: monitorVideo
+        },
+        //电气监测
+        {
+            path: '/monitorDq',
+            name: 'MonitorDq',
+            component: monitorDq
+        },
+        //水系统监测
+        {
+            path: '/monitorSxt',
+            name: 'MonitorSxt',
+            component: monitorSxt
+        },
     ]
 };
 
