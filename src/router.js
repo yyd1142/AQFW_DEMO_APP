@@ -131,6 +131,9 @@ const ReviewTmpQiandaoXuncha = resolve => require(['./views/tasksManage/xuncha/t
 const ReviewTmpDeviceXunch = resolve => require(['./views/tasksManage/xuncha/tmpXuncha/ReviewTmpDeviceXunch.vue'], resolve)
 const ReviewDailyXunchaQiandao = resolve => require(['./views/tasksManage/xuncha/dailyXuncha/ReviewDailyXunchaQiandao.vue'], resolve)
 const ReviewDailyXunchaDevice = resolve => require(['./views/tasksManage/xuncha/dailyXuncha/ReviewDailyXunchaDevice.vue'], resolve)
+const VideoSurveillance = resolve => require(['./views/VideoSurveillance/index.vue'], resolve)
+const AlarmDetail = resolve => require(['./views/VideoSurveillance/AlarmDetail.vue'], resolve)
+const LiveVideoDetail = resolve => require(['./views/VideoSurveillance/LiveVideoDetail.vue'], resolve)
 Vue.use(Router)
 
 const routers = {
@@ -739,6 +742,21 @@ const routers = {
             path: '/reviewDailyXunchaDevice/:id',
             name: 'ReviewDailyXunchaDevice',
             component: ReviewDailyXunchaDevice
+        },
+        {
+            path: '/videoSurveillance',
+            name: 'VideoSurveillance',
+            component: VideoSurveillance
+        },
+        {
+            path: '/alarmDetail/:id',
+            name: 'AlarmDetail',
+            component: AlarmDetail
+        },
+        {
+            path: '/liveVideoDetail/:id',
+            name: 'LiveVideoDetail',
+            component: LiveVideoDetail
         }
     ]
 };
