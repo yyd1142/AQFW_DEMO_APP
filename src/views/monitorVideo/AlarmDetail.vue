@@ -15,8 +15,8 @@
                 </li>
             </ul>
             <div class="btn submit">
-                <div class="cell">通知负责人</div>
-                <div class="cell border">确认正常</div>
+                <div class="cell" @click="choosePerson">通知负责人</div>
+                <div class="cell border" @click="submit">确认正常</div>
             </div>
         </div>
     </div>
@@ -37,6 +37,21 @@
                         id: this.$route.params.id
                     }
                 })
+            },
+            choosePerson() {
+                this.$MKOPush('/choosePerson')
+            },
+            submit() {
+                this.$MKODialog({
+                    title: "提示",
+                    msg: '确定排除报警吗？',
+                    cancelBtn: true,
+                    cancelText: "取消"
+                }).then(msg => {
+                    if (msg == "confirm") {
+
+                    }
+                });
             }
         }
     }

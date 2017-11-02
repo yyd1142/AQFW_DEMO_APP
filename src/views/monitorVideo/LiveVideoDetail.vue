@@ -7,16 +7,20 @@
                 <mko-tab-item :label="item" :activied="tabI==i" @handleTabClick="tab"
                               v-for="(item,i) in tabItems"></mko-tab-item>
             </mko-nav-bar>
-            <div class="player">
-                <video-player class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions" @ready="playerReadied">
+            <div class="player" v-show="tabI == 0">
+                <video-player id="videoPlayer" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions" @ready="playerReadied">
                 </video-player>
             </div>
+            <device-detail v-show="tabI == 1"></device-detail>
+            <alarm-record v-show="tabI == 2"></alarm-record>
         </div>
     </div>
 </template>
 
 <script>
-    require('videojs-contrib-hls/dist/videojs-contrib-hls')
+    import 'videojs-contrib-hls/dist/videojs-contrib-hls'
+    import DeviceDetail from './DeviceDetail.vue'
+    import AlarmRecord from './AlarmRecord.vue'
     export default {
         data() {
             return {
@@ -26,7 +30,7 @@
                     sources: [{
                         withCredentials: false,
                         type: "application/x-mpegURL",
-                        src: "http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8"
+                        src: "https://logos-channel.scaleengine.net/logos-channel/live/biblescreen-ad-free/playlist.m3u8"
                     }],
                     controlBar: {
                         timeDivider: false,
@@ -43,6 +47,11 @@
                 return this.$refs.videoPlayer.player
             }
         },
+        deactivated() {
+            this.$nextTick(() => {
+                this.player.pause();
+            })
+        },
         methods: {
             playerReadied(player) {
                 var hls = player.tech({IWillNotUseThisInPlugins: true}).hls
@@ -54,7 +63,11 @@
                 this.$MKOPop();
             },
             tab(text){
-                this.player.pause();
+                if (text === '实时监控') {
+                    this.player.play();
+                } else {
+                    this.player.pause();
+                }
                 for (let i in this.tabItems) {
                     if (text == this.tabItems[i]) {
                         this.tabI = i;
@@ -62,6 +75,10 @@
                     }
                 }
             }
+        },
+        components: {
+            DeviceDetail,
+            AlarmRecord
         }
     }
 </script>

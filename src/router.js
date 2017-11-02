@@ -133,7 +133,7 @@ const ReviewDailyXunchaQiandao = resolve => require(['./views/tasksManage/xuncha
 const ReviewDailyXunchaDevice = resolve => require(['./views/tasksManage/xuncha/dailyXuncha/ReviewDailyXunchaDevice.vue'], resolve)
 const AlarmDetail = resolve => require(['./views/monitorVideo/AlarmDetail.vue'], resolve)
 const LiveVideoDetail = resolve => require(['./views/monitorVideo/LiveVideoDetail.vue'], resolve)
-
+const ChoosePerson = resolve => require(['./views/monitorVideo/ChoosePerson.vue'], resolve)
 //视频监控
 const monitorVideo = resolve => require(['./views/monitorVideo/index.vue'], resolve);
 //电气监测
@@ -778,6 +778,11 @@ const routers = {
             path: '/liveVideoDetail/:id',
             name: 'LiveVideoDetail',
             component: LiveVideoDetail
+        },
+        {
+            path: '/choosePerson',
+            name: 'ChoosePerson',
+            component: ChoosePerson
         }
     ]
 };

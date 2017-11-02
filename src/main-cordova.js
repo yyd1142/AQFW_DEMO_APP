@@ -15,6 +15,9 @@ import MKOMessagePlugin from './plugins/MKOMessagePlugin'
 import MKOHistoryManager from './plugins/MKOHistoryManager'
 import MKOAPPState from './plugins/MKOAPPState'
 import store from './store'
+import VueVideoPlayer from 'vue-video-player'
+import 'video.js/dist/video-js.css'
+import 'vue-video-player/src/custom-theme.css'
 import { sync } from 'vuex-router-sync'
 FastClick.attach(document.body)
 
@@ -42,7 +45,7 @@ Vue.use(MkoUI);
 Vue.use(MKOMessagePlugin)
 Vue.use(MKOHistoryManager)
 Vue.use(MKOAPPState)
-
+Vue.use(VueVideoPlayer)
 var cordovaApp = {
   initialize: function (callback) {
     this.bindEvents()
