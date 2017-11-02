@@ -131,9 +131,8 @@ const ReviewTmpQiandaoXuncha = resolve => require(['./views/tasksManage/xuncha/t
 const ReviewTmpDeviceXunch = resolve => require(['./views/tasksManage/xuncha/tmpXuncha/ReviewTmpDeviceXunch.vue'], resolve)
 const ReviewDailyXunchaQiandao = resolve => require(['./views/tasksManage/xuncha/dailyXuncha/ReviewDailyXunchaQiandao.vue'], resolve)
 const ReviewDailyXunchaDevice = resolve => require(['./views/tasksManage/xuncha/dailyXuncha/ReviewDailyXunchaDevice.vue'], resolve)
-const VideoSurveillance = resolve => require(['./views/VideoSurveillance/index.vue'], resolve)
-const AlarmDetail = resolve => require(['./views/VideoSurveillance/AlarmDetail.vue'], resolve)
-const LiveVideoDetail = resolve => require(['./views/VideoSurveillance/LiveVideoDetail.vue'], resolve)
+const AlarmDetail = resolve => require(['./views/monitorVideo/AlarmDetail.vue'], resolve)
+const LiveVideoDetail = resolve => require(['./views/monitorVideo/LiveVideoDetail.vue'], resolve)
 
 //视频监控
 const monitorVideo = resolve => require(['./views/monitorVideo/index.vue'], resolve);
@@ -769,6 +768,16 @@ const routers = {
             path: '/monitorSxt',
             name: 'MonitorSxt',
             component: monitorSxt
+        },
+        {
+            path: '/alarmDetail/:id',
+            name: 'AlarmDetail',
+            component: AlarmDetail
+        },
+        {
+            path: '/liveVideoDetail/:id',
+            name: 'LiveVideoDetail',
+            component: LiveVideoDetail
         }
     ]
 };
