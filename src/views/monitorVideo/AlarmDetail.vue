@@ -4,19 +4,26 @@
         <mko-header title="报警详情" left-icon="icon-back" @handleLeftClick="back" right-icon="icon-message-prompt-no"
                     @handleRightClick="liveVideo"></mko-header>
         <div class="page-wrap">
+            <div class="title-wrap-a">
+                <div class="left">
+                    <div class="title">深圳湾体育中心-游泳馆，2层，西南角巡查点</div>
+                </div>
+                <div class="right">共10条记录</div>
+            </div>
             <ul class="surveillance-table-view">
-                <li class="surveillance-table-cell" v-for="item in 10">
+                <li class="surveillance-table-cell" v-for="item in 11">
                     <div class="padding">
                         <img src="/static/WX20171101-165733.png"/>
-                        <div class="name">消防通道堵塞监测</div>
-                        <div class="address">杨子康 已确认正常</div>
-                        <div class="time">2017-11-11 09:11</div>
+                        <div class="time">
+                            <span>2017-11-11</span>
+                            <span>09:18</span>
+                        </div>
                     </div>
                 </li>
             </ul>
-            <div class="btn submit">
-                <div class="cell" @click="choosePerson">通知负责人</div>
-                <div class="cell border" @click="submit">确认正常</div>
+            <div class="btn">
+                <mko-button size="large" @click="choosePerson">通知责任人</mko-button>
+                <mko-button class="paichu" size="large" plain @click="submit">排除风险</mko-button>
             </div>
         </div>
     </div>
@@ -44,7 +51,7 @@
             submit() {
                 this.$MKODialog({
                     title: "提示",
-                    msg: '确定排除报警吗？',
+                    msg: '确定排除风险吗？',
                     cancelBtn: true,
                     cancelText: "取消"
                 }).then(msg => {
@@ -60,51 +67,91 @@
     @import "../../config.less";
 
     .AlarmDetail {
-        .surveillance-table-view {
-            width: 100%;
+        .page-wrap {
             background-color: #ffffff;
-            margin-bottom: 45px;
-            .surveillance-table-cell {
+            .title-wrap-a {
                 width: 100%;
-                position: relative;
+                height: 44px;
+                padding: 0 14px;
+                .left {
+                    width: 200px;
+                    float: left;
+                    .title,
+                    .all-checked {
+                        display: inline;
+                        font-size: 12px;
+                        letter-spacing: 0px;
+                        line-height: 44px;
+                        height: 44px;
+                    }
+                    .title {
+                        margin-right: 14px;
+                        color: #999999;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    .all-checked {
+                        color: #3399FF;
+                    }
+                }
+                .right {
+                    float: right;
+                    font-size: 12px;
+                    color: #999999;
+                    letter-spacing: 0px;
+                    line-height: 44px;
+                    height: 44px;
+                }
+            }
+            .surveillance-table-view {
+                width: 100%;
                 background-color: #ffffff;
+                margin-bottom: 45px;
                 box-sizing: border-box;
-                .padding {
-                    .border-btm(@borderGray);
-                    img {
-                        width: 100%;
+                padding: 0 14px;
+                .surveillance-table-cell {
+                    width: 50%;
+                    position: relative;
+                    background-color: #ffffff;
+                    box-sizing: border-box;
+                    display: -webkit-inline-box;
+                    margin-bottom: 14px;
+                    &:nth-child(even) > .padding {
+                        padding-left: 7px;
                     }
-                    .name {
-                        width: 100%;
+                    &:nth-child(odd) > .padding {
+                        padding-right: 7px;
                     }
-                    .address {
-                        width: 100%;
-                    }
-                    .time {
-                        width: 100%;
+                    .padding {
+                        position: relative;
+                        img {
+                            width: 100%;
+                        }
+                        .time {
+                            width: 100%;
+                            position: absolute;
+                            bottom: 0;
+                            color: #ffffff;
+                            height: 24px;
+                            line-height: 24px;
+                            padding: 0 10px;
+                            font-size: 12px;
+                            span:first-child {
+                                float: left;
+                            }
+                            span:last-child {
+                                float: right;
+                            }
+                        }
                     }
                 }
             }
-        }
-        .btn {
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            height: 44px;
-            z-index: 20;
-            &.submit {
-                background-color: #3CA0E8;
-            }
-            .cell {
-                width: 50%;
-                float: left;
-                line-height: 44px;
-                height: 44px;
-                color: #ffffff;
-                text-align: CENTER;
-                &.border {
-                    width: 49%;
-                    border-left: 1px solid #ffffff;
+            .btn {
+                width: 100%;
+                margin-top: 14px;
+                .paichu {
+                    margin-top: 10px;
                 }
             }
         }

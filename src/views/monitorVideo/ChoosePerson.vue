@@ -1,19 +1,22 @@
 <template>
     <div class="ChoosePerson">
         <div class="placeholder-item"></div>
-        <mko-header title="选择通知人" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="'完成(' + chooseResults.length + ')'" @handleRightClick="submit"></mko-header>
+        <mko-search-bar v-model="searchValue" is-header hint-text="搜索责任人名称" @onCancel="cancel">
+        </mko-search-bar>
         <div class="page-wrap">
             <div class="search-bar-wrap">
-                <search-bar v-model="searchValue" @onFocus="listenInput" @onCancelSearch="closeSearchBar"
-                            @onClearSearch="clearSearch"></search-bar>
                 <ul class="person-table-view">
                     <li class="person-table-cell" v-for="item, index in persons" @click="choose(item, index)">
                         <div class="padding">
                             <i class="icon" :class="item.checked ? 'icon-is-checked' : 'icon-no-checked'"></i>
                             <span class="name">{{item.name}}</span>
+                            <span class="role">安全员</span>
                         </div>
                     </li>
                 </ul>
+            </div>
+            <div class="xuncha-btn" @click.stop="submit">
+                <span>完成({{chooseResults.length}})</span>
             </div>
         </div>
     </div>
@@ -25,19 +28,19 @@
             return {
                 searchValue: '',
                 persons: [{
-                    name: '杨子康1', checked: false
+                    name: '杨子康1', role: 1, checked: false
                 }, {
-                    name: '杨子康2', checked: false
+                    name: '杨子康2', role: 1, checked: false
                 }, {
-                    name: '杨子康3', checked: false
+                    name: '杨子康3', role: 1, checked: false
                 }, {
-                    name: '杨子康4', checked: false
+                    name: '杨子康4', role: 1, checked: false
                 }, {
-                    name: '杨子康5', checked: false
+                    name: '杨子康5', role: 1, checked: false
                 }, {
-                    name: '杨子康6', checked: false
+                    name: '杨子康6', role: 1, checked: false
                 }, {
-                    name: '杨子康7', checked: false
+                    name: '杨子康7', role: 1, checked: false
                 }],
                 chooseResults: []
             }
@@ -47,9 +50,19 @@
                 this.searchData();
             }
         },
+        activated() {
+            this.setBackButton()
+        },
         methods: {
             back() {
                 this.$MKOPop();
+            },
+            cancel() {
+                this.persons.map(item => {
+                    return item.checked = false;
+                });
+                this.chooseResults = [];
+                this.back();
             },
             searchData() {
 
@@ -68,18 +81,26 @@
                     this.chooseResults.push(item);
                 } else {
                     let datas = []
-                    for(let i = 0; i < this.chooseResults.length; i++) {
-                        if(this.chooseResults[i].name != item.name) {
+                    for (let i = 0; i < this.chooseResults.length; i++) {
+                        if (this.chooseResults[i].name != item.name) {
                             datas.push(this.chooseResults[i]);
                         }
                     }
                     this.chooseResults = datas;
                 }
-
                 this.persons[index].checked = !item.checked;
             },
             submit() {
                 this.$MKOPop()
+            },
+            setBackButton() {
+                let self = this;
+                window.mkoBackButton = {}
+                window.mkoBackButton.bInputData = true
+                window.mkoBackButton.callback = function () {
+                    window.mkoBackButton.bInputData = false;
+                    self.cancel();
+                }
             }
         },
         components: {
@@ -126,7 +147,6 @@
         .person-table-view {
             width: 100%;
             background-color: #ffffff;
-            margin-top: 88px + @headerTop;
             .person-table-cell {
                 width: 100%;
                 box-sizing: border-box;
@@ -148,7 +168,40 @@
                         line-height: 44px;
                         padding-left: 34px;
                     }
+                    .role {
+                        font-size: 14px;
+                        float: right;
+                        height: 44px;
+                        line-height: 44px;
+                        padding-right: 14px;
+                    }
                 }
+            }
+        }
+        .xuncha-btn {
+            height: 50px;
+            width: 100%;
+            display: table;
+            background: #3399ff;
+            position: fixed;
+            bottom: 0;
+            z-index: 24;
+            &.end {
+                background: #ff6666;
+            }
+            &.disabled {
+                background: #cccccc;
+            }
+            span {
+                font-size: 16px;
+                color: #ffffff;
+                letter-spacing: 0px;
+                width: 100%;
+                height: 50px;
+                line-height: 50px;
+                vertical-align: middle;
+                display: table-cell;
+                text-align: center;
             }
         }
     }

@@ -7,7 +7,7 @@
                 </slot>
             </div>
             <div class="title-wrap fl no-overflow">
-                <div class="title no-overflow">{{title}}</div>
+                <div class="title no-overflow" v-html="title"></div>
                 <div class="label no-overflow">
                     <slot name="label">
                         <div v-html="label"></div>
