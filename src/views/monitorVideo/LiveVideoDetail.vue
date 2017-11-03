@@ -52,7 +52,7 @@
         },
         deactivated() {
             this.$nextTick(() => {
-                this.player.pause();
+                this.player.dispose(); //销毁
             })
         },
         methods: {

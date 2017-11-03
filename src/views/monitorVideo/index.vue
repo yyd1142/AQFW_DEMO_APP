@@ -20,9 +20,10 @@
                 </mko-double-cell>
             </div>
             <ul class="surveillance-table-view" v-show="tabI == 1">
-                <li class="surveillance-table-cell" v-for="item in datas" @click="goLiveViedo(item)">
+                <li class="surveillance-table-cell" v-for="item in 2" @click="goLiveViedo(item)">
                     <div class="padding">
-                        <video-player class="vjs-custom-skin" :options="item.playerOptions"></video-player>
+                        <!--<video-player class="vjs-custom-skin" :options="item.playerOptions"></video-player>-->
+                        <img src="/static/video_default.png"/>
                         <div class="item">
                             <span class="dingding"></span>
                             <div class="name">消防通道堵塞监测</div>
@@ -48,37 +49,7 @@
                     actived: false,
                     labelName: 'surveillance'
                 }],
-                datas: [{
-                    playerOptions: {
-                        sources: [{
-                            withCredentials: false,
-                            type: "application/x-mpegURL",
-                            src: "https://logos-channel.scaleengine.net/logos-channel/live/biblescreen-ad-free/playlist.m3u8"
-                        }],
-                        controlBar: {
-                            timeDivider: false,
-                            durationDisplay: false
-                        },
-                        autoplay: false,
-                        flash: {hls: {withCredentials: false}},
-                        html5: {hls: {withCredentials: false}}
-                    }
-                }, {
-                    playerOptions: {
-                        sources: [{
-                            withCredentials: false,
-                            type: "application/x-mpegURL",
-                            src: "https://logos-channel.scaleengine.net/logos-channel/live/biblescreen-ad-free/playlist.m3u8"
-                        }],
-                        controlBar: {
-                            timeDivider: false,
-                            durationDisplay: false
-                        },
-                        autoplay: false,
-                        flash: {hls: {withCredentials: false}},
-                        html5: {hls: {withCredentials: false}}
-                    }
-                }]
+                datas: []
             }
         },
         methods: {
@@ -197,6 +168,9 @@
                         .video-js {
                             height: 228px !important;
                         }
+                    }
+                    img {
+                        width: 100%;
                     }
                     .item {
                         position: relative;
