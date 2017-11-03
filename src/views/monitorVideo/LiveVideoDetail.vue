@@ -47,7 +47,7 @@
         },
         computed: {
             player() {
-                return this.$refs.videoPlayer
+                return this.$refs.videoPlayer.player
             }
         },
         deactivated() {

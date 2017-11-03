@@ -14,19 +14,19 @@ export default {
   name: 'app',
   mounted() {
     this.$setUpdateServerUrl(`http://www.aqfwy.com/api/appManager/info`, 'TEST');
-//    let userData = localStorage.getItem('USER_DATA');
-//    if (userData && userData.length > 0) {
-//      userData = JSON.parse(userData);
-//      this.$store.commit(types.USER_INIT_DATA, userData);
-//      let groupIdAndRole = `${userData.groupId}_Role_${userData.role}`;
-//      let groupId = userData.groupId;
-//      let userName = userData.userName;
-//      let tags = [groupIdAndRole, groupId];
-//      this.$registerPUSHService(tags.join(','), userData.userName);
-//      this.$Login(userName, groupId);
-//    } else {
-//      this.$MKOJump('/login');
-//    }
+    let userData = localStorage.getItem('USER_DATA');
+    if (userData && userData.length > 0) {
+      userData = JSON.parse(userData);
+      this.$store.commit(types.USER_INIT_DATA, userData);
+      let groupIdAndRole = `${userData.groupId}_Role_${userData.role}`;
+      let groupId = userData.groupId;
+      let userName = userData.userName;
+      let tags = [groupIdAndRole, groupId];
+      this.$registerPUSHService(tags.join(','), userData.userName);
+      this.$Login(userName, groupId);
+    } else {
+      this.$MKOJump('/login');
+    }
     // this.getAppState()
   },
   methods: {

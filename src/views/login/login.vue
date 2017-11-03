@@ -96,8 +96,6 @@
         },
         methods: {
             login() {
-                this.$MKOPush('/monitorVideo');
-                return false;
                 if (this.$route.query.appState && this.$route.query.appState == 1) {
                     Toast({
                         message: `系统维护中，预计维护完成时间${this.$route.query.time}`,
