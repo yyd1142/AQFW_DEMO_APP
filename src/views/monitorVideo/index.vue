@@ -4,31 +4,33 @@
         <mko-header title="视频监控" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap">
             <mko-nav-bar>
-                <mko-tab-item :label="item" :activied="tabI==i" @handleTabClick="tab"
+                <mko-tab-item :label="item " :activied="tabI==i" @handleTabClick="tab"
                               v-for="(item,i) in tabItems"></mko-tab-item>
             </mko-nav-bar>
             <div class="title-wrap-a">
                 <div class="left">
                     <div class="title">{{tabI == 0 ? '实时报警信息' : '设备列表'}}</div>
                 </div>
-                <div class="right">{{tabI == 0 ? '共3条记录' : '共3个设备'}}</div>
+                <div class="right">
+                    {{tabI == 0 ? '共' + deviceAlarmDatas.length + '条记录' : '共' + deviceMonitorDatas.length + '个设备'}}
+                </div>
             </div>
             <div class="video-table-view" v-if="tabI == 0">
-                <mko-double-cell :title="titleFilter(item)" label="A栋|B1|131（消防通道）" @click="goInfo(item)" is-link
-                                 v-for="item in 3">
-                    <span class="blue">未处理</span>
+                <mko-double-cell :title="titleFilter(item)" :label="item.address" @click="goInfo(item)" is-link
+                                 v-for="item in deviceAlarmDatas">
+                    <span :class="item.status == 2 ? 'blue' : null">{{item.status == 2 ? '未处理' : '正常'}}</span>
                 </mko-double-cell>
             </div>
             <ul class="surveillance-table-view" v-show="tabI == 1">
-                <li class="surveillance-table-cell" v-for="item in 2" @click="goLiveViedo(item)">
+                <li class="surveillance-table-cell" v-for="item in deviceMonitorDatas" @click="goLiveViedo(item)">
                     <div class="padding">
                         <!--<video-player class="vjs-custom-skin" :options="item.playerOptions"></video-player>-->
                         <img src="/static/video_default.png"/>
                         <div class="item">
                             <span class="dingding"></span>
-                            <div class="name">消防通道堵塞监测</div>
-                            <div class="address">A栋|B1|131（消防通道）</div>
-                            <div class="time">正常</div>
+                            <div class="name">{{item.name}}</div>
+                            <div class="address">{{item.address}}</div>
+                            <div class="time">{{item.status == 2 ? '未处理' : '正常'}}</div>
                             <i class="icon icon-link-arrow"></i>
                         </div>
                     </div>
@@ -43,13 +45,70 @@
         data() {
             return {
                 tabI: 0,
-                tabItems: ['设备报警18', '监控设备3'],
                 tabs: [{name: '设备报警', actived: true, labelName: 'alarm'}, {
                     name: '监控设备',
                     actived: false,
                     labelName: 'surveillance'
                 }],
-                datas: []
+                datas: [],
+                deviceAlarmDatas: [{
+                    address: 'A栋|B1|131（应急出口）',
+                    count: 0,
+                    name: '应急出口堵塞监测',
+                    status: 1
+                }, {
+                    address: 'A栋|B1|122（电压房）',
+                    count: 5,
+                    name: '电压房堵塞监测',
+                    status: 2
+                }, {
+                    address: 'A栋|B1|89（安全出口）',
+                    count: 6,
+                    name: '安全出口堵塞监测',
+                    status: 2
+                }],
+                deviceMonitorDatas: [{
+                    id: 1,
+                    address: 'A栋|B1|131（办公室）',
+                    count: 1,
+                    name: '办公室安全监测',
+                    status: 2,
+                    url: 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8',
+                    liveVideoType: 'application/x-mpegURL'
+                }, {
+                    id: 2,
+                    address: 'A栋|B2|131（消防通道）',
+                    count: 4,
+                    name: '消防通道堵塞监测',
+                    status: 2,
+                    url: 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8',
+                    liveVideoType: 'application/x-mpegURL'
+                }, {
+                    id: 3,
+                    address: 'A栋|B3|131（泵房）',
+                    count: 3,
+                    name: '泵房安全监测',
+                    status: 2,
+                    url: 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8',
+                    liveVideoType: 'application/x-mpegURL'
+                }]
+            }
+        },
+        computed: {
+            tabItems() {
+                let deviceAlarmProblemCount = 0;
+                let deviceAlarmProblemCounts = [];
+                let deviceMonitorProblemCount = 0;
+                let deviceMonitorProblemCounts = [];
+                for (let item of this.deviceAlarmDatas) {
+                    deviceAlarmProblemCounts.push(item.count);
+                    deviceAlarmProblemCount = eval(deviceAlarmProblemCounts.join("+"));
+                }
+                for (let item of this.deviceMonitorDatas) {
+                    deviceMonitorProblemCounts.push(item.count);
+                    deviceMonitorProblemCount = eval(deviceMonitorProblemCounts.join("+"));
+                }
+                return [`设备报警${deviceAlarmProblemCount}`, `监控设备${deviceMonitorProblemCount}`];
             }
         },
         methods: {
@@ -71,10 +130,17 @@
                 })
             },
             goLiveViedo(item) {
+//                type: "application/x-mpegURL",
+//                type: "video/mp4",
+//                type: "rtmp/mp4",
                 this.$MKOPush({
                     name: 'LiveVideoDetail',
                     params: {
-                        id: item
+                        id: item.id
+                    },
+                    query: {
+                        liveUrl: item.url,
+                        type: item.liveVideoType
                     }
                 })
             },
@@ -87,12 +153,10 @@
                 }
             },
             titleFilter(item) {
-                return `<span class='dingding'>${6}</span>消防通道堵塞监测`
-            },
-            playerReadied(player) {
-                var hls = player.tech({IWillNotUseThisInPlugins: true}).hls
-                player.tech_.hls.xhr.beforeRequest = function (options) {
-                    return options
+                if (item.count == 0) {
+                    return item.name;
+                } else {
+                    return `<span class='dingding'>${item.count}</span>${item.name}`;
                 }
             }
         }

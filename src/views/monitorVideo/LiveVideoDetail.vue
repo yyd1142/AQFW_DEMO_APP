@@ -4,13 +4,12 @@
         <mko-header title="设备详情" left-icon="icon-back" @handleLeftClick="back" right-icon-text="停用设备"></mko-header>
         <div class="page-wrap">
             <div class="player-wrap">
-                <video-player class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions"
-                              @ready="playerReadied">
-                </video-player>
+                <video-player id="videoPlayer" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions" @ready="playerReadied"></video-player>
                 <!--<div class="address">深圳湾体育中心-游泳馆，2层，西南角巡查点</div>-->
             </div>
             <div class="tab-wrap">
-                <div class="cell" :class="tabI == index ? 'activied' : null" v-for="text, index in tabItems" @click="tab(text)">
+                <div class="cell" :class="tabI == index ? 'activied' : null" v-for="text, index in tabItems"
+                     @click="tab(text)">
                     <span v-text="text"></span>
                 </div>
             </div>
@@ -28,12 +27,23 @@
         data() {
             return {
                 tabI: 0,
-                tabItems: ['设备信息', '报警记录'],
-                playerOptions: {
+                tabItems: ['设备信息', '报警记录']
+            }
+        },
+        computed: {
+            player() {
+                return this.$refs.videoPlayer ? this.$refs.videoPlayer.player : null;
+            },
+            playerOptions() {
+                let src = 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8';
+                if (this.$route.params.id == 1) {
+                    src = "https://logos-channel.scaleengine.net/logos-channel/live/biblescreen-ad-free/playlist.m3u8"
+                }
+                let options = {
                     sources: [{
                         withCredentials: false,
-                        type: "application/x-mpegURL",
-                        src: "https://logos-channel.scaleengine.net/logos-channel/live/biblescreen-ad-free/playlist.m3u8"
+                        type: 'application/x-mpegURL',
+                        src: src
                     }],
                     controlBar: {
                         timeDivider: false,
@@ -43,26 +53,18 @@
                     flash: {hls: {withCredentials: false}},
                     html5: {hls: {withCredentials: false}}
                 }
+                return options;
             }
         },
-        computed: {
-            player() {
-                return this.$refs.videoPlayer.player
-            }
-        },
-        deactivated() {
-            this.$nextTick(() => {
-                this.player.dispose(); //销毁
-            })
+        activated() {
+            this.setBackButton();
         },
         methods: {
-            playerReadied(player) {
-                var hls = player.tech({IWillNotUseThisInPlugins: true}).hls
-                player.tech_.hls.xhr.beforeRequest = function (options) {
-                    return options
-                }
+            playerReadied() {
+                console.log('the player is readied')
             },
             back() {
+//                this.player.dispose(); //销毁
                 this.$MKOPop();
             },
             tab(text){
@@ -71,6 +73,13 @@
                         this.tabI = i;
                         return;
                     }
+                }
+            },
+            setBackButton() {
+                window.mkoBackButton = {};
+                window.mkoBackButton.bInputData = true;
+                if (window.mkoBackButton.bInputData) {
+                    window.mkoBackButton.callback = this.back;
                 }
             }
         },
