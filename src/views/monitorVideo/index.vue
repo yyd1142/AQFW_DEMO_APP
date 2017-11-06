@@ -3,33 +3,36 @@
         <div class="placeholder-item"></div>
         <mko-header title="视频监控" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap">
-            <div class="tabs-wrap">
-                <div class="cell" :class="item.actived ? 'actived' : null" v-for="(item, index) in tabs"
-                     @click="tab(item)">
-                    <i class="icon iconfont icon-success"></i>
-                    <span class="text" v-text="item.name"></span>
+            <mko-nav-bar>
+                <mko-tab-item :label="item " :activied="tabI==i" @handleTabClick="tab"
+                              v-for="(item,i) in tabItems"></mko-tab-item>
+            </mko-nav-bar>
+            <div class="title-wrap-a">
+                <div class="left">
+                    <div class="title">{{tabI == 0 ? '实时报警信息' : '设备列表'}}</div>
+                </div>
+                <div class="right">
+                    {{tabI == 0 ? '共' + deviceAlarmDatas.length + '条记录' : '共' + deviceMonitorDatas.length + '个设备'}}
                 </div>
             </div>
-            <div class="title">{{labelName == 'alarm' ? '实时报警信息' : '实时监控视频'}}</div>
-            <ul class="video-table-view" v-if="labelName == 'alarm'">
-                <li class="video-table-cell" v-for="item in 3" @click="goInfo(item)">
+            <div class="video-table-view" v-if="tabI == 0">
+                <mko-double-cell :title="titleFilter(item)" :label="item.address" @click="goInfo(item)" is-link
+                                 v-for="item in deviceAlarmDatas">
+                    <span :class="item.status == 2 ? 'blue' : null">{{item.status == 2 ? '未处理' : '正常'}}</span>
+                </mko-double-cell>
+            </div>
+            <ul class="surveillance-table-view" v-show="tabI == 1">
+                <li class="surveillance-table-cell" v-for="item in deviceMonitorDatas" @click="goLiveViedo(item)">
                     <div class="padding">
-                        <span class="number">1</span>
-                        <div class="name">消防通道堵塞监测</div>
-                        <div class="address">A栋|B1|131（消防通道）</div>
-                        <div class="time">2017-11-11 09:11</div>
-                        <div class="status">待处理</div>
-                        <i class="icon icon-link-arrow"></i>
-                    </div>
-                </li>
-            </ul>
-            <ul class="surveillance-table-view" v-if="labelName == 'surveillance'">
-                <li class="surveillance-table-cell" v-for="item in 3" @click="goLiveViedo(item)">
-                    <div class="padding">
-                        <img src="/static/WX20171101-165733.png"/>
-                        <div class="name">消防通道堵塞监测</div>
-                        <div class="address">A栋|B1|131（消防通道）</div>
-                        <div class="time">2017-11-11 09:11</div>
+                        <!--<video-player class="vjs-custom-skin" :options="item.playerOptions"></video-player>-->
+                        <img src="/static/video_default.png"/>
+                        <div class="item">
+                            <span class="dingding"></span>
+                            <div class="name">{{item.name}}</div>
+                            <div class="address">{{item.address}}</div>
+                            <div class="time">{{item.status == 2 ? '未处理' : '正常'}}</div>
+                            <i class="icon icon-link-arrow"></i>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -37,11 +40,75 @@
     </div>
 </template>
 <script>
+    import 'videojs-contrib-hls/dist/videojs-contrib-hls'
     export default {
         data() {
             return {
-                tabs: [{name: '设备报警', actived: true, labelName: 'alarm'}, {name: '监控设备', actived: false, labelName: 'surveillance'}],
-                labelName: 'alarm'
+                tabI: 0,
+                tabs: [{name: '设备报警', actived: true, labelName: 'alarm'}, {
+                    name: '监控设备',
+                    actived: false,
+                    labelName: 'surveillance'
+                }],
+                datas: [],
+                deviceAlarmDatas: [{
+                    address: 'A栋|B1|131（应急出口）',
+                    count: 0,
+                    name: '应急出口堵塞监测',
+                    status: 1
+                }, {
+                    address: 'A栋|B1|122（电压房）',
+                    count: 5,
+                    name: '电压房堵塞监测',
+                    status: 2
+                }, {
+                    address: 'A栋|B1|89（安全出口）',
+                    count: 6,
+                    name: '安全出口堵塞监测',
+                    status: 2
+                }],
+                deviceMonitorDatas: [{
+                    id: 1,
+                    address: 'A栋|B1|131（办公室）',
+                    count: 1,
+                    name: '办公室安全监测',
+                    status: 2,
+                    url: 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8',
+                    liveVideoType: 'application/x-mpegURL'
+                }, {
+                    id: 2,
+                    address: 'A栋|B2|131（消防通道）',
+                    count: 4,
+                    name: '消防通道堵塞监测',
+                    status: 2,
+                    url: 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8',
+                    liveVideoType: 'application/x-mpegURL'
+                }, {
+                    id: 3,
+                    address: 'A栋|B3|131（泵房）',
+                    count: 3,
+                    name: '泵房安全监测',
+                    status: 2,
+                    url: 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8',
+                    liveVideoType: 'application/x-mpegURL'
+                }]
+            }
+        },
+        computed: {
+            tabItems() {
+                let deviceAlarmProblemCount = 0;
+                let deviceAlarmProblemCounts = [];
+                let deviceMonitorProblemCount = 0;
+                let deviceMonitorProblemCounts = [];
+                for (let item of this.deviceAlarmDatas) {
+                    deviceAlarmProblemCounts.push(item.count);
+                    deviceAlarmProblemCount = eval(deviceAlarmProblemCounts.join("+"));
+                }
+                for (let item of this.deviceMonitorDatas) {
+                    deviceMonitorProblemCounts.push(item.count);
+                    deviceMonitorProblemCount = eval(deviceMonitorProblemCounts.join("+"));
+                }
+                return [`设备报警${deviceAlarmProblemCount}`, `监控设备${deviceMonitorProblemCount}`];
             }
         },
         methods: {
@@ -63,12 +130,34 @@
                 })
             },
             goLiveViedo(item) {
+//                type: "application/x-mpegURL",
+//                type: "video/mp4",
+//                type: "rtmp/mp4",
                 this.$MKOPush({
                     name: 'LiveVideoDetail',
                     params: {
-                        id: item
+                        id: item.id
+                    },
+                    query: {
+                        liveUrl: item.url,
+                        type: item.liveVideoType
                     }
                 })
+            },
+            tab(text){
+                for (let i in this.tabItems) {
+                    if (text == this.tabItems[i]) {
+                        this.tabI = i;
+                        return;
+                    }
+                }
+            },
+            titleFilter(item) {
+                if (item.count == 0) {
+                    return item.name;
+                } else {
+                    return `<span class='dingding'>${item.count}</span>${item.name}`;
+                }
             }
         }
     }
@@ -77,98 +166,118 @@
     @import "../../config.less";
 
     .VideoSurveillance {
-        .tabs-wrap {
+        .title-wrap-a {
             width: 100%;
-            background-color: #ffffff;
-            height: 88px;
-            .cell {
-                width: 50%;
-                height: 88px;
+            height: 44px;
+            padding: 0 14px;
+            .left {
+                width: 200px;
                 float: left;
-                position: relative;
-                text-align: center;
-                padding-top: 14px;
-                &.actived {
-                    .icon, .text {
-                        color: #3CA0E8;
-                    }
+                .title,
+                .all-checked {
+                    display: inline;
+                    font-size: 12px;
+                    letter-spacing: 0px;
+                    line-height: 44px;
+                    height: 44px;
                 }
-                .icon {
-                    font-size: 26px;
+                .title {
+                    margin-right: 14px;
+                    color: #999999;
                 }
-                .text {
-                    width: 100%;
-                    display: block;
-                    font-size: 14px;
-                    margin-top: 10px;
+                .all-checked {
+                    color: #3399FF;
                 }
             }
-        }
-        .title {
-            font-size: 14px;
-            height: 36px;
-            line-height: 36px;
-            padding-left: 14px;
+            .right {
+                float: right;
+                font-size: 12px;
+                color: #999999;
+                letter-spacing: 0px;
+                line-height: 44px;
+                height: 44px;
+            }
         }
         .video-table-view {
             width: 100%;
             background-color: #ffffff;
-            .video-table-cell {
-                width: 100%;
-                position: relative;
-                background-color: #ffffff;
-                height: 66px;
-                padding: 0 0 0 14px;
-                box-sizing: border-box;
-                .padding {
-                    .border-btm(@borderGray);
-                    .number {
-                        position: absolute;
-                    }
-                    .name {
-                        width: 100%;
-                    }
-                    .address {
-                        width: 100%;
-                    }
-                    .time {
-                        width: 100%;
-                    }
-                    .status {
-                        width: 100%;
-                        color: #ff0008;
-                    }
-                    .icon {
-                        position: absolute;
-                        right: 14px;
-                        bottom: 0;
-                        top: 0;
-                        margin: auto;
-                    }
-                }
+            .blue {
+                color: #3CA0E8;
+            }
+            .dingding {
+                color: #ffffff;
+                background-color: #ff0008;
+                font-size: 12px;
+                width: 24px;
+                height: 14px;
+                text-align: center;
+                display: inline-block;
+                border-radius: 3px;
+                line-height: 17px;
+                margin-right: 6px;
             }
         }
         .surveillance-table-view {
             width: 100%;
-            background-color: #ffffff;
             .surveillance-table-cell {
                 width: 100%;
                 position: relative;
                 background-color: #ffffff;
                 box-sizing: border-box;
+                margin-bottom: 14px;
                 .padding {
                     .border-btm(@borderGray);
+                    .vjs-custom-skin {
+                        width: 100%;
+                        .video-js {
+                            height: 228px !important;
+                        }
+                    }
                     img {
                         width: 100%;
                     }
-                    .name {
-                        width: 100%;
-                    }
-                    .address {
-                        width: 100%;
-                    }
-                    .time {
-                        width: 100%;
+                    .item {
+                        position: relative;
+                        height: 60px;
+                        padding-left: 55px;
+                        .dingding {
+                            background: url('/static/icons/video.png') 0 0 no-repeat;
+                            width: 55px / 2;
+                            height: 55px / 2;
+                            position: absolute;
+                            background-size: cover;
+                            left: 14px;
+                            margin: AUTO;
+                            top: 0;
+                            bottom: 0;
+                        }
+                        .icon {
+                            position: absolute;
+                            right: 14px;
+                            margin: auto;
+                            bottom: 0;
+                            top: 0;
+                        }
+                        .name {
+                            width: 100%;
+                            font-size: 14px;
+                            padding-top: 14px;
+                        }
+                        .address {
+                            width: 100%;
+                            font-size: 12px;
+                            margin-top: 10px;
+                            color: #999;
+                        }
+                        .time {
+                            position: absolute;
+                            right: 28px;
+                            font-size: 14px;
+                            height: 14px;
+                            margin: auto;
+                            top: 0;
+                            bottom: 0;
+                        }
                     }
                 }
             }

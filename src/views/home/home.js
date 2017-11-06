@@ -476,6 +476,11 @@ export default {
                 _scoTop = document.documentElement.scrollTop || document.body.scrollTop;
             })
         },
+        QRCode() {
+            this.$ScanQRCode(result => {
+
+            })
+        }
     },
     components: {
         NoData,

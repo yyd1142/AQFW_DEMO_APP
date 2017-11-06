@@ -190,7 +190,7 @@ MKOMessagePlugin.install = function (Vue, options) {
             console.error(error);
         }, 'request', command);
     }
-    
+
     //注销账号
     Vue.prototype.$Logout = function () {
         let command = {
@@ -198,7 +198,7 @@ MKOMessagePlugin.install = function (Vue, options) {
         }
         _sendMessage('notification', command);
     }
-    
+
     Vue.prototype.$Login = function (userName, groupId) {
         let command = {
             type: 'Login',
@@ -227,6 +227,17 @@ MKOMessagePlugin.install = function (Vue, options) {
             mode: mode
         }
         _sendMessage('notification', command);
+    }
+    //扫码功能
+    Vue.prototype.$ScanQRCode = function (callback) {
+        let command = {
+            type: 'ScanQRCode'
+        }
+        _send(result => {
+            callback(result);
+        }, (error) => {
+            console.error(error);
+        }, 'request', command);
     }
     MKOMessagePlugin.installed = true;
 }
