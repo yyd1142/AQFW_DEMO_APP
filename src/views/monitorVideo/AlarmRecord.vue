@@ -2,12 +2,12 @@
     <div class="AlarmRecord">
         <div class="title-wrap-a">
             <div class="left">
-                <div class="title">飞鹰-A522</div>
+                <div class="title">深圳湾体育中心-游泳馆，2层，西南角巡查点</div>
             </div>
-            <div class="right">共10条记录</div>
+            <div class="right">共{{datas.length}}条记录</div>
         </div>
-        <mko-double-cell :title="titleFilter(item)" label="A栋|B1|131（消防通道）" is-link v-for="item in 10">
-            <span class="blue">未处理</span>
+        <mko-double-cell :title="titleFilter(item)" :label="item.address" v-for="item in datas">
+            <span :class="item.status == 2 ? 'blue' : null">{{item.status == 2 ? '未处理' : '正常'}}</span>
         </mko-double-cell>
     </div>
 </template>
@@ -15,12 +15,31 @@
     export default {
         data() {
             return {
-
+                datas: [{
+                    address: 'A栋|B1|131（应急出口）',
+                    count: 0,
+                    name: '应急出口堵塞监测',
+                    status: 1
+                }, {
+                    address: 'A栋|B1|122（电压房）',
+                    count: 5,
+                    name: '电压房堵塞监测',
+                    status: 2
+                }, {
+                    address: 'A栋|B1|89（安全出口）',
+                    count: 6,
+                    name: '安全出口堵塞监测',
+                    status: 2
+                }]
             }
         },
         methods: {
             titleFilter(item) {
-                return `<span class='dingding'>${6}</span>消防通道堵塞监测`
+                if (item.count == 0) {
+                    return item.name;
+                } else {
+                    return `<span class='dingding'>${item.count}</span>${item.name}`;
+                }
             }
         }
     }
@@ -48,6 +67,9 @@
                 .title {
                     margin-right: 14px;
                     color: #999999;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
                 }
                 .all-checked {
                     color: #3399FF;

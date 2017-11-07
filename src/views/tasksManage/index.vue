@@ -3,12 +3,20 @@
         <div class="placeholder-item"></div>
         <mt-header class="header-wrap" fixed :title="title"></mt-header>
         <div class="page-wrap tasks-manage-wrap" v-if="!resError">
-            <mko-double-cell title="任务执行报告" :label="`共完成${repoCount}个任务，${repoCount}个未审核`" is-link @click="$MKOPush('/tasks_repo')">
+            <mko-double-cell title="任务执行报告" :label="`共完成${repoCount}个任务，${repoCount}个未审核`" is-link
+                             @click="$MKOPush('/tasks_repo')">
                 <span class="warning">{{repoCount}}</span>
             </mko-double-cell>
             <div class="tasks-wrap">
-                <mko-cell :title="s.name" is-link @click="go(i)" v-for="(s,i) in taskSurvey">
+                <mko-nav-bar border-bottom>
+                    <mko-tab-item :label="item" :activied="tabI==i" @handleTabClick="tab"
+                                  v-for="(item,i) in tabItems"></mko-tab-item>
+                </mko-nav-bar>
+                <mko-cell :title="s.name" is-link @click="go(i)" v-for="(s,i) in taskSurvey" v-if="tabI == 0">
                     <span class="text-blue" v-if="i<2">{{s.count}}</span>
+                </mko-cell>
+                <mko-cell :title="s.name" is-link v-for="(s,i) in ajTaskSurvey" v-if="tabI == 1">
+                    <span class="text-blue"></span>
                 </mko-cell>
             </div>
         </div>
@@ -20,8 +28,8 @@
 <script>
     import api from 'api'
     import moment from 'moment'
-    import { Indicator } from 'mint-ui'
-    import { DateNavbar, NoData, Tabs, ResError } from 'components'
+    import {Indicator} from 'mint-ui'
+    import {DateNavbar, NoData, Tabs, ResError} from 'components'
     import MyTask from '../tasks/MyTask'
     import TaskSurvey from '../tasks/TaskSurvey'
     import * as types from 'store/mutation-types'
@@ -32,11 +40,26 @@
         data() {
             return {
                 title: '任务',
+                tabI: 0,
+                tabItems: ['消防任务', '安监任务'],
                 taskSurvey: [],
                 repoCount: 0,
                 tasks: [],
                 notData: false,
-                resError: false
+                resError: false,
+                ajTaskSurvey: [{
+                    name: '检查',
+                    count: 0,
+                    doing: 0,
+                },{
+                    name: '维修',
+                    count: 0,
+                    doing: 0,
+                },{
+                    name: '保养',
+                    count: 0,
+                    doing: 0,
+                }]
             }
         },
         computed: {
@@ -102,11 +125,11 @@
                     count: 0,
                     doing: 0,
                 });
-                taskSurvey.push({
-                    name: '检查',
-                    count: 0,
-                    doing: 0,
-                });
+//                taskSurvey.push({
+//                    name: '检查',
+//                    count: 0,
+//                    doing: 0,
+//                });
                 taskSurvey.push({
                     name: '保养',
                     count: 0,
@@ -166,6 +189,14 @@
                 ];
                 if (path[i])
                     this.$MKOPush(path[i]);
+            },
+            tab(text){
+                for (let i in this.tabItems) {
+                    if (text == this.tabItems[i]) {
+                        this.tabI = i;
+                        return;
+                    }
+                }
             }
         },
         components: {
