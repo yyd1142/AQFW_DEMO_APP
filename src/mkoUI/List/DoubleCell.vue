@@ -10,11 +10,11 @@
                 <div class="title no-overflow" v-html="title"></div>
                 <div class="label no-overflow">
                     <slot name="label">
-                        <div v-html="label"></div>
+                        <div class="no-overflow" v-html="label"></div>
                     </slot>
                 </div>
             </div>
-            <span class="link-arrow" :class="linkIcon||(fr(active)?'icon-arrow-right':'icon-link-arrow')" v-if="fr(isLink)"></span>
+            <span class="link-arrow" :class="linkIcon||'icon-link-arrow'" v-if="fr(isLink)"></span>
             <div class="value fr no-overflow" :class="{'is-link':fr(isLink),'is-active':fr(active)}">
                 <div class="text no-overflow">
                     <slot>

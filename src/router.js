@@ -138,6 +138,8 @@ const ChoosePerson = resolve => require(['./views/monitorVideo/ChoosePerson.vue'
 const monitorVideo = resolve => require(['./views/monitorVideo/index.vue'], resolve);
 //电气监测
 const monitorDq = resolve => require(['./views/monitorDq/index.vue'], resolve);
+const monitorDqDeviceDetail = resolve => require(['./views/monitorDq/DeviceDetail/index.vue'], resolve);
+const monitorDqDeviceChart = resolve => require(['./views/monitorDq/DeviceDetail/ChartModule.vue'], resolve);
 //水系统监测
 const monitorSxt = resolve => require(['./views/monitorSxt/index.vue'], resolve);
 
@@ -762,6 +764,16 @@ const routers = {
             path: '/monitorDq',
             name: 'MonitorDq',
             component: monitorDq
+        },
+        {
+            path: '/monitorDqDeviceDetail',
+            name: 'monitorDqDeviceDetail',
+            component: monitorDqDeviceDetail
+        },
+        {
+            path: '/monitorDqDeviceChart',
+            name: 'monitorDqDeviceChart',
+            component: monitorDqDeviceChart
         },
         //水系统监测
         {

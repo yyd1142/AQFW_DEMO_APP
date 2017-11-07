@@ -1,0 +1,319 @@
+<template>
+    <div>
+        <mko-header title="电气监测"
+                    right-text="停用设备" @handleRightClick=""
+                    left-icon="icon-back" @handleLeftClick="back">
+        </mko-header>
+        <div class="page-wrap monitor-dq-device-wrap">
+            <div class="chart-module-wrap">
+                <div class="chart-wrap clear">
+                    <div class="dashboard" ref="dashboard-left"></div>
+                    <div class="dashboard" ref="dashboard-mid"></div>
+                    <div class="dashboard" ref="dashboard-right"></div>
+                </div>
+                <div class="more" @click="goAllChart">
+                    查看全部图表 <span class="sign icon-link-arrow"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    //    import ChartModule from './ChartModule.vue'
+    import echarts from 'echarts';
+    let theme = 'macarons';
+    export default {
+        data () {
+            return {}
+        },
+        watch: {},
+        computed: {},
+        mounted() {
+        },
+        activated(){
+            this.DrawChart1(echarts);
+            this.DrawChart2(echarts);
+            this.DrawChart3(echarts);
+        },
+        deactivated() {
+        },
+        destroyed(){
+        },
+        methods: {
+            goAllChart(){
+                this.$MKOPush('/monitorDqDeviceChart');
+            },
+            DrawChart1(ec){
+                let myChart = ec.init(this.$refs['dashboard-left'], theme);
+                myChart.setOption({
+                    tooltip: {
+                        formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+//                            restore: {show: true},
+//                            saveAsImage: {show: true}
+                        }
+                    },
+                    series: [
+                        {
+                            max: 220,
+                            name: '业务指标',
+                            type: 'gauge',
+                            splitNumber: 5,       // 分割段数，默认为5
+                            axisLine: {            // 坐标轴线
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: [[0.045, '#FF6666'], [0.999, '#3399ff'], [1, '#FF6666']],
+                                    width: 1,
+                                }
+                            },
+                            axisTick: {            // 坐标轴小标记
+                                splitNumber: 10,   // 每份split细分多少段
+                                length: 5,        // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: 'auto',
+                                }
+                            },
+                            axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    color: 'auto',
+                                    fontSize: 4,
+
+                                }
+                            },
+                            splitLine: {           // 分隔线
+                                show: true,        // 默认显示，属性show控制显示与否
+                                length: 5,         // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                    color: 'auto'
+                                }
+                            },
+                            pointer: {
+                                width: 1,
+                                lineStyle: {       // 属性lineStyle控制线条样式
+
+                                }
+                            },
+                            title: {
+                                show: true,
+                                offsetCenter: [0, '-40%'],       // x, y，单位px
+                                z: 0,
+                                zlevel: 0,
+
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    fontWeight: 'normal',
+                                    fontSize: 5,
+                                },
+
+                            },
+                            detail: {
+                                formatter: '{value}',
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    color: 'auto',
+                                    fontWeight: 'thin'
+                                }
+                            },
+                            data: [{value: 22.66, name: '电压()'}]
+                        }
+                    ]
+                })
+            },
+            DrawChart2(ec){
+                let myChart = ec.init(this.$refs['dashboard-mid'], theme);
+                myChart.setOption({
+                    tooltip: {
+                        formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+//                            restore: {show: true},
+//                            saveAsImage: {show: true}
+                        }
+                    },
+                    series: [
+                        {
+                            max: 1000,
+                            name: '业务指标',
+                            type: 'gauge',
+                            splitNumber: 10,       // 分割段数，默认为5
+                            axisLine: {            // 坐标轴线
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: [[0.1, '#FF6666'], [0.8, '#3399ff'], [1, '#FF6666']],
+                                    width: 1,
+                                }
+                            },
+                            axisTick: {            // 坐标轴小标记
+                                splitNumber: 10,   // 每份split细分多少段
+                                length: 5,        // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: 'auto',
+                                }
+                            },
+                            axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    color: 'auto',
+                                    fontSize: 4,
+
+                                }
+                            },
+                            splitLine: {           // 分隔线
+                                show: true,        // 默认显示，属性show控制显示与否
+                                length: 5,         // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                    color: 'auto'
+                                }
+                            },
+                            pointer: {
+                                width: 1,
+                                lineStyle: {       // 属性lineStyle控制线条样式
+
+                                }
+                            },
+                            title: {
+                                show: true,
+                                offsetCenter: [0, '-40%'],       // x, y，单位px
+                                z: 0,
+                                zlevel: 0,
+
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    fontWeight: 'normal',
+                                    fontSize: 5,
+                                },
+
+                            },
+                            detail: {
+                                formatter: '{value}',
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    color: 'auto',
+                                    fontWeight: 'thin'
+                                }
+                            },
+                            data: [{value: 22.66, name: '电流(mA)'}]
+                        }
+                    ]
+                })
+            },
+            DrawChart3(ec){
+                let myChart = ec.init(this.$refs['dashboard-right'], theme);
+                myChart.setOption({
+                    tooltip: {
+                        formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+//                            restore: {show: true},
+//                            saveAsImage: {show: true}
+                        }
+                    },
+                    series: [
+                        {
+                            min: 20,
+                            max: 150,
+                            name: '线温',
+                            type: 'gauge',
+                            splitNumber: 5,       // 分割段数，默认为5
+                            axisLine: {            // 坐标轴线
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: [[0.1, '#FF6666'], [0.8, '#3399ff'], [1, '#FF6666']],
+                                    width: 1,
+                                }
+                            },
+                            axisTick: {            // 坐标轴小标记
+                                splitNumber: 10,   // 每份split细分多少段
+                                length: 5,        // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: 'auto',
+                                }
+                            },
+                            axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    color: 'auto',
+                                    fontSize: 4,
+
+                                }
+                            },
+                            splitLine: {           // 分隔线
+                                show: true,        // 默认显示，属性show控制显示与否
+                                length: 5,         // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                    color: 'auto'
+                                }
+                            },
+                            pointer: {
+                                width: 1,
+                                lineStyle: {       // 属性lineStyle控制线条样式
+
+                                }
+                            },
+                            title: {
+                                show: true,
+                                offsetCenter: [0, '-40%'],       // x, y，单位px
+                                z: 0,
+                                zlevel: 0,
+
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    fontWeight: 'normal',
+                                    fontSize: 5,
+                                },
+
+                            },
+                            detail: {
+                                formatter: '{value}',
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    color: 'auto',
+                                    fontWeight: 'thin'
+                                }
+                            },
+                            data: [{value: 87.38, name: '线温(℃)'}]
+                        }
+                    ]
+                })
+            },
+            back(){
+                this.$MKOPop();
+            }
+        },
+        components: {
+//            ChartModule
+        }
+    }
+</script>
+
+<style lang="less" rel="stylesheet/less">
+    @import "../../../config.less";
+
+    .monitor-dq-device-wrap {
+        .chart-module-wrap {
+            .chart-wrap {
+                background-color: #fff;
+                .dashboard {
+                    margin: auto;
+                    height: 150px;
+                    width: 33.33%;
+                    float: left;
+                }
+            }
+            .more {
+                height: 30px;
+                line-height: 30px;
+                border-top: 1px solid @baseBorder;
+                font-size: 12px;
+                text-align: center;
+                background-color: #fff;
+                .sign {
+                    position: relative;
+                    top: 1px;
+                    left: 4px;
+                    transform: scale(0.7,0.7);
+                }
+            }
+        }
+    }
+</style>
