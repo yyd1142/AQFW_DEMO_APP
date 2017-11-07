@@ -19,6 +19,7 @@
     "bluebird": "^3.5.0",
     "blueimp-md5": "^2.7.0",
     "core-js": "^2.4.1",
+    "echarts": "^3.7.2",
     "es6-promise": "^4.1.0",
     "fastclick": "^1.0.6",
     "less": "^2.7.2",

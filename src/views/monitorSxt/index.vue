@@ -44,7 +44,7 @@
             }
         },
         components: {
-            alarmList,deviceList
+            alarmList, deviceList
 
         }
     }
@@ -66,6 +66,12 @@
             }
             .value {
                 color: @baseText03;
+            }
+        }
+
+        .mko-double-cell {
+            .value {
+                min-width: 0;
             }
         }
     }
