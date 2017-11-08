@@ -12,6 +12,7 @@
             <div class="chart-wrap clear">
                 <div class="line-chart" ref="lineChart-1"></div>
                 <div class="line-chart" ref="lineChart-2"></div>
+                <div class="line-chart" ref="lineChart-3"></div>
             </div>
         </div>
     </div>
@@ -36,15 +37,13 @@
             this.DrawChart3(echarts);
             this.DrawChart4(echarts);
             this.DrawChart5(echarts);
+            this.DrawChart6(echarts);
         },
         deactivated() {
         },
         destroyed(){
         },
         methods: {
-            goAllChart(){
-                this.$MKOPush('/monitorDqDeviceChart');
-            },
             DrawChart1(ec){
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
                 myChart.setOption({
@@ -395,7 +394,7 @@
                     let f = r % 2 == 0 ? r : (-1 * r);
                     initValue += f;
                     if (initValue < 0) {
-                        initValue += Math.abs(f) * 2;
+                        initValue += (Math.abs(f) * 2);
                     }
                     yData.push(initValue);
                 }
@@ -472,6 +471,92 @@
                         }
                     ]
                 })
+            },
+            DrawChart6(ec){
+                let myChart = ec.init(this.$refs['lineChart-3'], theme);
+
+                let xData = ['13:30', '13:31', '13:32', '13:33', '13:34'];
+
+
+                myChart.setOption({
+                    title: {
+                        text: '线温(℃)',
+                        padding: 10,
+                        textStyle: {
+                            fontWeight: 'normal',
+                            color: '#333',
+                        },
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+//                        data: ['最高气温', '最低气温']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {}
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData,
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#333'
+                                }
+                            },
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            axisLabel: {
+                                formatter: '{value} °C'
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#333'
+                                }
+                            },
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '最高气温',
+                            type: 'line',
+                            data: [11, 11, 15, 13, 12],
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
+                                ]
+                            }
+                        },
+                        {
+                            name: '最低气温',
+                            type: 'line',
+                            data: [1, -2, 2, 5, 3],
+                            markPoint: {
+                                data: [
+                                    {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                });
             },
             back(){
                 this.$MKOPop();

@@ -46,7 +46,7 @@ export default {
                 { class: 'sheshi-icon', text: '设施设备', url: '/device' },
                 { class: 'shipin-icon', text: '视频监控', url: '/monitorVideo' },
                 { class: 'dianqi-icon', text: '电气监测', url: '/monitorDq' },
-                { class: 'dianqi-icon', text: '水系统监测', url: '/monitorSxt' }
+                { class: 'jibenxinxi-icon', text: '水系统监测', url: '/monitorSxt' }
                 ],
             aq_actions: [
                 { class: 'jibenxinxi-icon', text: '基本信息', url: '/basic_info' },
@@ -446,7 +446,7 @@ export default {
                         this.adminActions[1].class = data.notice > 0 ? 'notice-icon admin-has-data-icon' : 'notice-icon'
                         this.aq_actions[1].class = data.notice > 0 ? 'has-tongzhigonggao-icon' : 'tongzhigonggao-icon'
                         this.hasMessageDataClass = data.message > 0 ? 'icon-message-prompt-has' : 'icon-message-prompt-no'
-                        this.actions[2].class = data.dwYHK > 0 ? "has-yinhuan-icon" : 'yinhuan-icon'
+                        this.actions[1].class = data.dwYHK > 0 ? "has-yinhuan-icon" : 'yinhuan-icon'
                         this.resError = false;
                     }
                     return false;
@@ -457,7 +457,7 @@ export default {
                     this.adminActions[1].class = data.notice > 0 ? 'notice-icon admin-has-data-icon' : 'notice-icon'
                     this.aq_actions[1].class = data.notice > 0 ? 'has-tongzhigonggao-icon' : 'tongzhigonggao-icon'
                     this.hasMessageDataClass = data.message > 0 ? 'icon-message-prompt-has' : 'icon-message-prompt-no'
-                    this.actions[2].class = data.dwYHK > 0 ? "has-yinhuan-icon" : 'yinhuan-icon'
+                    this.actions[1].class = data.dwYHK > 0 ? "has-yinhuan-icon" : 'yinhuan-icon'
                     localStorage.setItem('hasNewMessage', JSON.stringify(data))
                 } else {
                     this.resError = true;
