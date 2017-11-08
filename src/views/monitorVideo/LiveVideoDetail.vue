@@ -4,7 +4,7 @@
         <mko-header title="设备详情" left-icon="icon-back" @handleLeftClick="back" right-icon-text="停用设备"></mko-header>
         <div class="page-wrap">
             <div class="player-wrap">
-                <video-player id="videoPlayer" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions" @ready="playerReadied"></video-player>
+                <video-player id="videoPlayer" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions"></video-player>
                 <!--<div class="address">深圳湾体育中心-游泳馆，2层，西南角巡查点</div>-->
             </div>
             <div class="tab-wrap">
@@ -20,14 +20,15 @@
 </template>
 
 <script>
-    import 'videojs-contrib-hls/dist/videojs-contrib-hls'
+    import { videoPlayer } from 'vue-video-player'
     import DeviceDetail from './DeviceDetail.vue'
     import AlarmRecord from './AlarmRecord.vue'
     export default {
         data() {
             return {
                 tabI: 0,
-                tabItems: ['设备信息', '报警记录']
+                tabItems: ['设备信息', '报警记录'],
+                isPlayer: true,
             }
         },
         computed: {
@@ -36,9 +37,6 @@
             },
             playerOptions() {
                 let src = 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8';
-                if (this.$route.params.id == 1) {
-                    src = "https://logos-channel.scaleengine.net/logos-channel/live/biblescreen-ad-free/playlist.m3u8"
-                }
                 let options = {
                     sources: [{
                         withCredentials: false,
@@ -58,13 +56,13 @@
         },
         activated() {
             this.setBackButton();
+            if(!this.isPlayer) {
+
+            }
         },
         methods: {
-            playerReadied() {
-                console.log('the player is readied')
-            },
             back() {
-//                this.player.dispose(); //销毁
+                this.isPlayer = false;
                 this.$MKOPop();
             },
             tab(text){
@@ -85,7 +83,8 @@
         },
         components: {
             DeviceDetail,
-            AlarmRecord
+            AlarmRecord,
+            videoPlayer
         }
     }
 </script>

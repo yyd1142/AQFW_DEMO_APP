@@ -1,5 +1,5 @@
 <template>
-    <div class="mkotabs" :class="{'is-header':isHeader!==undefined}">
+    <div class="mkotabs" :class="{'is-header': isHeader !== undefined, 'border-bottom': borderBottom !== undefined}">
         <nav class="tabs-wrap">
             <slot></slot>
         </nav>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    props: ['is-header']
+    props: ['is-header', 'border-bottom']
 }
 </script>
 
@@ -29,6 +29,9 @@ export default {
         width: 204px;
         padding: 0;
         background-color: transparent;
+    }
+    &.border-bottom {
+        border-bottom: 1px solid #eeeeee;
     }
     .tabs-wrap {
         width: 100%;

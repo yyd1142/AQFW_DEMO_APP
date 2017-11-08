@@ -3,6 +3,7 @@
         <div class="placeholder-item"></div>
         <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap xc-task-add-wrap" ref="wrapper" :style="{ height: wrapperHeight + 'px'}">
+            <task-type ref="task-type" @save="getTaskType"></task-type>
             <task-info ref="task-info" @save="getTaskInfo"></task-info>
             <task-spot ref="task-spot" @save="getTaskSpot"></task-spot>
             <task-person ref="task-person" @save="getTaskPerson"></task-person>
@@ -15,6 +16,7 @@
     import api from 'api'
     import moment from 'moment'
     import { Indicator, Toast } from 'mint-ui'
+    import taskType from './components/taskType.vue';
     import taskInfo from './components/taskInfo.vue';
     import taskSpot from './components/taskSpot.vue';
     import taskPerson from './components/taskPerson.vue';
@@ -24,8 +26,8 @@
                 title: '新建巡查',
                 wrapperHeight: 0,
                 formData: {},
-                confirm: [false, false, false],
-                isConfirm: false,
+                confirm: [false, false, false, false],
+                isConfirm: false
             }
         },
         watch: {},
@@ -45,23 +47,29 @@
             window.mkoBackButton.callback = null;
         },
         methods: {
+            getTaskType(obj) {
+                this.formData.dep = obj[0].value;
+                this.confirm[0] = true;
+                this.watchConfirm();
+                this.$refs['task-info'].isFold = false;
+            },
             getTaskInfo(obj){
                 for (let key in obj) {
                     this.formData[key] = obj[key];
                 }
-                this.confirm[0] = true;
+                this.confirm[1] = true;
                 this.watchConfirm();
                 this.$refs['task-spot'].isFold = false;
             },
             getTaskSpot(obj){
                 this.formData.spot = obj;
-                this.confirm[1] = true;
+                this.confirm[2] = true;
                 this.watchConfirm();
                 this.$refs['task-person'].isFold = false;
             },
             getTaskPerson(obj){
                 this.formData.person = obj;
-                this.confirm[2] = true;
+                this.confirm[3] = true;
                 this.watchConfirm();
                 this.$refs['task-person'].isFold = false;
             },
@@ -179,7 +187,7 @@
             }
         },
         components: {
-            taskInfo, taskSpot, taskPerson
+            taskInfo, taskSpot, taskPerson, taskType
         }
     }
 </script>
