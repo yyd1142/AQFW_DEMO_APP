@@ -1,10 +1,13 @@
 <template>
     <div>
         <div class="placeholder-item"></div>
-        <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back" right-icon="icon-delete" @handleRightClick="remove"></mko-header>
+        <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back" right-icon="icon-delete"
+                    @handleRightClick="remove"></mko-header>
         <div class="page-wrap xc-task-edit-wrap" ref="wrapper" :style="{ height: wrapperHeight + 'px'}">
             <div class="module-wrap">
                 <mko-form-cell title="巡查任务名" v-model="formData.name" type="text" edit></mko-form-cell>
+                <mko-form-cell title="行业类型" :val="depFilter[formData.dep] || '选择'"
+                               type="sel" edit @click="popupPickerShow('dep')"></mko-form-cell>
                 <mko-form-cell title="执行人员" :val="personFr(formData.person)"
                                type="sel" edit @click="popupPickerShow('person')"></mko-form-cell>
             </div>
@@ -17,7 +20,8 @@
                 <mko-select-box :title="`${item.jzName}，${item.level}`" :options="options_spot[i]" :selected="item.pos"
                                 :column="2" name-key="name" value-key="positionId" @select="selSpot($event,i)"
                                 v-for="(item,i) in formData.spot">
-                    <button slot="more" class="sel-btn" :style="{margin:'5px 1.4%',width:'47.2%'}" @click="goSelSpot(true)">
+                    <button slot="more" class="sel-btn" :style="{margin:'5px 1.4%',width:'47.2%'}"
+                            @click="goSelSpot(true)">
                         <span class="icon icon-plus-blue-1"></span>
                     </button>
                 </mko-select-box>
@@ -29,9 +33,14 @@
 
             <!--选项-->
             <sel-spot @sel="selSpotOnList" :selected-form="formData" v-if="$route.query.sel"></sel-spot>
-            <mko-popup-bottom title="执行人员" v-model="selPopupShow" @save="selPickerVal" @cancel="selPopupShow=false">
+            <mko-popup-bottom :title="popupName" v-model="selPopupShow" @save="selPickerVal"
+                              @cancel="selPopupShow=false">
                 <mko-select-box :selected="history_person" :options="options_person"
-                                name-key="employeeName" value-key="userName" @select="onPersonChange"></mko-select-box>
+                                name-key="employeeName" value-key="userName" @select="onPersonChange"
+                                v-if="pickerWrapperName === 'person'"></mko-select-box>
+                <mko-select-box :column="4" :options="depOptions" name-key="name" value-key="value" :selected="depDatas"
+                                @select="onDepChange"
+                                v-if="pickerWrapperName === 'dep'"></mko-select-box>
             </mko-popup-bottom>
         </div>
     </div>
@@ -40,7 +49,7 @@
 <script>
     import api from 'api'
     import moment from 'moment'
-    import { Indicator, Toast } from 'mint-ui'
+    import {Indicator, Toast} from 'mint-ui'
     import selSpot from './components/selSpot.vue';
     //    import taskInfo from './components/_taskInfo.vue';
     //    import taskSpot from './components/_taskSpot.vue';
@@ -66,6 +75,17 @@
                 selPopupShow: false,
                 pickerShow: '',
                 ruleId: '',
+                depOptions: [{
+                    name: '消防', value: 1
+                }, {
+                    name: '安监', value: 2
+                }, {
+                    name: '其他', value: 0
+                }],
+                depDatas: [],
+                depFilter: ['其他', '消防', '安监'],
+                popupName: '',
+                pickerWrapperName: ''
             }
         },
         watch: {
@@ -159,16 +179,22 @@
             },
             popupPickerShow(picker){
                 let that = this;
-                let fns = {
-                    'person': function () {
-                        that.history_person = JSON.parse(JSON.stringify(that.formData.person));
-                    },
+                if (picker == 'person') {
+                    let fns = {
+                        'person': function () {
+                            that.history_person = JSON.parse(JSON.stringify(that.formData.person));
+                        },
 
-                };
-                if (fns[picker])
-                    fns[picker]();
+                    };
+                    if (fns[picker])
+                        fns[picker]();
+                    this.popupName = '执行人员';
+                } else if (picker == 'dep') {
+                    this.popupName = '行业类型';
+                }
                 this.selPopupShow = true;
                 this.pickerShow = picker;
+                this.pickerWrapperName = picker;
             },
             onPersonChange(item){
                 let p = this.history_person;
@@ -183,13 +209,17 @@
             selPickerVal(){
                 let that = this;
                 let f = this.formData;
-                let fns = {
-                    'person': function () {
-                        f.person = JSON.parse(JSON.stringify(that.history_person));
-                    },
-                };
-                if (fns[this.pickerShow])
-                    fns[this.pickerShow]();
+                if (this.pickerWrapperName == 'person') {
+                    let fns = {
+                        'person': function () {
+                            f.person = JSON.parse(JSON.stringify(that.history_person));
+                        },
+                    };
+                    if (fns[this.pickerShow])
+                        fns[this.pickerShow]();
+                } else if (this.pickerWrapperName === 'dep') {
+                    this.formData.dep = this.depDatas[0].value;
+                }
                 this.selPopupShow = false;
             },
             goSelSpot(bool){
@@ -361,6 +391,10 @@
                     }
 
                 })
+            },
+            onDepChange(item) {
+                this.depDatas = [];
+                this.depDatas.push(item);
             }
         },
         components: {

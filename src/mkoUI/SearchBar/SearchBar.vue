@@ -71,6 +71,7 @@
             },
             inputOnBlur() {
                 this.iptOnFocus = false;
+                this.$emit('onBlur', true);
             },
         },
         components: {}
