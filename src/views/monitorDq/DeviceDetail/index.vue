@@ -15,17 +15,28 @@
                     查看全部图表 <span class="sign icon-link-arrow"></span>
                 </div>
             </div>
+            <div class="tab-wrap">
+                <div class="cell" :class="{'active':tabI==i}" v-for="(text,i) in tabItems" @click="tab(i)">
+                    <span v-text="text"></span>
+                </div>
+            </div>
+            <device-info v-show="tabI==0"></device-info>
+            <alarm-record v-show="tabI==1"></alarm-record>
         </div>
     </div>
 </template>
 
 <script>
-    //    import ChartModule from './ChartModule.vue'
+    import AlarmRecord from './AlarmRecord.vue'
+    import DeviceInfo from './DeviceInfo.vue'
     import echarts from 'echarts';
     let theme = 'macarons';
     export default {
         data () {
-            return {}
+            return {
+                tabI: 0,
+                tabItems: ['设备信息', '报警记录']
+            }
         },
         watch: {},
         computed: {},
@@ -41,8 +52,12 @@
         destroyed(){
         },
         methods: {
+            tab(i){
+                this.tabI = i;
+            },
             goAllChart(){
-                this.$MKOPush('/monitorDqDeviceChart');
+                let id = 1;
+                this.$MKOPush('/monitorDqDeviceChart/' + id);
             },
             DrawChart1(ec){
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
@@ -102,7 +117,6 @@
                                 offsetCenter: [0, '-40%'],       // x, y，单位px
                                 z: 0,
                                 zlevel: 0,
-
                                 textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                                     fontWeight: 'normal',
                                     fontSize: 5,
@@ -116,7 +130,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: 22.66, name: '电压()'}]
+                            data: [{value: 22.66, name: '电压(V)'}]
                         }
                     ]
                 })
@@ -281,7 +295,7 @@
             }
         },
         components: {
-//            ChartModule
+            DeviceInfo, AlarmRecord
         }
     }
 </script>
@@ -291,6 +305,7 @@
 
     .monitor-dq-device-wrap {
         .chart-module-wrap {
+            margin-bottom: 14px;
             .chart-wrap {
                 background-color: #fff;
                 .dashboard {
@@ -311,7 +326,32 @@
                     position: relative;
                     top: 1px;
                     left: 4px;
-                    transform: scale(0.7,0.7);
+                    transform: scale(0.7, 0.7);
+                }
+            }
+        }
+        .tab-wrap {
+            width: 100%;
+            height: 32px;
+            background-color: #ffffff;
+            .cell {
+                width: 50%;
+                float: left;
+                height: 24px;
+                line-height: 24px;
+                text-align: CENTER;
+                color: @mainBlue;
+                &.active {
+                    span {
+                        border-bottom: 2px solid @mainBlue;
+                        display: block;
+                        width: 56px;
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
+                span {
+                    font-size: 14px;
                 }
             }
         }

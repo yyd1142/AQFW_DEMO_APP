@@ -140,9 +140,14 @@ const monitorVideo = resolve => require(['./views/monitorVideo/index.vue'], reso
 const monitorDq = resolve => require(['./views/monitorDq/index.vue'], resolve);
 const monitorDqDeviceDetail = resolve => require(['./views/monitorDq/DeviceDetail/index.vue'], resolve);
 const monitorDqDeviceChart = resolve => require(['./views/monitorDq/DeviceDetail/ChartModule.vue'], resolve);
+const monitorDqAlarmDetail = resolve => require(['./views/monitorDq/AlarmDetail/index.vue'], resolve);
+const monitorDqAlarmDetailSelPerson = resolve => require(['./views/monitorDq/AlarmDetail/SelPerson.vue'], resolve);
 //水系统监测
 const monitorSxt = resolve => require(['./views/monitorSxt/index.vue'], resolve);
-
+const monitorSxtDeviceDetail = resolve => require(['./views/monitorSxt/DeviceDetail/index.vue'], resolve);
+const monitorSxtDeviceChart = resolve => require(['./views/monitorSxt/DeviceDetail/ChartModule.vue'], resolve);
+const monitorSxtAlarmDetail = resolve => require(['./views/monitorSxt/AlarmDetail/index.vue'], resolve);
+const monitorSxtAlarmDetailSelPerson = resolve => require(['./views/monitorSxt/AlarmDetail/SelPerson.vue'], resolve);
 
 Vue.use(Router)
 
@@ -766,14 +771,24 @@ const routers = {
             component: monitorDq
         },
         {
-            path: '/monitorDqDeviceDetail',
+            path: '/monitorDqDeviceDetail/:id',
             name: 'monitorDqDeviceDetail',
             component: monitorDqDeviceDetail
         },
         {
-            path: '/monitorDqDeviceChart',
+            path: '/monitorDqDeviceChart/:id',
             name: 'monitorDqDeviceChart',
             component: monitorDqDeviceChart
+        },
+        {
+            path: '/monitorDqAlarmDetail/:id',
+            name: 'monitorDqAlarmDetail',
+            component: monitorDqAlarmDetail
+        },
+        {
+            path: '/monitorDqAlarmDetailSelPerson/:id',
+            name: 'monitorDqAlarmDetailSelPerson',
+            component: monitorDqAlarmDetailSelPerson
         },
         //水系统监测
         {
@@ -781,6 +796,27 @@ const routers = {
             name: 'MonitorSxt',
             component: monitorSxt
         },
+        {
+            path: '/monitorSxtDeviceDetail/:id',
+            name: 'monitorSxtDeviceDetail',
+            component: monitorSxtDeviceDetail
+        },
+        {
+            path: '/monitorSxtDeviceChart/:id',
+            name: 'monitorSxtDeviceChart',
+            component: monitorSxtDeviceChart
+        },
+        {
+            path: '/monitorSxtAlarmDetail/:id',
+            name: 'monitorSxtAlarmDetail',
+            component: monitorSxtAlarmDetail
+        },
+        {
+            path: '/monitorSxtAlarmDetailSelPerson/:id',
+            name: 'monitorSxtAlarmDetailSelPerson',
+            component: monitorSxtAlarmDetailSelPerson
+        },
+        //视频监控
         {
             path: '/alarmDetail/:id',
             name: 'AlarmDetail',

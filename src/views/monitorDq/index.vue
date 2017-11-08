@@ -3,7 +3,7 @@
         <mko-header title="电气监测" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap monitor-dq-wrap">
             <mko-nav-bar>
-                <mko-tab-item :label="item.text" :activied="tabI==i" @handleTabClick="tab(i)"
+                <mko-tab-item :label="`${item.text} ${item.count}`" :activied="tabI==i" @handleTabClick="tab(i)"
                               v-for="(item,i) in headerBtnItems"></mko-tab-item>
             </mko-nav-bar>
             <alarm-list v-show="tabI==0"></alarm-list>
@@ -20,8 +20,8 @@
             return {
                 tabI: 0,
                 headerBtnItems: [
-                    {text: '设备报警'},
-                    {text: '电气设备'},
+                    {text: '设备报警', count: 2},
+                    {text: '电气设备', count: 1},
                 ]
             }
         },
@@ -44,7 +44,7 @@
             }
         },
         components: {
-            alarmList,deviceList
+            alarmList, deviceList
         }
     }
 </script>

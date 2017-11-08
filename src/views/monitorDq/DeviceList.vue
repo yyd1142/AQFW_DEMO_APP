@@ -30,7 +30,8 @@
         },
         methods: {
             goDetail(){
-                this.$MKOPush('/monitorDqDeviceDetail');
+                let id = 1;
+                this.$MKOPush('/monitorDqDeviceDetail/' + id);
             }
         },
         components: {}
