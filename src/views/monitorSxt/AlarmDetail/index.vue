@@ -68,7 +68,7 @@
         methods: {
             selPerson(){
                 let id = 1;
-                this.$MKOPush('/monitorSxtAlarmDetailSelPerson/' + id)
+                this.$MKOPush('/choosePerson')
             },
             removeDanger(){
                 this.$MKODialog({
