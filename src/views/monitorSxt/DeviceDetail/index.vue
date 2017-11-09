@@ -56,6 +56,8 @@
                 this.$MKOPush('/monitorSxtDeviceChart/' + id);
             },
             DrawChart2(ec){
+                let names = ['压力值(Pa)', '水位值(米)'];
+                let data = parseInt(Math.random() * 1000);
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -127,7 +129,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: 62.19, name: '压力值(Pa)'}]
+                            data: [{value: data, name: names[this.$route.params.id - 1]}]
                         }
                     ]
                 })

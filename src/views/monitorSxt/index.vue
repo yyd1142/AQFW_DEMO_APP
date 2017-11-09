@@ -21,7 +21,7 @@
                 tabI: 0,
                 headerBtnItems: [
                     {text: '设备报警', count: 2},
-                    {text: '消防供水设施', count: 2},
+                    {text: '水系统监测', count: 2},
                 ]
             }
         },
