@@ -8,11 +8,21 @@
                 </div>
             </mko-double-cell>
             <div class="fold-wrap" v-show="!isFold">
-                <mko-select-box title="设备（可多选）" :options="options.dvc_0.concat(options.dvc_1)" :selected="formData.dvc" value-key="unitID" name-key="unitName" :column="2" @select="selDvc">
+                <mko-select-box title="设备类型" :options="options.dvcType" :selected="[formData.dvcType]" @select="selDvcType" :column="2"></mko-select-box>
+
+                <mko-select-box title="消防设备（可多选）" :options="options.dvcXf_0.concat(options.dvcXf_1)" :selected="formData.dvc"
+                                value-key="unitID" name-key="unitName" :column="2" @select="selDvc" v-show="formData.dvcType==1">
                     <button slot="more" class="sel-btn" :style="{margin:'5px 1.4%',width:'47.2%'}" @click="goSelDvc(true)">
                         <div class="icon-search-blue"></div>
                     </button>
                 </mko-select-box>
+                <mko-select-box title="安监设备（可多选）" :options="options.dvcAj_0.concat(options.dvcAj_1)" :selected="formData.dvc"
+                                value-key="unitID" name-key="unitName" :column="2" @select="selDvc" v-show="formData.dvcType==2">
+                    <button slot="more" class="sel-btn" :style="{margin:'5px 1.4%',width:'47.2%'}" @click="goSelDvc(true)">
+                        <div class="icon-search-blue"></div>
+                    </button>
+                </mko-select-box>
+
                 <mko-select-box title="频率（单选）" name-key="label" :options="options.rate" :selected="[formData.rate]" :column="4" @select="selRate"></mko-select-box>
                 <div class="desc">
                     建议巡查频率：<br>
@@ -23,12 +33,13 @@
                 <mko-button plain size="large" :disabled="!valid" @click="confirm">确认</mko-button>
             </div>
         </div>
-        <dvc-search @sel="selDvcOnList" @back="goSelDvc(false)" v-if="onSelDvc"></dvc-search>
+        <dvc-search :type="formData.dvcType" @sel="selDvcOnList" @back="goSelDvc(false)" v-if="onSelDvc"></dvc-search>
     </div>
 </template>
 
 <script>
     import dvcSearch from './dvcSearch.vue'
+    let _key = ['Xf', 'Aj'];
     export default {
         props: ['parentsForm'],
         data () {
@@ -40,11 +51,18 @@
                 valid: false,
                 onSelDvc: false,
                 options: {
-                    dvc_0: [],
-                    dvc_1: [],
+                    dvcType: [
+                        {value: 1, text: '消防设备'},
+                        {value: 2, text: '安监设备'}
+                    ],
+                    dvcXf_0: [],
+                    dvcXf_1: [],
+                    dvcAj_0: [],
+                    dvcAj_1: [],
                     rate: []
                 },
                 formData: {
+                    dvcType: '',
                     dvc: [],
                     rate: {}
                 },
@@ -87,7 +105,7 @@
         mounted() {
         },
         activated(){
-            this.options.dvc_0 = [
+            this.options.dvcXf_0 = [
                 {unitID: 163, unitName: '灭火器', systemID: 18, systemName: '灭火器'},
                 {unitID: 54, unitName: '室内消火栓', systemID: 6, systemName: '消火栓（消防炮）灭火系统'},
                 {unitID: 170, unitName: '安全出口', systemID: 19, systemName: '其他'},
@@ -96,7 +114,7 @@
                 {unitID: 116, unitName: '疏散指示标志灯具', systemID: 11, systemName: '应急照明和疏散指示标志'},
                 {unitID: 52, unitName: '泵房', systemID: 5, systemName: '消防供水设施'},
             ];
-            this.options.dvc_1 = [];
+            this.options.dvcXf_1 = [];
             this.options.rate = this.patrolOptions;
             if (this.$route.params.spotId) {
                 this.num = 1;
@@ -112,6 +130,9 @@
         destroyed(){
         },
         methods: {
+            selDvcType(item){
+                this.formData.dvcType = item.value;
+            },
             goSelDvc(bool){
 //                if (bool) {
 //                    let path = this.$route.fullPath;
@@ -122,9 +143,9 @@
                 this.onSelDvc = bool;
             },
             selDvcOnList(item){
-                console.log(item)
-                let op_0 = this.options.dvc_0;
-                let op_1 = this.options.dvc_1;
+                let key = `dvc${_key[this.formData.dvcType - 1]}_`;
+                let op_0 = this.options[key + '0'];
+                let op_1 = this.options[key + '1'];
                 let fr = function () {
                     for (let i in op_0) {
                         if (op_0[i].unitID == item.unitID) {

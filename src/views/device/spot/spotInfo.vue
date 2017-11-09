@@ -3,7 +3,7 @@
         <div class="placeholder-item"></div>
         <mko-header :title="`${title}详情`"
                     :left-icon="isEdit?'':'icon-back'" :left-icon-text="isEdit?'取消':''" @handleLeftClick="back"
-                    :right-icon="isEdit&&dvcList.length==0?'icon-delete':''" @handleRightClick="removeSpot">
+                    :right-icon="isEdit&&(dvcXfList.length+dvcAjList.length)==0?'icon-delete':''" @handleRightClick="removeSpot">
             <div class="header-right sp-header-right" slot="custom" v-show="!isEdit">
                 <div class="right-icon icon icon-edit-header" @click="edit"></div>
                 <div class="right-icon icon icon-history" @click="history"></div>
@@ -11,41 +11,55 @@
         </mko-header>
 
         <div class="page-wrap device-spot-info-wrap" ref="wrapper" :style="{ height: wrapperHeight + 'px'}">
-            <!--<mko-cell title="巡查记录" val="14条" @click="go(`/xc_repo_list/${$route.params.pid}`)" is-link></mko-cell>-->
-
             <mko-form-cell :title="`${title}名称`" :val="info.name" v-model="formData.name" type="text" :edit="isEdit"></mko-form-cell>
             <!--<mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel" :edit="isEdit" @click="goSelSpot(true)"></mko-form-cell>-->
             <mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel"></mko-form-cell>
             <mko-form-cell title="需要巡查" :val="(isEdit?formData.isC:info.isC)?'是':'否'" type="sel" :edit="isEdit" @click="goSelIsC"></mko-form-cell>
 
-            <!--<div class="title-top-wrap">-->
-            <!--<div class="label fl">设备列表</div>-->
-            <!--<div class="btn fl" @click="goDvcAdd">添加设备</div>-->
-            <!--<div class="value fr">设备状态</div>-->
-            <!--</div>-->
+            <!--tab-->
+            <div class="tab-wrap">
+                <div class="cell" :class="{'active':tabI==i}" v-for="(text,i) in tabItems" @click="tab(i)">
+                    <span v-text="text"></span>
+                </div>
+            </div>
+
+            <!--title-->
             <div class="title-wrap" @click="sel()">
                 <div class="title fl" :class="isEdit?'is-edit':''" @click="goDvcAdd">
                     <div class="icon text-middle-1 icon-plus-blue" v-show="isEdit"></div>
                     {{isEdit ? '添加设备' : listTitle}}
                     <div class="sign" :class="isSel?'icon-link-arrow-down':'icon-link-arrow-up'" v-show="!isEdit"></div>
                 </div>
-                <div class="fr">共{{dvcList.length}}个</div>
+                <div class="fr" v-show="tabI==0">共{{dvcXfList.length}}个</div>
+                <div class="fr" v-show="tabI==1">共{{dvcAjList.length}}个</div>
             </div>
+
+            <!--列表-->
             <div class="sel-wrap" @click.self="isSel=false" v-show="isSel">
                 <mko-cell title="全部" @click="getDvcList">
                     <div class="icon-tick-blue-1 fr" v-show="isSelAll"></div>
                 </mko-cell>
-                <mko-cell :class="t.isSel?'active':''" :title="`只看${t.unitName}`" @click="selDvcList(i)" v-for="(t,i) in dvcTypeList">
+                <mko-cell :class="t.isSel?'active':''" :title="`只看${t.unitName}`" @click="selDvcList(i)" v-show="tabI==0" v-for="(t,i) in dvcXfTypeList">
+                    <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
+                </mko-cell>
+                <mko-cell :class="t.isSel?'active':''" :title="`只看${t.unitName}`" @click="selDvcList(i)" v-show="tabI==1" v-for="(t,i) in dvcAjTypeList">
                     <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
                 </mko-cell>
             </div>
-
-            <div class="list-wrap">
-                <mko-cell :title="`${d.unitName||'未知设备'}${d.SSSBCode||''}`" :is-link="!isEdit" @click="go('/device/' + d.sssbId)" v-for="d in dvcList">
-                    <span :class="statusColor[d.status]" v-text="statusText[d.status]"></span>
+            <div class="list-wrap" v-show="tabI==0">
+                <mko-cell :title="`${d.unitName||'未知设备'}${d.SSSBCode||''}`" :icon="d.STATUS|deviceStatusIconFilter"
+                          :is-link="!isEdit" @click="go('/device/' + d.sssbId)" v-for="d in dvcXfList">
+                    <span :class="statusColor[d.STATUS]">{{statusText[d.STATUS]}}</span>
+                </mko-cell>
+            </div>
+            <div class="list-wrap" v-show="tabI==1">
+                <mko-cell :title="`${d.unitName||'未知设备'}${d.SSSBCode||''}`" :icon="d.STATUS|deviceStatusIconFilter"
+                          :is-link="!isEdit" @click="go('/device/' + d.sssbId)" v-for="d in dvcAjList">
+                    <span :class="statusColor[d.STATUS]">{{statusText[d.STATUS]}}</span>
                 </mko-cell>
             </div>
 
+            <!--按钮-->
             <mko-button class="footer-btn" size="large" :disabled="!valid" no-radius @click="send" v-if="isEdit">
                 保存
             </mko-button>
@@ -74,6 +88,8 @@
     let _valid = ['name', 'jzName', 'jzId', 'level'];
 
     let _historyIsC = 0;
+    let _listKey = ['dvcXfList', 'dvcAjList'];
+    let _typeKey = ['dvcXfTypeList', 'dvcAjTypeList'];
     export default {
         data() {
             return {
@@ -84,10 +100,16 @@
                 isEdit: false,
                 popupShow: false,
                 wrapperHeight: 0,
-                //数据
+                //tab
+                tabI: 0,
+                tabItems: ['消防设备', '安监设备'],
+                //设备列表
                 noData: false,
-                dvcList: [],
-                dvcTypeList: [],
+                dvcXfList: [],
+                dvcXfTypeList: [],
+                dvcAjList: [],
+                dvcAjTypeList: [],
+                //巡查点详情
                 info: {
                     name: '',
                     jzName: '',
@@ -126,6 +148,9 @@
                     document.body.style.overflow = 'hidden'
                 }
             },
+            tabI(){
+                this.getDvcList();
+            }
         },
         computed: {
             jzInfo() {
@@ -169,6 +194,9 @@
         },
         methods: {
             levelFr,
+            tab(i){
+                this.tabI = i;
+            },
             sel() {
                 if (this.isEdit) {
                     return;
@@ -272,7 +300,7 @@
                 })
             },
             getDvcTypeList() {
-                let list = this.dvcList;
+                let list = this[_listKey[this.tabI]];
                 let t_list = [];
                 list.forEach(item => {
                     for (let i in t_list) {
@@ -286,7 +314,7 @@
                         isSel: false
                     });
                 });
-                this.dvcTypeList = t_list;
+                this[_typeKey[this.tabI]] = t_list;
             },
             getDvcList(unit_id) {
                 Indicator.open({spinnerType: 'fading-circle'});
@@ -294,18 +322,21 @@
                     this.isSelAll = true;
 
                 let params = {
+                    groupId: this.$store.getters.groupId,
                     isCheck: 1,
                     id: this.$route.params.pid,
                     unitId: unit_id,
+                    dep: this.tabI + 1
                 };
+                let list = _listKey[this.tabI];
                 api.getDvcPositionInfo(params).then(result => {
                     Indicator.close();
                     if (result && result.code == 0) {
-                        this.dvcList = result.response;
+                        this[list] = result.response;
                         if (!unit_id)
                             this.getDvcTypeList();
 
-                        if (this.dvcList.length <= 0)
+                        if (this[list].length <= 0)
                             this.noData = true;
 
                         this.isSel = false;
@@ -316,7 +347,7 @@
             },
             selDvcList(index) {
                 this.isSelAll = false;
-                let t_list = this.dvcTypeList;
+                let t_list = this[_typeKey[this.tabI]];
                 for (let i in t_list) {
                     t_list[i].isSel = false;
                 }
@@ -392,6 +423,34 @@
                 top: 15px;
             }
         }
+
+        .tab-wrap {
+            margin-top: 10px;
+            width: 100%;
+            height: 32px;
+            background-color: #ffffff;
+            .cell {
+                width: 50%;
+                float: left;
+                height: 24px;
+                line-height: 24px;
+                text-align: CENTER;
+                color: @mainBlue;
+                &.active {
+                    span {
+                        border-bottom: 2px solid @mainBlue;
+                        display: block;
+                        width: 56px;
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
         > .title-top-wrap {
             height: 34px;
             padding: 14px 14px 8px;
@@ -411,7 +470,6 @@
             }
         }
         > .title-wrap {
-            margin-top: 10px;
             padding: 0 14px;
             height: 44px;
             line-height: 44px;
@@ -430,7 +488,9 @@
                     color: @mainBlue;
                 }
                 .sign {
+                    position: relative;
                     left: 7px;
+                    top: -2px;
                 }
             }
         }

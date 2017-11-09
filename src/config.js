@@ -46,6 +46,6 @@ export default {
     taskStatus: ['', '未开始', '进行中', '未上传', '处理中', '待审核', '已审核', '已超期'],
     //设备状态
     deviceStatus: ['未检查', '正常', '故障', '维修', '停用', '待审核', '排除隐患', '确认隐患'],
-    deviceStatusColor: ['', 'base-text-01', 'text-danger', 'text-warning', 'base-text-03'],
+    deviceStatusColor: ['', 'base-text-02', 'text-danger', 'text-warning', 'base-text-03'],
     deviceStatusIcon: ['icon-device-warn', 'icon-device-succ', 'icon-device-danger', 'icon-device-warn', 'icon-device-warn', 'icon-device-warn', 'icon-device-succ', 'icon-device-danger'],
 }
