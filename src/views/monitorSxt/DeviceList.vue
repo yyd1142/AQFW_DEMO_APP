@@ -4,12 +4,12 @@
             <div class="label fl">设施列表</div>
             <div class="value fr">共2个设施</div>
         </div>
-        <mko-double-cell title="水压表" icon="icon-location"
-                         label="深圳湾体育中心-体育馆，-1层，东北角巡查点" is-link @click="goDetail">
+        <mko-double-cell title="水压监测" icon="icon-location"
+                         label="深圳湾体育中心-体育馆，-1层，东北角巡查点" is-link @click="goDetail(1)">
             正常
         </mko-double-cell>
-        <mko-double-cell title="消防水池" icon="icon-location"
-                         label="深圳湾体育中心-体育馆，2层，西南角巡查点" is-link @click="goDetail">
+        <mko-double-cell title="水位监测" icon="icon-location"
+                         label="深圳湾体育中心-体育馆，2层，西南角巡查点" is-link @click="goDetail(2)">
             停用
         </mko-double-cell>
     </div>
@@ -31,8 +31,7 @@
         destroyed(){
         },
         methods: {
-            goDetail(){
-                let id = 1;
+            goDetail(id){
                 this.$MKOPush('/monitorSxtDeviceDetail/' + id);
             }
         },

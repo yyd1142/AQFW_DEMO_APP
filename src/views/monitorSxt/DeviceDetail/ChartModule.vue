@@ -1,6 +1,7 @@
 <template>
     <div>
         <mko-header title="水系统监测"
+                    :right-icon-text="time||'0'"
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap sxt-chart-module-wrap">
@@ -17,10 +18,14 @@
 <script>
     import echarts from 'echarts';
     let theme = 'macarons';
+    let timer = null;
+    let type = '';
+    let names = ['压力值(Pa)', '水位值(米)'];
     export default {
         data () {
             return {
                 allShow: false,
+                time: 30,
             }
         },
         watch: {},
@@ -28,15 +33,33 @@
         mounted() {
         },
         activated(){
-            this.DrawChart2(echarts);
-            this.DrawChart4(echarts);
+            this.refreshData();
+            this.time = 30;
+            let that = this;
+            timer = setInterval(function () {
+                that.time = parseInt(that.time) - 1;
+                if (that.time < 0) {
+                    that.time = 30;
+                    that.refreshData();
+                }
+            }, 1000);
+
+            type = this.$route.params.id - 1;
         },
         deactivated() {
+            clearInterval(timer);
+            timer = null;
         },
         destroyed(){
         },
         methods: {
+            refreshData(){
+                this.DrawChart2(echarts);
+                this.DrawChart4(echarts);
+            },
             DrawChart2(ec){
+                let data = parseInt(Math.random() * 1000);
+
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -108,7 +131,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: 62.19, name: '压力值(Pa)'}]
+                            data: [{value: data, name: names[type]}]
                         }
                     ]
                 })
@@ -141,7 +164,7 @@
                 let myChart = ec.init(this.$refs['lineChart-1'], theme);
                 myChart.setOption({
                     title: {
-                        text: '压力值(Pa)',
+                        text: names[type],
                         padding: 10,
                         textStyle: {
                             fontWeight: 'normal',

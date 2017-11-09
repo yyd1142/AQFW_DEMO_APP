@@ -60,6 +60,7 @@
                 this.$MKOPush('/monitorDqDeviceChart/' + id);
             },
             DrawChart1(ec){
+                let data = parseInt(Math.random() * 220);
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -117,6 +118,7 @@
                                 offsetCenter: [0, '-40%'],       // x, y，单位px
                                 z: 0,
                                 zlevel: 0,
+
                                 textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                                     fontWeight: 'normal',
                                     fontSize: 5,
@@ -130,12 +132,13 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: 22.66, name: '电压(V)'}]
+                            data: [{value: data, name: '电压()'}]
                         }
                     ]
                 })
             },
             DrawChart2(ec){
+                let data = parseInt(Math.random() * 1000);
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -207,12 +210,17 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: 22.66, name: '电流(mA)'}]
+                            data: [{value: data, name: '电流(mA)'}]
                         }
                     ]
                 })
             },
             DrawChart3(ec){
+                let data = parseInt(Math.random() * 150);
+                while (data < 20) {
+                    console.log(data);
+                    data = parseInt(Math.random() * 150);
+                }
                 let myChart = ec.init(this.$refs['dashboard-right'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -285,7 +293,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: 87.38, name: '线温(℃)'}]
+                            data: [{value: data, name: '线温(℃)'}]
                         }
                     ]
                 })

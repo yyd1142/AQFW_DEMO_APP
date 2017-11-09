@@ -6,27 +6,27 @@
             <div class="title-card">
                 <div class="cell clear">
                     <div class="title">报警部件</div>
-                    <div class="value">测温式电气火灾监控探测器</div>
+                    <div class="value">水压监测</div>
                 </div>
                 <div class="cell clear">
                     <div class="title">安装位置</div>
                     <div class="value">深圳湾体育中心-体育馆，-1层，东北角巡查点</div>
                 </div>
                 <div class="cell clear">
-                    <div class="title">首次报警</div>
+                    <div class="title">首次报警时间</div>
                     <div class="value">2017-11-08 14:15</div>
                 </div>
                 <div class="cell clear">
-                    <div class="title">最近报警</div>
-                    <div class="value">2017-11-08 14:30</div>
+                    <div class="title">最近报警时间</div>
+                    <div class="value">2017-11-08 14:21</div>
                 </div>
                 <div class="cell clear">
                     <div class="title">报警次数</div>
                     <div class="value">2</div>
                 </div>
                 <div class="cell clear">
-                    <div class="title">报警数值</div>
-                    <div class="value">无</div>
+                    <div class="title">报警值</div>
+                    <div class="value">672.0kPa</div>
                 </div>
             </div>
 
@@ -34,14 +34,14 @@
                 <div class="label">警情处理状态跟踪</div>
             </div>
             <div class="alarm-record-wrap">
-                <mko-double-cell icon="icon-device-succ" title="处理完成" label="2017-11-08 14:30"></mko-double-cell>
-                <mko-double-cell icon="icon-device-warn" title="已通知" label="2017-11-08 14:30"></mko-double-cell>
-                <mko-double-cell icon="icon-device-danger" title="设备报警" label="2017-11-08 14:30"></mko-double-cell>
+                <mko-double-cell icon="icon-device-succ" title="已确认正常" label="2017-11-08 14:30"></mko-double-cell>
+                <mko-double-cell icon="icon-device-warn" title="已通知" label="2017-11-08 12:47"></mko-double-cell>
+                <mko-double-cell icon="icon-device-danger" title="待处理" label="2017-11-08 12:30"></mko-double-cell>
             </div>
 
             <div class="button-wrap" v-if="status!=1">
                 <mko-button size="large" @click="selPerson">通知责任人</mko-button>
-                <mko-button size="large" plain @click="removeDanger">排除风险</mko-button>
+                <mko-button size="large" plain @click="removeDanger">确认正常</mko-button>
             </div>
         </div>
     </div>
@@ -111,11 +111,13 @@
                 .title {
                     float: left;
                     margin-right: 14px;
+                    width: 24%;
                     font-size: 14px;
                     color: @baseText03;
                 }
                 .value {
                     float: left;
+                    width: 70%;
                     font-size: 14px;
                     color: @baseText02;
                 }

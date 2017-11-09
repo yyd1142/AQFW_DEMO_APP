@@ -1,11 +1,11 @@
 <template>
     <div class="alarm-record-wrap">
-        <mko-double-cell :title="badge(2)+'测温式电气火宅监控探测器'"
-                         label="温度报警，警告值：0.0~60.0℃" is-link @click="goDetail">
-            未处理
+        <mko-double-cell :title="badge(2)+'测温式电气火宅监控探测'"
+                         label="温度报警，警告值：0.0-60℃">
+            待处理
         </mko-double-cell>
-        <mko-double-cell title="剩余电流式电气火灾监控探测器"
-                         label="温度报警，警告值：0.0~0.6A" is-link @click="goDetail">
+        <mko-double-cell title="电流式电气火灾监控探测"
+                         label="电流报警，警告值：0.0~0.6A">
             已通知
         </mko-double-cell>
     </div>

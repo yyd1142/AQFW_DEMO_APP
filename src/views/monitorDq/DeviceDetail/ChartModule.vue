@@ -1,6 +1,7 @@
 <template>
     <div>
-        <mko-header title="测温式电气火灾监控探测器"
+        <mko-header title="水系统监测"
+                    :right-icon-text="time||'0'"
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap dq-chart-module-wrap">
@@ -21,10 +22,14 @@
 <script>
     import echarts from 'echarts';
     let theme = 'macarons';
+    let timer = null;
+
+
     export default {
         data () {
             return {
                 allShow: false,
+                time: 30,
             }
         },
         watch: {},
@@ -32,19 +37,35 @@
         mounted() {
         },
         activated(){
-            this.DrawChart1(echarts);
-            this.DrawChart2(echarts);
-            this.DrawChart3(echarts);
-            this.DrawChart4(echarts);
-            this.DrawChart5(echarts);
-            this.DrawChart6(echarts);
+            this.refreshData();
+            this.time = 30;
+            let that = this;
+            timer = setInterval(function () {
+                that.time = parseInt(that.time) - 1;
+                if (that.time < 0) {
+                    that.time = 30;
+                    that.refreshData();
+                }
+            }, 1000)
+
         },
         deactivated() {
+            clearInterval(timer);
+            timer = null;
         },
         destroyed(){
         },
         methods: {
+            refreshData(){
+                this.DrawChart1(echarts);
+                this.DrawChart2(echarts);
+                this.DrawChart3(echarts);
+                this.DrawChart4(echarts);
+                this.DrawChart5(echarts);
+                this.DrawChart6(echarts);
+            },
             DrawChart1(ec){
+                let data = parseInt(Math.random() * 220);
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -116,12 +137,13 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: 22.66, name: '电压()'}]
+                            data: [{value: data, name: '电压()'}]
                         }
                     ]
                 })
             },
             DrawChart2(ec){
+                let data = parseInt(Math.random() * 1000);
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -193,12 +215,17 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: 22.66, name: '电流(mA)'}]
+                            data: [{value: data, name: '电流(mA)'}]
                         }
                     ]
                 })
             },
             DrawChart3(ec){
+                let data = parseInt(Math.random() * 150);
+                while (data < 20) {
+                    console.log(data);
+                    data = parseInt(Math.random() * 150);
+                }
                 let myChart = ec.init(this.$refs['dashboard-right'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -271,7 +298,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: 87.38, name: '线温(℃)'}]
+                            data: [{value: data, name: '线温(℃)'}]
                         }
                     ]
                 })

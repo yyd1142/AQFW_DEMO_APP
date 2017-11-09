@@ -180,11 +180,9 @@
             },
             validForm(){
                 let f = this.formData;
-                for (let key in f) {
-                    if (f[key].length == 0) {
-                        this.valid = false;
-                        return;
-                    }
+                if (f.dvc.length == 0 || !f.rate.value) {
+                    this.valid = false;
+                    return;
                 }
                 this.valid = true;
             },

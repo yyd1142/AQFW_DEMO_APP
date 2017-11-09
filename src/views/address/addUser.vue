@@ -16,8 +16,10 @@
                            @click="popupPickerShow('gender')"></mko-form-cell>
             <mko-form-cell title="身份证号" v-model="formData.IDNumber" type="text" edit required></mko-form-cell>
             <mko-form-cell title="电话" v-model="formData.phone" type="number" edit required></mko-form-cell>
-            <mko-form-cell title="角色" :val="formData.role|roleFilter" type="sel" edit required
-                           @click="popupPickerShow('role')"></mko-form-cell>
+            <mko-form-cell title="角色" type="sel" edit required @click="popupPickerShow('role')">
+                {{formData.department | departmentFilter}}{{formData.department || formData.department === 0 ? '部门，' : ''}}{{formData.role | roleNewFilter}}
+            </mko-form-cell>
+
             <mko-form-cell title="职责" :val="formData.roleRuls|roleRulsFilter" type="sel" edit required
                            @click="popupPickerShow('role-ruls')"></mko-form-cell>
 
@@ -43,10 +45,12 @@
 
 <script>
     import api from 'api'
-    import { Indicator, Toast} from 'mint-ui'
+    import conf from 'config'
+    import { Indicator, Toast } from 'mint-ui'
     //  import { MkoFormCell, MkoEditCard, MkoPopupBottom } from 'mko-ui'
 
     let history_gender = '';
+    let history_dpm = '';
     let history_role = '';
     export default {
         data () {
@@ -68,25 +72,10 @@
                     status: 1 //1启用 2禁用
                 },
                 genderList: [{flex: 1, values: ['男', '女']}],  //1,2
-                roleList: [{
-                    flex: 1,
-                    values: [
-                        {text: '消防安全责任人', value: 1},
-//            {text: '消防安全管理人', value: 2},
-                        {text: '消防控制室操作人员', value: 3},
-                        {text: '专兼职消防管理人员', value: 4},
-                        {text: '保安', value: 5},
-                        {text: '消防引导员', value: 6},
-                        {text: '消防安全监测人员', value: 7},
-                        {text: '建设工程设计人员', value: 8},
-                        {text: '建设工程消防设施施工、监理、检测、维保等执业人员', value: 9},
-                        {text: '易燃易爆危险化学品从业人员', value: 10},
-                        {text: '电工、电气焊工等特殊工种作业人员', value: 11},
-                        {text: '专职（志愿）消防队员', value: 12},
-                        {text: '其他重点岗位人员', value: 13},
-                        {text: '社会单位员工', value: 14}
-                    ]
-                }],
+                roleList: [
+                    {flex: 1, values: conf.departmentList, className: 'picker-left', defaultIndex: 0},
+                    {flex: 1, values: [], className: 'picker-right'}
+                ],
                 roleRulsList: ['管理', '值班', '巡查', '检测', '保养', '维修', '检查'], //0
                 roleRulsList1: [
                     {text: '管理', value: 0},
@@ -129,6 +118,7 @@
         },
         activated(){
             this.onInputData();
+            this.roleList[0].values = conf.departmentList;
         },
         deactivated() {
         },
@@ -151,12 +141,12 @@
                             that.genderList[0].defaultIndex = that.formData.gender - 1;
                     },
                     'role': function () {
-                        if (that.formData.role)
-                            for (let i in that.roleList[0].values) {
-                                if (that.formData.role == that.roleList[0].values[i].value) {
-                                    that.roleList[0].defaultIndex = i;
-                                }
-                            }
+//                        if (that.formData.role)
+//                            for (let i in that.roleList[0].values) {
+//                                if (that.formData.role == that.roleList[0].values[i].value) {
+//                                    that.roleList[0].defaultIndex = i;
+//                                }
+//                            }
                     },
                     'role-ruls': function () {
                         that.history_roleRuls = that.formData.roleRuls.join('').split('');
@@ -175,6 +165,7 @@
                         form.gender = history_gender;
                     },
                     'role': function () {
+                        form.department = history_dpm;
                         form.role = history_role;
                     },
                     'role-ruls': function () {
@@ -231,7 +222,13 @@
                 }
             },
             onRoleChange(picker, vals){
-                history_role = vals[0].value;
+                let dpm = (vals[0] || vals[0] == 0) ? vals[0].value : '';
+                let role = vals[1] ? vals[1].value : '';
+                if (dpm != history_dpm) {
+                    history_dpm = dpm;
+                    this.roleList[1].values = conf.roleList[dpm] ? conf.roleList[dpm].role : [];
+                }
+                history_role = role;
             },
             onRoleRulsChange(item){
                 let index = this.history_roleRuls.join('').indexOf(item.value);
