@@ -34,7 +34,7 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components'),
       'filters': path.resolve(__dirname, '../src/filters'),
       'store': path.resolve(__dirname, '../src/store'),
-      'mko-ui':path.resolve(__dirname, '../src/mkoUI'),
+      'mko-ui':path.resolve(__dirname, '../src/mkoUI')
     }
   },
   externals: {
