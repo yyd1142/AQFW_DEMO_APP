@@ -48,4 +48,67 @@ export default {
     deviceStatus: ['未检查', '正常', '故障', '维修', '停用', '待审核', '排除隐患', '确认隐患'],
     deviceStatusColor: ['', 'base-text-02', 'text-danger', 'text-warning', 'base-text-03'],
     deviceStatusIcon: ['icon-device-warn', 'icon-device-succ', 'icon-device-danger', 'icon-device-warn', 'icon-device-warn', 'icon-device-warn', 'icon-device-succ', 'icon-device-danger'],
+    //人员部门分类
+    departmentList: [
+        {text: '消防', value: 1},
+        {text: '安监', value: 2},
+        {text: '其他', value: 0},
+    ],
+    roleList: {
+        1: {
+            type: 1,
+            text: '消防',
+            role: [
+                {text: '消防安全责任人', value: 1},
+//            {text: '消防安全管理人', value: 2},
+                {text: '消防控制室操作人员', value: 3},
+                {text: '专兼职消防管理人员', value: 4},
+                {text: '保安', value: 5},
+                {text: '消防引导员', value: 6},
+                {text: '消防安全监测人员', value: 7},
+                {text: '建设工程设计人员', value: 17},
+                {text: '建设工程消防设施施工、监理、检测、维保等执业人员', value: 9},
+            ]
+        },
+        2: {
+            type: 2,
+            text: '安监',
+            role: [
+                {text: '易燃易爆危险化学品从业人员', value: 10},
+                {text: '设备维修工', value: 11},
+                {text: '专职（志愿）消防队员', value: 8},
+                {text: '其他重点岗位人员', value: 18},
+                {text: '社会单位员工', value: 19},
+                {text: '安全负责人', value: 15},
+                {text: '安全管理员', value: 16},
+            ]
+        },
+        0: {
+            type: 0,
+            text: '其他',
+            role: [
+                {text: '建筑工程设计人员', value: 17},
+                {text: '其他重点岗位人员', value: 18},
+                {text: '社会单位员工', value: 19},
+            ]
+        }
+    },
+    allRoleList: {
+        1: '消防安全责任人',
+        2: '消防安全管理人',
+        3: '消防控制室操作人员',
+        4: '专兼职消防管理人员',
+        5: '保安',
+        6: '消防引导员',
+        7: '消防安全监测人员',
+        8: '专职（志愿）消防队员',
+        9: '建设工程消防设施施工、监理、检测、维保等执业人员',
+        10: '易燃易爆危险化学品从业人员',
+        11: '设备维修工',
+        15: '安全负责人',
+        16: '安全管理员',
+        17: '建筑工程设计人员',
+        18: '其他重点岗位人员',
+        19: '社会单位员工'
+    }
 }

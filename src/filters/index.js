@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import moment from 'moment'
+import conf from 'config'
+
 // 日期格式化
 Vue.filter('formatDate', (value, format) => {
     if (!value) {
@@ -159,6 +161,20 @@ Vue.filter('errorsExamFilter', (value) => {
 Vue.filter('roleFilter', (value) => {
     const role = ['消防安全责任人', '消防安全管理人', '消防控制室管理人员', '专兼职消防管理人员', '保安', '消防引导员', '消防安全监测人员', '建设工程设计人员', '建设工程消防设施施工、监理、检测、维保等执业人员', '易燃易爆危险化学品从业人员', '电工、电气焊工等特殊工种作业人员', '专职（志愿）消防队员', '其他重点岗位人员', '社会单位员工'];
     return role[value - 1]
+});
+
+Vue.filter('roleNewFilter', (value) => {
+    const role = conf.allRoleList;
+    return role[value]
+});
+
+//部门
+Vue.filter('departmentFilter', (value) => {
+    const dpm = conf.departmentList;
+    for (let item of dpm) {
+        if (value == item.value)
+            return item.text;
+    }
 });
 
 //职责
