@@ -13,6 +13,7 @@
     import api from 'api'
 
     export default {
+        props: ['type'],
         data () {
             return {
                 val: '',
@@ -46,7 +47,8 @@
         methods: {
             getHintList(val){
                 let params = {
-                    unitName: val
+                    unitName: val,
+                    dep: this.type
                 };
                 api.searchDvc(params).then(res => {
                     if (res && res.code == 0) {

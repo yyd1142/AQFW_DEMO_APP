@@ -54,6 +54,32 @@ Vue.filter('xunchaDeviceStatusStyleFilter', value => {
     }
 })
 
+Vue.filter('deviceStatusIconFilter', value => {
+    if (value == 2 || value == 3 || value == 4 || value == 5 || value == 7) {
+        return "icon-device-danger";
+    } else if (value == 6 || value == 1) {
+        return "icon-device-succ";
+    } else if (value == 0) {
+        return "icon-device-warn";
+    } else {
+        return "icon-device-succ";
+    }
+})
+
+Vue.filter('deviceStatusColorFilter', value => {
+    if (value == 2 || value == 3 || value == 4 || value == 5 || value == 7) {
+        return "text-danger";
+    } else if (value == 6 || value == 1) {
+        return "text-success";
+    } else if (value == 0) {
+        return "text-warn";
+    } else {
+        return "text-success";
+    }
+})
+
+
+
 Vue.filter('CheckPointPositionStatusFilter', (value) => {
     let status = ["未检查", "已检查"];
     return status[value];
@@ -322,6 +348,8 @@ Vue.filter('frequencyFr', function (value) {
 
 
 export const formatDate = Vue.filter('formatDate')
+export const deviceStatusColorFilter = Vue.filter('deviceStatusColorFilter')
+export const deviceStatusIconFilter = Vue.filter('deviceStatusIconFilter')
 const taskStatusFilter = Vue.filter('taskStatusFilter')
 const xunchaStatusColor = Vue.filter('xunchaStatusColor')
 const zhibanStatusFilter = Vue.filter('zhibanStatusFilter')
@@ -339,6 +367,8 @@ export const frequencyFr = Vue.filter('frequencyFr')
 export const calcHeadColor = Vue.filter('calcHeadColor')
 export default {
     formatDate,
+    deviceStatusColorFilter,
+    deviceStatusIconFilter,
     taskStatusFilter,
     xunchaStatusColor,
     errorsExamFilter,
