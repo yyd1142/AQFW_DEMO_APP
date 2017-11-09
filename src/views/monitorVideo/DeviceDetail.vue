@@ -1,19 +1,18 @@
 <template>
     <div class="live-video-device">
-        <mko-form-cell title="设备名称" val="消防灭火器" non-text="未填"></mko-form-cell>
-        <mko-form-cell title="设备编号" val="98K" ype="text" non-text="未填" :edit="isEdit"></mko-form-cell>
-        <mko-form-cell title="品牌名称" val="98K" type="text" non-text="未知品牌" :edit="isEdit"></mko-form-cell>
-        <mko-form-cell title="品牌型号" val="98K" type="text" non-text="未知型号" :edit="isEdit"></mko-form-cell>
-        <mko-form-cell title="所属系统" val="消防灭火系统" type="text" non-text="未填"></mko-form-cell>
-        <mko-form-cell title="安装日期" val="2017-09-09" type="sel" non-text="未填" :edit="isEdit"></mko-form-cell>
-        <mko-form-cell title="巡查频率" val="每日一次" type="sel" non-text="未填" :edit="isEdit">
-        </mko-form-cell>
-        <mko-form-cell title="设备状态" type="sel" non-text="未填">
-            <span>正常</span>
-        </mko-form-cell>
+        <mko-form-cell title="设备名称" val="消防灭火器"></mko-form-cell>
+        <mko-form-cell title="所属单位" val="深圳大观"></mko-form-cell>
+        <mko-form-cell title="设备ID" val="98K"></mko-form-cell>
+        <mko-form-cell title="安装时间" val="2017-08-17"></mko-form-cell>
+        <mko-form-cell title="监控类型" val="消防通道堵塞监测"></mko-form-cell>
+        <mko-form-cell title="设备品牌" val="三星"></mko-form-cell>
+        <mko-form-cell title="型号" val="C0019"></mko-form-cell>
+        <mko-form-cell title="安装位置" val="万象城C座L1，安全出口"></mko-form-cell>
+        <mko-form-cell title="设备状态" val="正常"></mko-form-cell>
     </div>
 </template>
 <script>
+//    明火监测、 消防通道堵塞监测、消防门闭合监测、消防控制室值班人员脱岗监测
     export default {
         data() {
             return {

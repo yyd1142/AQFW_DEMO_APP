@@ -40,7 +40,46 @@
     </div>
 </template>
 <script>
-    import 'videojs-contrib-hls/dist/videojs-contrib-hls'
+    var json = {
+        deviceAlarmDatas: [{
+            address: 'A栋|B1|131（应急出口）',
+            count: 3,
+            name: '明火监测',
+            status: 2
+        }, {
+            address: 'A栋|B1|122（电压房）',
+            count: 1,
+            name: '消防通道堵塞监测',
+            status: 2
+        }, {
+            address: 'A栋|B1|89（安全出口）',
+            count: 3,
+            name: '消防门闭合监测',
+            status: 2
+        }],
+        deviceMonitorDatas: [{
+            address: 'A栋|B1|131（应急出口）',
+            count: 0,
+            name: '明火监测',
+            status: 2
+        }, {
+            address: 'A栋|B1|122（电压房）',
+            count: 0,
+            name: '消防通道堵塞监测',
+            status: 2
+        }, {
+            address: 'A栋|B1|89（安全出口）',
+            count: 0,
+            name: '消防门闭合监测',
+            status: 2
+        }, {
+            address: 'B栋|B1|84（安全出口）',
+            count: 0,
+            name: '消防控制室值班人员脱岗监测',
+            status: 1
+        }]
+    }
+    var lifeCycle = '';
     export default {
         data() {
             return {
@@ -51,47 +90,8 @@
                     labelName: 'surveillance'
                 }],
                 datas: [],
-                deviceAlarmDatas: [{
-                    address: 'A栋|B1|131（应急出口）',
-                    count: 0,
-                    name: '应急出口堵塞监测',
-                    status: 1
-                }, {
-                    address: 'A栋|B1|122（电压房）',
-                    count: 5,
-                    name: '电压房堵塞监测',
-                    status: 2
-                }, {
-                    address: 'A栋|B1|89（安全出口）',
-                    count: 6,
-                    name: '安全出口堵塞监测',
-                    status: 2
-                }],
-                deviceMonitorDatas: [{
-                    id: 1,
-                    address: 'A栋|B1|131（办公室）',
-                    count: 1,
-                    name: '办公室安全监测',
-                    status: 2,
-                    url: 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8',
-                    liveVideoType: 'application/x-mpegURL'
-                }, {
-                    id: 2,
-                    address: 'A栋|B2|131（消防通道）',
-                    count: 4,
-                    name: '消防通道堵塞监测',
-                    status: 2,
-                    url: 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8',
-                    liveVideoType: 'application/x-mpegURL'
-                }, {
-                    id: 3,
-                    address: 'A栋|B3|131（泵房）',
-                    count: 3,
-                    name: '泵房安全监测',
-                    status: 2,
-                    url: 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8',
-                    liveVideoType: 'application/x-mpegURL'
-                }]
+                deviceAlarmDatas: [],
+                deviceMonitorDatas: []
             }
         },
         computed: {
@@ -109,7 +109,22 @@
                     deviceMonitorProblemCount = eval(deviceMonitorProblemCounts.join("+"));
                 }
                 return [`设备报警${deviceAlarmProblemCount}`, `监控设备${deviceMonitorProblemCount}`];
+            },
+        },
+        mounted() {
+            lifeCycle = 'mounted'
+            sessionStorage.setItem('videoDeviceDatas', JSON.stringify(json));
+            this.deviceAlarmDatas = json.deviceAlarmDatas;
+            this.deviceMonitorDatas = json.deviceMonitorDatas;
+        },
+        activated() {
+            if(lifeCycle != 'mounted') {
+                let _json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
+                this.deviceAlarmDatas = _json.deviceAlarmDatas;
+                this.deviceMonitorDatas = _json.deviceMonitorDatas;
+                console.log('reee')
             }
+            lifeCycle = 'activated'
         },
         methods: {
             back() {
@@ -126,6 +141,11 @@
                     name: 'AlarmDetail',
                     params: {
                         id: item
+                    },
+                    query: {
+                        status: item.status,
+                        address: item.address,
+                        count: item.count
                     }
                 })
             },

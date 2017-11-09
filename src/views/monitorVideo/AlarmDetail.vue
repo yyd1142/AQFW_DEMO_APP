@@ -6,12 +6,12 @@
         <div class="page-wrap">
             <div class="title-wrap-a">
                 <div class="left">
-                    <div class="title">深圳湾体育中心-游泳馆，2层，西南角巡查点</div>
+                    <div class="title" v-text="$route.query.address"></div>
                 </div>
-                <div class="right">共10条记录</div>
+                <div class="right">共{{$route.query.count}}条记录</div>
             </div>
             <ul class="surveillance-table-view">
-                <li class="surveillance-table-cell" v-for="item in 11">
+                <li class="surveillance-table-cell" v-for="item in $route.query.count">
                     <div class="padding">
                         <img src="/static/WX20171101-165733.png"/>
                         <div class="time">
@@ -21,7 +21,7 @@
                     </div>
                 </li>
             </ul>
-            <div class="btn">
+            <div class="btn" v-if="$route.query.status == 2">
                 <mko-button size="large" @click="choosePerson">通知责任人</mko-button>
                 <mko-button class="paichu" size="large" plain @click="submit">排除风险</mko-button>
             </div>

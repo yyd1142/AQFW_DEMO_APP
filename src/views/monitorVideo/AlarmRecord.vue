@@ -2,12 +2,12 @@
     <div class="AlarmRecord">
         <div class="title-wrap-a">
             <div class="left">
-                <div class="title">深圳湾体育中心-游泳馆，2层，西南角巡查点</div>
+                <div class="title">万象城C座L1</div>
             </div>
             <div class="right">共{{datas.length}}条记录</div>
         </div>
         <mko-double-cell :title="titleFilter(item)" :label="item.address" v-for="item in datas">
-            <span :class="item.status == 2 ? 'blue' : null">{{item.status == 2 ? '未处理' : '正常'}}</span>
+            <span>{{item.status == 2 ? '未处理' : '正常'}}</span>
         </mko-double-cell>
     </div>
 </template>
