@@ -1,12 +1,12 @@
 <template>
     <div class="ChoosePerson">
         <div class="placeholder-item"></div>
-        <mko-search-bar v-model="searchValue" is-header hint-text="搜索责任人名称" @onCancel="cancel">
+        <mko-search-bar v-model="searchValue" is-header autofocus @onCancel="cancel">
         </mko-search-bar>
         <div class="page-wrap">
             <div class="search-bar-wrap">
                 <ul class="person-table-view">
-                    <li class="person-table-cell" v-for="item, index in persons" @click="choose(item, index)">
+                    <li class="person-table-cell" v-for="item, index in (searchValue ? searchDatas : persons)" @click="choose(item, index)">
                         <div class="padding">
                             <i class="icon" :class="item.checked ? 'icon-is-checked' : 'icon-no-checked'"></i>
                             <span class="name">{{item.name}}</span>
@@ -15,6 +15,7 @@
                     </li>
                 </ul>
             </div>
+            <no-data v-if="searchValue ? (searchDatas.length == 0) : (persons.length == 0) "></no-data>
             <div class="xuncha-btn" @click.stop="submit">
                 <span>完成({{chooseResults.length}})</span>
             </div>
@@ -22,27 +23,29 @@
     </div>
 </template>
 <script>
-    import {SearchBar} from 'components';
+    import {SearchBar, NoData} from 'components'
+    import {Toast} from 'mint-ui'
     export default {
         data() {
             return {
                 searchValue: '',
+                chooseResults: [],
+                searchDatas: [],
                 persons: [{
-                    name: '杨子康1', role: 1, checked: false
+                    name: '王慧农', role: 1, checked: false
                 }, {
-                    name: '杨子康2', role: 1, checked: false
+                    name: '刘荣志', role: 1, checked: false
                 }, {
-                    name: '杨子康3', role: 1, checked: false
+                    name: '纪志龙', role: 1, checked: false
                 }, {
-                    name: '杨子康4', role: 1, checked: false
+                    name: '范章顺', role: 1, checked: false
                 }, {
-                    name: '杨子康5', role: 1, checked: false
+                    name: '杨端午', role: 1, checked: false
                 }, {
-                    name: '杨子康6', role: 1, checked: false
+                    name: '余燕瑜', role: 1, checked: false
                 }, {
-                    name: '杨子康7', role: 1, checked: false
-                }],
-                chooseResults: []
+                    name: '朱扬墩', role: 1, checked: false
+                }]
             }
         },
         watch: {
@@ -65,7 +68,12 @@
                 this.back();
             },
             searchData() {
-
+                let search = this.searchValue;
+                if(search) {
+                    this.searchDatas = this.persons.filter(item => {
+                        return item.name.indexOf(search) > -1;
+                    })
+                }
             },
             listenInput(val) {
 
@@ -91,7 +99,10 @@
                 this.persons[index].checked = !item.checked;
             },
             submit() {
-                this.$MKOPop()
+                Toast({message: "已通知相应负责人", duration: 2000});
+                setTimeout(() => {
+                    this.back();
+                }, 1500);
             },
             setBackButton() {
                 let self = this;
@@ -104,7 +115,7 @@
             }
         },
         components: {
-            SearchBar
+            SearchBar, NoData
         }
     }
 </script>
@@ -147,6 +158,7 @@
         .person-table-view {
             width: 100%;
             background-color: #ffffff;
+            margin-top: 44px;
             .person-table-cell {
                 width: 100%;
                 box-sizing: border-box;

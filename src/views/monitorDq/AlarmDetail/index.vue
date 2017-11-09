@@ -68,7 +68,7 @@
         methods: {
             selPerson(){
                 let id = 1;
-                this.$MKOPush('/monitorDqAlarmDetailSelPerson/' + id)
+                this.$MKOPush('/choosePerson')
             },
             removeDanger(){
                 this.$MKODialog({
