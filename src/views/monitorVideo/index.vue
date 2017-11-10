@@ -20,6 +20,7 @@
                                  v-for="item in deviceAlarmDatas">
                     <span :class="item.status == 2 ? 'blue' : null">{{item.status == 2 ? '未处理' : '正常'}}</span>
                 </mko-double-cell>
+                <no-data v-if="deviceAlarmDatas.length == 0"></no-data>
             </div>
             <ul class="surveillance-table-view" v-show="tabI == 1">
                 <li class="surveillance-table-cell" v-for="item in deviceMonitorDatas" @click="goLiveViedo(item)">
@@ -30,7 +31,7 @@
                             <span class="dingding"></span>
                             <div class="name">{{item.name}}</div>
                             <div class="address">{{item.address}}</div>
-                            <div class="time">{{item.status == 2 ? '未处理' : '正常'}}</div>
+                            <div class="time">{{statusFilter[item.status]}}</div>
                             <i class="icon icon-link-arrow"></i>
                         </div>
                     </div>
@@ -42,37 +43,44 @@
 <script>
     var json = {
         deviceAlarmDatas: [{
+            id: 1,
             address: 'A栋|B1|131（应急出口）',
             count: 3,
             name: '明火监测',
             status: 2
         }, {
+            id: 2,
             address: 'A栋|B1|122（电压房）',
             count: 1,
             name: '消防通道堵塞监测',
             status: 2
         }, {
+            id: 3,
             address: 'A栋|B1|89（安全出口）',
             count: 3,
             name: '消防门闭合监测',
             status: 2
         }],
         deviceMonitorDatas: [{
+            id: 1,
             address: 'A栋|B1|131（应急出口）',
             count: 0,
             name: '明火监测',
             status: 2
         }, {
+            id: 2,
             address: 'A栋|B1|122（电压房）',
             count: 0,
             name: '消防通道堵塞监测',
             status: 2
         }, {
+            id: 3,
             address: 'A栋|B1|89（安全出口）',
             count: 0,
             name: '消防门闭合监测',
             status: 2
         }, {
+            id: 4,
             address: 'B栋|B1|84（安全出口）',
             count: 0,
             name: '消防控制室值班人员脱岗监测',
@@ -80,6 +88,7 @@
         }]
     }
     var lifeCycle = '';
+    import { NoData } from 'components'
     export default {
         data() {
             return {
@@ -91,7 +100,8 @@
                 }],
                 datas: [],
                 deviceAlarmDatas: [],
-                deviceMonitorDatas: []
+                deviceMonitorDatas: [],
+                statusFilter: ['已停用', '正常', '未处理', '已通知']
             }
         },
         computed: {
@@ -108,7 +118,7 @@
                     deviceMonitorProblemCounts.push(item.count);
                     deviceMonitorProblemCount = eval(deviceMonitorProblemCounts.join("+"));
                 }
-                return [`设备报警${deviceAlarmProblemCount}`, `监控设备${deviceMonitorProblemCount}`];
+                return [`设备报警${deviceAlarmProblemCount ? deviceAlarmProblemCount : ''}`, `监控设备${deviceMonitorProblemCount ? deviceMonitorProblemCount : ''}`];
             },
         },
         mounted() {
@@ -122,7 +132,6 @@
                 let _json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
                 this.deviceAlarmDatas = _json.deviceAlarmDatas;
                 this.deviceMonitorDatas = _json.deviceMonitorDatas;
-                console.log('reee')
             }
             lifeCycle = 'activated'
         },
@@ -132,7 +141,7 @@
             },
             tab(item) {
                 for (let tab of this.tabs) {
-                    tab.actived = item.name == tab.name ? true : false
+                    tab.actived = item.name === tab.name ? true : false;
                 }
                 this.labelName = item.labelName
             },
@@ -140,7 +149,7 @@
                 this.$MKOPush({
                     name: 'AlarmDetail',
                     params: {
-                        id: item
+                        id: item.id
                     },
                     query: {
                         status: item.status,
@@ -150,9 +159,6 @@
                 })
             },
             goLiveViedo(item) {
-//                type: "application/x-mpegURL",
-//                type: "video/mp4",
-//                type: "rtmp/mp4",
                 this.$MKOPush({
                     name: 'LiveVideoDetail',
                     params: {
@@ -160,7 +166,8 @@
                     },
                     query: {
                         liveUrl: item.url,
-                        type: item.liveVideoType
+                        type: item.liveVideoType,
+                        status: item.status
                     }
                 })
             },
@@ -179,6 +186,9 @@
                     return `<span class='dingding'>${item.count}</span>${item.name}`;
                 }
             }
+        },
+        components: {
+            NoData
         }
     }
 </script>

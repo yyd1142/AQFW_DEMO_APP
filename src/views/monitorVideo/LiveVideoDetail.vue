@@ -1,7 +1,7 @@
 <template>
     <div class="LiveVideoDetail">
         <div class="placeholder-item"></div>
-        <mko-header title="设备详情" left-icon="icon-back" @handleLeftClick="back" right-icon-text="停用设备"></mko-header>
+        <mko-header title="设备详情" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="status == 0 ? '启用设备': '停用设备'" @handleRightClick="changeStatus"></mko-header>
         <div class="page-wrap">
             <div class="player-wrap">
                 <video-player id="videoPlayer" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions"></video-player>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import { videoPlayer } from 'vue-video-player'
+    import { Indicator, Toast } from 'mint-ui'
     import DeviceDetail from './DeviceDetail.vue'
     import AlarmRecord from './AlarmRecord.vue'
     export default {
@@ -29,6 +29,7 @@
                 tabI: 0,
                 tabItems: ['设备信息', '报警记录'],
                 isPlayer: true,
+                status: ''
             }
         },
         computed: {
@@ -52,10 +53,11 @@
                     html5: {hls: {withCredentials: false}}
                 }
                 return options;
-            }
+            },
         },
         activated() {
             this.setBackButton();
+            this.status = this.$route.query.status;
             if(!this.isPlayer) {
 
             }
@@ -79,12 +81,36 @@
                 if (window.mkoBackButton.bInputData) {
                     window.mkoBackButton.callback = this.back;
                 }
+            },
+            changeStatus() {
+                let status = this.$route.query.status;
+                let json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
+                this.$MKODialog({
+                    title: "提示",
+                    msg: `确定${status === 0 ? '启用' : '停用'}设备吗？`,
+                    cancelBtn: true,
+                    cancelText: "取消"
+                }).then(msg => {
+                    if (msg == "confirm") {
+                        Indicator.open({ spinnerType: 'fading-circle' });
+                        for(let item of json.deviceMonitorDatas) {
+                            if(item.id === this.$route.params.id) {
+                                item.status = status == 0 ? 1 : 0;
+                            }
+                        }
+                        sessionStorage.setItem('videoDeviceDatas', JSON.stringify(json));
+                        setTimeout(() => {
+                            Indicator.close();
+                            this.status = this.status == 0 ? 1 : 0;
+                            Toast({message: `已${this.status === 0 ? '停用' : '启用'}`, duration: 2000});
+                        }, 1500)
+                    }
+                });
             }
         },
         components: {
             DeviceDetail,
-            AlarmRecord,
-            videoPlayer
+            AlarmRecord
         }
     }
 </script>

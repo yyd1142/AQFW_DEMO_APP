@@ -56,15 +56,21 @@
         activated() {
             this.setBackButton()
         },
+        deactivated() {
+            this.persons.map(item => {
+                return item.checked = false;
+            });
+            this.persons.map(item => {
+                return item.checked = false;
+            });
+            this.chooseResults = [];
+            this.searchValue = '';
+        },
         methods: {
             back() {
                 this.$MKOPop(2);
             },
             cancel() {
-                this.persons.map(item => {
-                    return item.checked = false;
-                });
-                this.chooseResults = [];
                 this.back();
             },
             searchData() {

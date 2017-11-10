@@ -29,6 +29,7 @@
     </div>
 </template>
 <script>
+    import { Toast } from 'mint-ui'
     export default {
         data() {
             return {}
@@ -46,7 +47,15 @@
                 })
             },
             choosePerson() {
-                this.$MKOPush('/choosePerson')
+                this.$MKOPush({
+                    name: 'ChoosePerson',
+                    params: {
+                        id: this.$route.params.id
+                    },
+                    query: {
+                        from: 'monitorVideo'
+                    }
+                })
             },
             submit() {
                 this.$MKODialog({
@@ -56,7 +65,20 @@
                     cancelText: "取消"
                 }).then(msg => {
                     if (msg == "confirm") {
-
+                        let json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
+                        for(let [index, item] of json.deviceAlarmDatas.entries()) {
+                            if(item.id === this.$route.params.id) {
+                                json.deviceAlarmDatas.splice(index, 1);
+                            }
+                        }
+                        for(let [index, item] of json.deviceMonitorDatas.entries()) {
+                            if(item.id === this.$route.params.id) {
+                                item.status = 1;
+                            }
+                        }
+                        sessionStorage.setItem('videoDeviceDatas', JSON.stringify(json));
+                        Toast({message: "已排除风险", duration: 2000});
+                        this.back();
                     }
                 });
             }
