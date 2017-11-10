@@ -107,11 +107,7 @@
             submit() {
                 if (this.$route.query.from === 'monitorVideo') {
                     let json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
-                    for (let [index, item] of json.deviceAlarmDatas.entries()) {
-                        if (item.id === this.$route.params.id) {
-                            json.deviceAlarmDatas.splice(index, 1);
-                        }
-                    }
+
                     for (let [index, item] of json.deviceMonitorDatas.entries()) {
                         if (item.id === this.$route.params.id) {
                             item.status = 3;

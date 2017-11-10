@@ -71,11 +71,6 @@
                                 json.deviceAlarmDatas.splice(index, 1);
                             }
                         }
-                        for(let [index, item] of json.deviceMonitorDatas.entries()) {
-                            if(item.id === this.$route.params.id) {
-                                item.status = 1;
-                            }
-                        }
                         sessionStorage.setItem('videoDeviceDatas', JSON.stringify(json));
                         Toast({message: "已排除风险", duration: 2000});
                         this.back();
