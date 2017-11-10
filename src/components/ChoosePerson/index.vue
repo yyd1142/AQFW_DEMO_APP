@@ -68,7 +68,7 @@
         },
         methods: {
             back() {
-                this.$MKOPop(2);
+                this.$MKOPop();
             },
             cancel() {
                 this.back();
@@ -121,7 +121,7 @@
                 }
                 Toast({message: "已通知相应负责人", duration: 2000});
                 setTimeout(() => {
-                    this.back();
+                    this.$MKOPop(2);
                 }, 1500);
             },
             setBackButton() {

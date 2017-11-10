@@ -67,8 +67,15 @@
         },
         methods: {
             selPerson(){
-                let id = 1;
-                this.$MKOPush('/choosePerson')
+                this.$MKOPush({
+                    name: 'ChoosePerson',
+                    params: {
+                        id: this.$route.params.id
+                    },
+                    query: {
+                        from: 'monitorSxt'
+                    }
+                })
             },
             removeDanger(){
                 this.$MKODialog({
