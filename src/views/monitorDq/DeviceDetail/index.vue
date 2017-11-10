@@ -1,7 +1,7 @@
 <template>
     <div>
         <mko-header title="电气监测"
-                    right-text="停用设备" @handleRightClick=""
+                    :right-icon-text="status == 0 ? '启用设备': '停用设备'" @handleRightClick="changeStatus"
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap monitor-dq-device-wrap">
@@ -20,7 +20,7 @@
                     <span v-text="text"></span>
                 </div>
             </div>
-            <device-info v-show="tabI==0"></device-info>
+            <device-info :status="status" v-show="tabI==0"></device-info>
             <alarm-record v-show="tabI==1"></alarm-record>
         </div>
     </div>
@@ -30,12 +30,15 @@
     import AlarmRecord from './AlarmRecord.vue'
     import DeviceInfo from './DeviceInfo.vue'
     import echarts from 'echarts';
+    import { Indicator, Toast } from 'mint-ui'
+
     let theme = 'macarons';
     export default {
         data () {
             return {
                 tabI: 0,
-                tabItems: ['设备信息', '报警记录']
+                tabItems: ['设备信息', '报警记录'],
+                status: '',
             }
         },
         watch: {},
@@ -46,6 +49,8 @@
             this.DrawChart1(echarts);
             this.DrawChart2(echarts);
             this.DrawChart3(echarts);
+            this.status = JSON.parse(sessionStorage.getItem('dqDeviceData'))[parseInt(this.$route.params.id) - 1].status;
+
         },
         deactivated() {
         },
@@ -58,6 +63,32 @@
             goAllChart(){
                 let id = 1;
                 this.$MKOPush('/monitorDqDeviceChart/' + id);
+            },
+            changeStatus() {
+                let status = this.status;
+                let list = JSON.parse(sessionStorage.getItem('dqDeviceData'));
+                console.log(list);
+                this.$MKODialog({
+                    title: "提示",
+                    msg: `确定${status === 0 ? '启用' : '停用'}设备吗？`,
+                    cancelBtn: true,
+                    cancelText: "取消"
+                }).then(msg => {
+                    if (msg == "confirm") {
+                        Indicator.open({spinnerType: 'fading-circle'});
+                        for (let item of list) {
+                            if (item.id == this.$route.params.id) {
+                                item.status = status == 0 ? 1 : 0;
+                            }
+                        }
+                        sessionStorage.setItem('dqDeviceData', JSON.stringify(list));
+                        setTimeout(() => {
+                            Indicator.close();
+                            this.status = this.status == 0 ? 1 : 0;
+                            Toast({message: `已${this.status === 0 ? '停用' : '启用'}`, duration: 2000});
+                        }, 1500)
+                    }
+                });
             },
             DrawChart1(ec){
                 let data = parseInt(Math.random() * 220);

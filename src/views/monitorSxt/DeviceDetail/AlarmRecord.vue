@@ -1,12 +1,9 @@
 <template>
     <div class="alarm-record-wrap">
-        <mko-double-cell :title="badge(2)+'水压监测'"
-                         label="水压报警，警告值：20.0~666.0kPa" active>
-            待处理
-        </mko-double-cell>
-        <mko-double-cell title="水位监测"
-                         label="高度报警，警告值：0.5-2.0M">
-            已通知
+        <mko-double-cell :title="(item.status==2?badge(2):'')+item.name"
+                         :label="item.desc" :active="item.status==2"
+                         v-if="item.status!==0" v-for="item in list">
+            {{item.status == 2 ? '待处理' : '已通知'}}
         </mko-double-cell>
     </div>
 </template>
@@ -14,13 +11,16 @@
 <script>
     export default {
         data () {
-            return {}
+            return {
+              list:[]
+            }
         },
         watch: {},
         computed: {},
         mounted() {
         },
         activated(){
+            this.getData();
         },
         deactivated() {
         },
@@ -30,10 +30,12 @@
             badge(val){
                 return `<span class="badge">${val}</span>`
             },
-            goDetail(){
-                let id = 1;
-                this.$MKOPush('/monitorSxtAlarmDetail/' + id);
-            }
+            getData(){
+                let data = sessionStorage.getItem('sxtAlarmData');
+                if (data) {
+                    this.list = JSON.parse(data);
+                }
+            },
         },
         components: {}
     }

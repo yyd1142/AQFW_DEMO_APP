@@ -22,7 +22,7 @@
                 headerBtnItems: [
                     {text: '设备报警', count: 2},
                     {text: '水系统监测', count: 2},
-                ]
+                ],
             }
         },
         watch: {},

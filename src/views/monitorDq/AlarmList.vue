@@ -4,13 +4,11 @@
             <div class="label fl">实时报警记录</div>
             <div class="value fr">共2条记录</div>
         </div>
-        <mko-double-cell :title="badge(2)+'测温式电气火灾监控探测'"
-                         label="温度报警，警告值：0.0-60℃" is-link @click="goDetail">
-            待处理
-        </mko-double-cell>
-        <mko-double-cell title="电流式电气火灾监控探测"
-                         label="电流报警，警告值：0.0~0.6A" is-link @click="goDetail">
-            已通知
+        <mko-double-cell :title="(item.status==2?badge(2):'')+item.name"
+                         :label="item.desc" :active="item.status==2"
+                         is-link @click="goDetail(item.id)"
+                         v-if="item.status!==0" v-for="item in list">
+            {{item.status == 2 ? '待处理' : '已通知'}}
         </mko-double-cell>
     </div>
 </template>
@@ -18,13 +16,21 @@
 <script>
     export default {
         data () {
-            return {}
+            return {
+                list: [
+                    {id: 1, name: '电气火灾监控探测', desc: '温度报警，警告值：0.0-60℃', alarmData: '72℃', count: 2, status: 2},
+                    {id: 2, name: '电气火灾监控探测', desc: '电流报警，警告值：0.0~0.6A', alarmData: '7.0A', status: 1}
+                ]
+            }
         },
         watch: {},
         computed: {},
         mounted() {
+            sessionStorage.setItem('dqAlarmData', JSON.stringify(this.list));
         },
         activated(){
+            this.getData();
+
         },
         deactivated() {
         },
@@ -34,8 +40,13 @@
             badge(val){
                 return `<span class="badge">${val}</span>`
             },
-            goDetail(){
-                let id = 1;
+            getData(){
+                let data = sessionStorage.getItem('dqAlarmData');
+                if (data) {
+                    this.list = JSON.parse(data);
+                }
+            },
+            goDetail(id){
                 this.$MKOPush('/monitorDqAlarmDetail/' + id);
             }
         },

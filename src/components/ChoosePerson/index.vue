@@ -23,8 +23,8 @@
     </div>
 </template>
 <script>
-    import {SearchBar, NoData} from 'components'
-    import {Toast} from 'mint-ui'
+    import { SearchBar, NoData } from 'components'
+    import { Toast } from 'mint-ui'
     export default {
         data() {
             return {
@@ -75,7 +75,7 @@
             },
             searchData() {
                 let search = this.searchValue;
-                if(search) {
+                if (search) {
                     this.searchDatas = this.persons.filter(item => {
                         return item.name.indexOf(search) > -1;
                     })
@@ -105,24 +105,37 @@
                 this.persons[index].checked = !item.checked;
             },
             submit() {
-                if(this.$route.query.from === 'monitorVideo') {
+                if (this.$route.query.from === 'monitorVideo') {
                     let json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
-                    for(let [index, item] of json.deviceAlarmDatas.entries()) {
-                        if(item.id === this.$route.params.id) {
+                    for (let [index, item] of json.deviceAlarmDatas.entries()) {
+                        if (item.id === this.$route.params.id) {
                             json.deviceAlarmDatas.splice(index, 1);
                         }
                     }
-                    for(let [index, item] of json.deviceMonitorDatas.entries()) {
-                        if(item.id === this.$route.params.id) {
+                    for (let [index, item] of json.deviceMonitorDatas.entries()) {
+                        if (item.id === this.$route.params.id) {
                             item.status = 3;
                         }
                     }
                     sessionStorage.setItem('videoDeviceDatas', JSON.stringify(json));
+                    Toast({message: "已通知相应负责人", duration: 2000});
+                    setTimeout(() => {
+                        this.$MKOPop(2);
+                    }, 1500);
+                } else {
+                    let f = this.$route.query.from;
+                    let data = JSON.parse(sessionStorage.getItem(`${f}AlarmData`));
+                    for (let item of data) {
+                        if (item.id == this.$route.params.id) {
+                            item.status = 1;
+                        }
+                    }
+                    sessionStorage.setItem(`${f}AlarmData`, JSON.stringify(data));
+                    Toast({message: "已通知相应负责人", duration: 2000});
+                    setTimeout(() => {
+                        this.$MKOPop(1);
+                    }, 1500);
                 }
-                Toast({message: "已通知相应负责人", duration: 2000});
-                setTimeout(() => {
-                    this.$MKOPop(2);
-                }, 1500);
             },
             setBackButton() {
                 let self = this;

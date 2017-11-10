@@ -2,11 +2,11 @@
     <div>
         <mko-header title="报警详情" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap monitor-dq-alarm-wrap">
-            <mko-info-bar v-if="status==1">已于2017-11-08 15:12排除该风险</mko-info-bar>
+            <mko-info-bar  v-if="data.status==0">已于2017-11-08 15:12排除该风险</mko-info-bar>
             <div class="title-card">
                 <div class="cell clear">
                     <div class="title">报警部件</div>
-                    <div class="value">测温式电气火灾监控探测器</div>
+                    <div class="value">电气火灾监控探测器</div>
                 </div>
                 <div class="cell clear">
                     <div class="title">安装位置</div>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="cell clear">
                     <div class="title">报警值</div>
-                    <div class="value">72℃</div>
+                    <div class="value">{{data.alarmData}}</div>
                 </div>
             </div>
 
@@ -34,14 +34,14 @@
                 <div class="label">警情处理状态跟踪</div>
             </div>
             <div class="alarm-record-wrap">
-                <mko-double-cell icon="icon-device-succ" title="已确认正常" label="2017-11-08 14:30" v-if="status==1"></mko-double-cell>
-                <mko-double-cell icon="icon-device-warn" title="已通知" label="2017-11-08 12:47"></mko-double-cell>
+                <mko-double-cell icon="icon-device-succ" title="已确认正常" label="2017-11-08 14:30" v-if="data.status==0"></mko-double-cell>
+                <mko-double-cell icon="icon-device-warn" title="已通知" label="2017-11-08 12:47" v-if="data.status<=1"></mko-double-cell>
                 <mko-double-cell icon="icon-device-danger" title="待处理" label="2017-11-08 12:30"></mko-double-cell>
             </div>
 
-            <div class="button-wrap" v-if="status!=1">
-                <mko-button size="large" @click="selPerson">通知责任人</mko-button>
-                <mko-button size="large" plain @click="removeDanger">确认正常</mko-button>
+            <div class="button-wrap" v-if="data.status!==0">
+                <mko-button size="large" @click="selPerson" v-if="data.status==2">通知责任人</mko-button>
+                <mko-button size="large" plain @click="removeDanger" v-if="data.status>0">确认正常</mko-button>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
     export default {
         data () {
             return {
-                status: 2
+                data: {}
             }
         },
         watch: {},
@@ -59,13 +59,19 @@
         mounted() {
         },
         activated(){
-            this.status = 2;
+            this.getData();
         },
         deactivated() {
         },
         destroyed(){
         },
         methods: {
+            getData(){
+                let data = sessionStorage.getItem('dqAlarmData');
+                if (data) {
+                    this.data = JSON.parse(data)[this.$route.params.id - 1];
+                }
+            },
             selPerson(){
                 this.$MKOPush({
                     name: 'ChoosePerson',
@@ -73,7 +79,7 @@
                         id: this.$route.params.id
                     },
                     query: {
-                        from: 'monitorDq'
+                        from: 'dq'
                     }
                 })
             },
@@ -84,7 +90,16 @@
                     cancelBtn: true
                 }).then(res => {
                     if (res == 'confirm') {
-                        this.status = 1;
+                        if (res == 'confirm') {
+                            this.data.status = 0;
+                            let list = JSON.parse(sessionStorage.getItem('dqAlarmData'));
+                            for (let i in list) {
+                                if (list[i].id == this.data.id) {
+                                    list.splice(i, 1, this.data)
+                                }
+                            }
+                            sessionStorage.setItem('dqAlarmData', JSON.stringify(list));
+                        }
                     }
                 })
             },

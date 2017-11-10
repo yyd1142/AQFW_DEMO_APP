@@ -4,10 +4,10 @@
             <div class="label fl">设备列表</div>
             <div class="value fr">共1个设备</div>
         </div>
-        <mko-double-cell title="测温式电气火灾监控探测器" icon="icon-location"
-                         label="深圳湾体育中心-体育馆，-1层，东北角巡查点"
-                         @click="goDetail" is-link>
-            正常
+        <mko-double-cell :title="item.name" icon="icon-location"
+                         :label="item.pos"
+                         @click="goDetail(item.id)" is-link v-for="item in list">
+            {{item.status == 0 ? '停用' : '正常'}}
         </mko-double-cell>
     </div>
 </template>
@@ -16,21 +16,33 @@
 
     export default {
         data () {
-            return {}
+            return {
+                list: [
+                    {id: 1, name: '电气火灾监控探测器', pos: '深圳湾体育中心-体育馆，-1层，东北角巡查点', status: 1},
+                ]
+            }
         },
         watch: {},
         computed: {},
         mounted() {
+            sessionStorage.setItem('dqDeviceData', JSON.stringify(this.list));
+
         },
         activated(){
+            this.getData();
         },
         deactivated() {
         },
         destroyed(){
         },
         methods: {
-            goDetail(){
-                let id = 1;
+            getData(){
+                let data = sessionStorage.getItem('dqDeviceData');
+                if (data) {
+                    this.list = JSON.parse(data);
+                }
+            },
+            goDetail(id){
                 this.$MKOPush('/monitorDqDeviceDetail/' + id);
             }
         },
