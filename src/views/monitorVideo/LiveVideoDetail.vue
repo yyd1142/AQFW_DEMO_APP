@@ -13,7 +13,7 @@
                     <span v-text="text"></span>
                 </div>
             </div>
-            <device-detail v-show="tabI == 0"></device-detail>
+            <device-detail v-show="tabI == 0" :status="status"></device-detail>
             <alarm-record v-show="tabI == 1"></alarm-record>
         </div>
     </div>
