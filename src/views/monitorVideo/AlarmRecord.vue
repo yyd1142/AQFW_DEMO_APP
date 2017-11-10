@@ -7,7 +7,7 @@
             <div class="right">共{{datas.length}}条记录</div>
         </div>
         <mko-double-cell :title="titleFilter(item)" :label="item.address" v-for="item in datas">
-            <span>{{item.status == 2 ? '未处理' : '正常'}}</span>
+            <span>{{statusFilter[item.status]}}</span>
         </mko-double-cell>
     </div>
 </template>
@@ -29,8 +29,9 @@
                     address: 'A栋|B1|89（安全出口）',
                     count: 6,
                     name: '安全出口堵塞监测',
-                    status: 2
-                }]
+                    status: 3
+                }],
+                statusFilter: ['', '已通知', '未处理', '已确认正常']
             }
         },
         methods: {

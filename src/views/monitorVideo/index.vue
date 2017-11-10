@@ -18,7 +18,7 @@
             <div class="video-table-view" v-if="tabI == 0">
                 <mko-double-cell :title="titleFilter(item)" :label="item.address" @click="goInfo(item)" is-link
                                  v-for="item in deviceAlarmDatas">
-                    <span :class="item.status == 2 ? 'blue' : null">{{item.status == 2 ? '未处理' : '正常'}}</span>
+                    <span :class="item.status == 2 ? 'blue' : null">{{item.status == 1 ? '已通知' : '未处理'}}</span>
                 </mko-double-cell>
                 <no-data v-if="deviceAlarmDatas.length == 0"></no-data>
             </div>
@@ -66,19 +66,19 @@
             address: 'A栋|B1|131（应急出口）',
             count: 0,
             name: '明火监测',
-            status: 2
+            status: 1
         }, {
             id: 2,
             address: 'A栋|B1|122（电压房）',
             count: 0,
             name: '消防通道堵塞监测',
-            status: 2
+            status: 1
         }, {
             id: 3,
             address: 'A栋|B1|89（安全出口）',
             count: 0,
             name: '消防门闭合监测',
-            status: 2
+            status: 1
         }, {
             id: 4,
             address: 'B栋|B1|84（安全出口）',
@@ -101,7 +101,7 @@
                 datas: [],
                 deviceAlarmDatas: [],
                 deviceMonitorDatas: [],
-                statusFilter: ['已停用', '正常', '未处理', '已通知']
+                statusFilter: ['停用', '正常', '故障']
             }
         },
         computed: {
@@ -118,7 +118,7 @@
                     deviceMonitorProblemCounts.push(item.count);
                     deviceMonitorProblemCount = eval(deviceMonitorProblemCounts.join("+"));
                 }
-                return [`设备报警${deviceAlarmProblemCount ? deviceAlarmProblemCount : ''}`, `监控设备${deviceMonitorProblemCount ? deviceMonitorProblemCount : ''}`];
+                return [`设备报警 ${deviceAlarmProblemCount ? deviceAlarmProblemCount : ''}`, `监控设备 ${deviceMonitorProblemCount ? deviceMonitorProblemCount : ''}`];
             },
         },
         mounted() {

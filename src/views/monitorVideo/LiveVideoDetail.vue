@@ -95,13 +95,13 @@
                         Indicator.open({ spinnerType: 'fading-circle' });
                         for(let item of json.deviceMonitorDatas) {
                             if(item.id === this.$route.params.id) {
-                                item.status = status == 0 ? 1 : 0;
+                                item.status = status === 0 ? 1 : 0;
                             }
                         }
                         sessionStorage.setItem('videoDeviceDatas', JSON.stringify(json));
                         setTimeout(() => {
                             Indicator.close();
-                            this.status = this.status == 0 ? 1 : 0;
+                            this.status = this.status === 0 ? 1 : 0;
                             Toast({message: `已${this.status === 0 ? '停用' : '启用'}`, duration: 2000});
                         }, 1500)
                     }
