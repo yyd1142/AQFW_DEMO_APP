@@ -1,7 +1,8 @@
 <template>
     <div class="live-video-device">
-        <mko-form-cell title="设备名称" val="消防灭火器"></mko-form-cell>
-        <mko-form-cell title="所属单位" val="深圳大观"></mko-form-cell>
+        <mko-form-cell title="所属系统" val="消防通道堵塞监测系统"></mko-form-cell>
+        <mko-form-cell title="设备名称" val="消防通道堵塞监测设备"></mko-form-cell>
+        <mko-form-cell title="所属单位" val="无锡万象城"></mko-form-cell>
         <mko-form-cell title="设备ID" val="98K"></mko-form-cell>
         <mko-form-cell title="安装时间" val="2017-08-17"></mko-form-cell>
         <mko-form-cell title="监控类型" val="消防通道堵塞监测"></mko-form-cell>

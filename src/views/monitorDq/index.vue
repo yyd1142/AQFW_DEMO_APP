@@ -21,7 +21,7 @@
                 tabI: 0,
                 headerBtnItems: [
                     {text: '设备报警', count: 2},
-                    {text: '电气设备', count: 1},
+                    {text: '监测设备', count: 1},
                 ]
             }
         },

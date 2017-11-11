@@ -1,6 +1,6 @@
 <template>
     <div>
-        <mko-header title="水系统监测"
+        <mko-header title="电气监测"
                     :right-icon-text="time||'0'"
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>

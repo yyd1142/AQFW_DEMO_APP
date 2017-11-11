@@ -18,7 +18,7 @@
             <div class="video-table-view" v-if="tabI == 0">
                 <mko-double-cell :title="titleFilter(item)" :label="item.address" @click="goInfo(item)" is-link
                                  v-for="item in deviceAlarmDatas">
-                    <span :class="item.status == 2 ? 'blue' : null">{{item.status == 1 ? '已通知' : '未处理'}}</span>
+                    <span :class="item.status == 2 ? 'blue' : null">{{item.status == 1 ? '已通知' : '待处理'}}</span>
                 </mko-double-cell>
                 <no-data v-if="deviceAlarmDatas.length == 0"></no-data>
             </div>

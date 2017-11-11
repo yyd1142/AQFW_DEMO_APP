@@ -31,7 +31,7 @@
                     name: '安全出口堵塞监测',
                     status: 3
                 }],
-                statusFilter: ['', '已通知', '未处理', '已确认正常']
+                statusFilter: ['', '已通知', '待处理', '已确认正常']
             }
         },
         methods: {
