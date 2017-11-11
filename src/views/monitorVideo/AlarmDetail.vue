@@ -64,7 +64,7 @@
                     cancelBtn: true,
                     cancelText: "取消"
                 }).then(msg => {
-                    if (msg == "confirm") {
+                    if (msg === "confirm") {
                         let json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
                         for(let [index, item] of json.deviceAlarmDatas.entries()) {
                             if(item.id === this.$route.params.id) {
