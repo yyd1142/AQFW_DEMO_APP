@@ -15,6 +15,7 @@
             <!--<mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel" :edit="isEdit" @click="goSelSpot(true)"></mko-form-cell>-->
             <mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel"></mko-form-cell>
             <mko-form-cell title="需要巡查" :val="(isEdit?formData.isC:info.isC)?'是':'否'" type="sel" :edit="isEdit" @click="goSelIsC"></mko-form-cell>
+            <mko-form-cell title="绑定二维码" val="已绑定（012922）"></mko-form-cell>
 
             <!--tab-->
             <div class="tab-wrap">

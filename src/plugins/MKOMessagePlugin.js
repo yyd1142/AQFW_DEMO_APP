@@ -231,13 +231,10 @@ MKOMessagePlugin.install = function (Vue, options) {
     //扫码功能
     Vue.prototype.$ScanQRCode = function (callback) {
         let command = {
-            type: 'ScanQRCode'
+            type: "ScanQRCode",
+            callback: createCallbackFunction(callback)
         }
-        _send(result => {
-            callback(result);
-        }, (error) => {
-            console.error(error);
-        }, 'request', command);
+        _sendMessage('notification', command)
     }
     MKOMessagePlugin.installed = true;
 }

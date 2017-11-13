@@ -148,7 +148,8 @@ const monitorSxtDeviceDetail = resolve => require(['./views/monitorSxt/DeviceDet
 const monitorSxtDeviceChart = resolve => require(['./views/monitorSxt/DeviceDetail/ChartModule.vue'], resolve);
 const monitorSxtAlarmDetail = resolve => require(['./views/monitorSxt/AlarmDetail/index.vue'], resolve);
 const monitorSxtAlarmDetailSelPerson = resolve => require(['./views/monitorSxt/AlarmDetail/SelPerson.vue'], resolve);
-
+const QRCode = resolve => require(['./views/qrcode/index.vue'], resolve);
+const BindDevice = resolve => require(['./views/qrcode/BindDevice.vue'], resolve);
 Vue.use(Router)
 
 const routers = {
@@ -831,6 +832,16 @@ const routers = {
             path: '/choosePerson/:id',
             name: 'ChoosePerson',
             component: ChoosePerson
+        },
+        {
+            path: '/QRCode',
+            name: 'QRCode',
+            component: QRCode
+        },
+        {
+            path: '/bind_device/:id',
+            name: 'BindDevice',
+            component: BindDevice
         }
     ]
 };

@@ -3,7 +3,7 @@
         <div class="title-wrap" v-if="editDisabled===un">
             <div class="title fl" :class="titleColor ? titleColor : ''">{{title || ''}}</div>
             <div v-show="!isRemove">
-                <div class="btn fr" @click="editFn">{{isEdit ? (cancelBtnText || '取消') : (editBtnText || '编辑')}}</div>
+                <div class="btn fr" @click="editFn" v-show="mode != 'readOnly'">{{isEdit ? (cancelBtnText || '取消') : (editBtnText || '编辑')}}</div>
                 <div class="btn fr" :class="{'disabled-btn':(!validate&&this.validate !== un)}" @click="saveFn" v-show="isEdit">
                     {{saveBtnText || '保存'}}
                 </div>
@@ -20,7 +20,7 @@
     export default {
         //组件不加validate参数代表不做验证
         //组件添加edit-disabled代表无标题栏
-        props: ['title', 'edit', 'validate', 'edit-disabled', 'edit-btn-text', 'save-btn-text', 'cancel-btn-text', 'remove', 'titleColor'],
+        props: ['title', 'edit', 'validate', 'edit-disabled', 'edit-btn-text', 'save-btn-text', 'cancel-btn-text', 'remove', 'titleColor', 'mode'],
         data() {
             return {
                 un: undefined

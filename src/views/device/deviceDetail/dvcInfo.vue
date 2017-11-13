@@ -10,7 +10,7 @@
         <div class="page-wrap device-info-wrap">
             <mko-dropdowns ref="dropDowns" :actions="actions"></mko-dropdowns>
 
-            <mko-edit-card title="基础信息" :edit="isEdit" :validate="isValid" @edit="edit" @save="updateDvc">
+            <mko-edit-card title="基础信息" :validate="isValid" @edit="edit" @save="updateDvc">
                 <mko-form-cell title="设备名称" :val="info.unitName" non-text="未填"></mko-form-cell>
                 <mko-form-cell title="设备编号" :val="info.SSSBCode" v-model="formData.SSSBCode"
                                type="text" non-text="未填" :edit="isEdit"></mko-form-cell>
@@ -36,6 +36,7 @@
                                v-show="!isEdit">
                     <span :class="dvcStatusColor">{{dvcStatus}}</span>
                 </mko-form-cell>
+                <mko-form-cell title="绑定二维码" val="已绑定（012922）"></mko-form-cell>
             </mko-edit-card>
 
             <!--当前故障详情-->

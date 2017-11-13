@@ -72,7 +72,8 @@ const Http = (path, method, domain, bHandleError) => {
 }
 
 export function httpGet(path, domain, bHandleError) {
-    return Http(path, 'get', domain, bHandleError)
+    let mode = domain === 'http://www.aqfwy.com/api/platform' ? 'DEMO' : null;
+    return Http(path, 'get', domain, bHandleError, mode)
 }
 
 export function httpPost(path, domain, bHandleError) {

@@ -477,9 +477,12 @@ export default {
             })
         },
         QRCode() {
-            this.$ScanQRCode(result => {
-
+            this.$MKOPush({
+                path: '/QRCode'
             })
+            // this.$ScanQRCode(result => {
+            //
+            // })
         }
     },
     components: {
