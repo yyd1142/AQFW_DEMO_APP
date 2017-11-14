@@ -59,14 +59,14 @@ export default {
     },
     computed: {
         qiaoDaoXunChaData() {
-            return this.$store.state.xuncha.lastDevices;
+            return this.$store.state.xuncha ? this.$store.state.xuncha.lastDevices : [];
         },
         checkPointPhotos() {
-            return this.$store.state.xuncha.lastCheckPointPhotos;
+            return this.$store.state.xuncha ? this.$store.state.xuncha.lastCheckPointPhotos : [];
         },
         bInputData() {
             let bInputData = false;
-            let checkPointDatas = this.$store.state.xuncha.lastDevices;
+            let checkPointDatas = this.qiaoDaoXunChaData;
             checkPointDatas.forEach((checkPoint) => {
                 checkPoint.forEach((item) => {
                     if (item.status == 5) {
@@ -83,12 +83,18 @@ export default {
             }
             return isChecked;
         },
-        ...mapGetters({
-            usedTimeString: 'usedTimeString',
-            statusInfo: 'statusInfo',
-            hasFinished: 'getXCCheckPointHasFinished',
-            taskStatus: 'taskStatus'
-        })
+        taskStatus() {
+            return this.$store.state.xuncha ? this.$store.getters.taskStatus : 0;
+        },
+        hasFinished() {
+            return this.$store.state.xuncha ? this.$store.getters.getXCCheckPointHasFinished : false;
+        },
+        statusInfo() {
+            return this.$store.state.xuncha ? this.$store.getters.statusInfo : {};
+        },
+        usedTimeString() {
+            return this.$store.state.xuncha ? this.$store.getters.usedTimeString : 0;
+        }
     },
     beforeMount() {
         this.qiaoDaoXunChaTitle = this.$route.query.title;

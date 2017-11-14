@@ -9,7 +9,8 @@
                 <div class="center">绑定后扫描二维码可快速查看设备详情</div>
                 <mko-form-cell title="编号" :val="$route.params.id"></mko-form-cell>
                 <mko-form-cell title="类型" val="巡查点二维码"></mko-form-cell>
-                <mko-form-cell title="绑定巡查点" :val="selSpot ? selSpot : '请选择'" :edit="true" type="sel" @click="goSelSpot(true)"></mko-form-cell>
+                <mko-form-cell title="绑定巡查点" :val="selSpot ? selSpot : '请选择'" :edit="true" type="sel"
+                               @click="goSelSpot(true)"></mko-form-cell>
                 <mko-button class="footer-btn" size="large" @click="confirm" no-radius>确认</mko-button>
             </div>
         </div>
@@ -18,7 +19,8 @@
 </template>
 
 <script>
-    import SelSpot from './components/selSpot.vue';
+    import { Toast } from 'mint-ui'
+    import SelSpot from './components/selSpot.vue'
     export default {
         data() {
             return {
@@ -33,7 +35,7 @@
             goSelSpot(bool){
                 if (bool) {
                     let path = this.$route.fullPath;
-                    this.$MKOPush(path + '?sel=spot');
+                    this.$MKOPush(path + '&sel=spot');
                 } else {
                     this.$MKOPop();
                 }
@@ -42,7 +44,7 @@
                 this.selSpot = `${form.jz.jzName},${form.jzLevel.label},${form.spot[0].jzPosition}`
             },
             confirm() {
-                if(!this.selSpot) return false;
+                if (!this.selSpot) return false;
                 this.$MKODialog({
                     title: "提示",
                     msg: '绑定后此二维码将不能再绑定其他设备，确认绑定吗',
@@ -51,7 +53,10 @@
                     cancelText: "取消"
                 }).then(msg => {
                     if (msg == "confirm") {
-
+                        Toast({message: "绑定成功", duration: 2000});
+                        setTimeout(() => {
+                            this.back();
+                        }, 1500);
                     }
                 });
             }

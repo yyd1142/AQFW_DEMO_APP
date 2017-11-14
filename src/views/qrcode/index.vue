@@ -11,26 +11,57 @@
 
 <script>
     import api from 'api'
+    import {Toast} from 'mint-ui'
+    import xuncha from 'store/modules/xuncha'
+    import * as types from 'store/mutation-types'
+    import cloneDeep from 'lodash/cloneDeep'
+    const taskId = '1639840V74p8'
+    function compare(property) {
+        return function (a, b) {
+            var value1 = a[property];
+            var value2 = b[property];
+            return value1 - value2;
+        }
+    }
     export default {
         data() {
             return {}
         },
         activated() {
+            if (this.$store.state.xuncha) {
+                this.$store.dispatch('clearXunChaTimer');
+                this.$store.unregisterModule('xuncha');
+            }
+//            this.goDeviceDetail('deviceDetail_161580');
+//            this.goSpotInfo('spotInfo_16792');
+//            this.dialog('xunchaTaskDevice_161580');
             this.$ScanQRCode(result => {
-                if (result.response.indexOf('deviceDetail') === 0) {
-                    this.goDeviceDetail(result.response) //设备
-                } else if(result.response.indexOf('BindDevice') === 0){
-                    this.goBindDevice(result.response)
+                let response = result.response;
+                if (response.indexOf('deviceDetail') === 0) {
+                    this.goDeviceDetail(response) //设备
+                } else if (response.indexOf('BindDevice') === 0) {
+                    this.goBindDevice(response)
+                } else if (response.indexOf('xunchaTaskDevice') === 0) {
+                    this.dialog(response);
+                } else if(response.indexOf('spotInfo') === 0) {
+                    this.goSpotInfo(response);
                 } else {
-                    this.errorQRCode()
+                    alert('无法识别此二维码')
                 }
             });
+        },
+        deactivated() {
+            try {
+                window.MKODialogShow = false
+            } catch (err) {
+                alert(err)
+            }
         },
         methods: {
             back() {
                 this.$MKOPop()
             },
-            dialog() {
+            dialog(result) {
                 this.$MKODialog({
                     title: "提示",
                     msg: '检测到该设备所在巡查点正在进行巡查任务，需要查看吗？',
@@ -39,9 +70,9 @@
                     cancelText: "查看巡查点"
                 }).then(msg => {
                     if (msg == "confirm") {
-                        this.viewQiandao();
+                        this.goDeviceDetail(result);
                     } else {
-//                        this.goDeviceDetail();
+                        this.getTaskBuilds();
                     }
                 });
             },
@@ -57,11 +88,25 @@
                         from: 'qrcode'
                     }
                 }
-                let from = '/enter/home';
+                let from = this.$route.query.fromPath ? this.$route.query.fromPath : '/enter/home';
                 this.$MKOPush(nextPath, from, true);
             },
-            getTaskBuilds(taskId)
-            {
+            goSpotInfo(result) {
+                result = result.split('_');
+                let id = result[1];
+                let nextPath = {
+                    name: 'spotInfo',
+                    params: {
+                        pid: id
+                    },
+                    query: {
+                        from: 'qrcode'
+                    }
+                }
+                let from = this.$route.query.fromPath ? this.$route.query.fromPath : '/enter/home';
+                this.$MKOPush(nextPath, from, true);
+            },
+            getTaskBuilds() {
                 api.getXCTaskPosition({
                     taskId: taskId
                 }).then(res => {
@@ -112,29 +157,72 @@
                         item['level'] = level;
                     });
                     builds.sort(compare('level'));
-                    console.log(builds);
+                    this.getTaskInfo();
                 })
-            }
-            ,
-            viewQiandao(item, buildIndex, floorIndex)
-            {
-//                if (this.status == 1) {
-//                    Toast({message: "请先开始巡查任务!", duration: 2000});
-//                    return false;
-//                }
-//                if (item.status == 1 && this.status == 3) {
-//                    Toast({message: "未巡查，无巡查数据!", duration: 2000});
-//                    return false;
-//                }
-//                this.$MKOPush({
-//                    path: `/qiandaoDailyXuncha/${this.$route.params.id}`,
-//                    query: {
-//                        positionId: item.positionId,
-//                        buildIndex: buildIndex,
-//                        floorIndex: floorIndex,
-//                        name: item.name
-//                    }
-//                });
+            },
+            getTaskInfo() {
+                api.getTaskInfo({
+                    taskId: taskId
+                }).then(res => {
+                    if (!res) return false;
+                    if (res.code == 0) {
+                        if (res.response.groupId == this.$store.getters.groupId) {
+                            if (res.response.status == 5) {
+                                this.$MKODialog({msg: '无法查看该任务'});
+                            } else {
+                                this.goXunchaTask(res.response);
+                            }
+                        } else {
+                            this.$MKODialog({msg: '无法查看该任务'});
+                        }
+                    } else {
+                        this.$MKODialog({msg: '无法查看该任务'});
+                    }
+                })
+            },
+            goXunchaTask(task) {
+                if (task.status == 5 || task.status == 6) {
+                    let name = 'xuncha'
+                    localStorage.setItem('lastReviewXunChaData', JSON.stringify(task));
+                    localStorage.setItem('lastXunChaTaskId', task.taskId);
+                    this.$MKOPush({
+                        name: name,
+                        params: {
+                            taskId: task.taskId
+                        },
+                        query: {
+                            from: 'home',
+                            fromQuery: this.$route.query,
+                            isReview: true
+                        }
+                    })
+                    return;
+                }
+                if (task.status == 4) {
+                    this.$MKODialog({title: '提示', msg: '数据正在处理中，请稍后查看...'})
+                    return;
+                }
+                let routerPath = {};
+                let taskData = cloneDeep(task);
+                this.$store.registerModule('xuncha', xuncha);
+                this.$store.commit(types.XUNCHA_INIT_TASK_DATA, taskData);
+                localStorage.setItem('lastXunChaTaskId', task.taskId);
+                routerPath = {
+                    name: 'xuncha',
+                    params: {
+                        taskId: task.taskId
+                    },
+                    query: {
+                        from: 'home',
+                        fromPath: '/enter/home',
+                        name: task.description,
+                        taskDescribe: task.taskDescribe ? task.taskDescribe : task.description,
+                        to: 'qiandao'
+                    }
+                }
+                this.$MKOPush(routerPath, {
+                    path: '/enter/home'
+                });
             },
             goBindDevice(result) {
                 result = result.split('_');
@@ -148,11 +236,8 @@
                         from: 'qrcode'
                     }
                 }
-                let from = '/enter/home';
+                let from = this.$route.query.fromPath ? this.$route.query.fromPath : '/enter/home';
                 this.$MKOPush(nextPath, from, true);
-            },
-            errorQRCode() {
-
             }
         }
     }

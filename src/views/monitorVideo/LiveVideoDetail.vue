@@ -23,6 +23,7 @@
     import { Indicator, Toast } from 'mint-ui'
     import DeviceDetail from './DeviceDetail.vue'
     import AlarmRecord from './AlarmRecord.vue'
+    import 'videojs-contrib-hls/dist/videojs-contrib-hls'
     export default {
         data() {
             return {
@@ -37,18 +38,19 @@
                 return this.$refs.videoPlayer ? this.$refs.videoPlayer.player : null;
             },
             playerOptions() {
-                let src = 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8';
+//                let src = 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8';
+//                src = 'http://121.40.182.225:8080/hls/100961/index.m3u8'
                 let options = {
                     sources: [{
                         withCredentials: false,
                         type: 'application/x-mpegURL',
-                        src: src
+                        src: 'http://121.40.182.225:8080/hls/100961/index.m3u8'
                     }],
                     controlBar: {
                         timeDivider: false,
                         durationDisplay: false
                     },
-                    autoplay: false,
+                    autoplay: true,
                     flash: {hls: {withCredentials: false}},
                     html5: {hls: {withCredentials: false}}
                 }

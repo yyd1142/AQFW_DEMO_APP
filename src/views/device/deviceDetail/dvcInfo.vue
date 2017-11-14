@@ -3,14 +3,14 @@
         <div class="placeholder-item"></div>
         <mko-header title="设备详情" left-icon="icon-back" @handleLeftClick="back" @handleRightClick="edit">
             <div class="header-right sp-header-right" slot="custom">
-                <div class="right-icon icon icon-setting" @click="handleAddButton"></div>
+                <div class="right-icon icon icon-setting" @click="handleAddButton" v-if="isAdmin"></div>
                 <div class="right-icon icon icon-history" @click="goDeviceLogList"></div>
             </div>
         </mko-header>
         <div class="page-wrap device-info-wrap">
             <mko-dropdowns ref="dropDowns" :actions="actions"></mko-dropdowns>
 
-            <mko-edit-card title="基础信息" :validate="isValid" @edit="edit" @save="updateDvc">
+            <mko-edit-card title="基础信息" :edit="isEdit" :validate="isValid" @edit="edit" @save="updateDvc" :mode="isAdmin ? null : 'readOnly'">
                 <mko-form-cell title="设备名称" :val="info.unitName" non-text="未填"></mko-form-cell>
                 <mko-form-cell title="设备编号" :val="info.SSSBCode" v-model="formData.SSSBCode"
                                type="text" non-text="未填" :edit="isEdit"></mko-form-cell>
@@ -36,7 +36,8 @@
                                v-show="!isEdit">
                     <span :class="dvcStatusColor">{{dvcStatus}}</span>
                 </mko-form-cell>
-                <mko-form-cell title="绑定二维码" val="已绑定（012922）"></mko-form-cell>
+                <mko-form-cell title="绑定二维码" :val="formData.isBindDevice ? '已绑定（012922）' : '绑定'" type="sel" :edit="isEdit"
+                               @click="bindQRCode"></mko-form-cell>
             </mko-edit-card>
 
             <!--当前故障详情-->
@@ -133,7 +134,8 @@
                 op: [
                     {value: `2/0/1`, label: `每周1次`},
                     {value: `4/0/1`, label: `半月1次`},
-                ]
+                ],
+                isBindDevice: false
             }
         },
         watch: {
@@ -225,6 +227,9 @@
                 }
                 return _l;
             },
+            isAdmin() {
+                return this.$store.state.user.isAdmin;
+            }
         },
         mounted() {
             this.patrolList = [
@@ -246,6 +251,12 @@
                 this.getLogList();
             } else {
                 scrollTo(0, _scoTop);
+            }
+
+            if(this.$route.query.from && this.$route.query.from === 'qrcode') {
+                this.formData.isBindDevice = true;
+            } else {
+                this.formData.isBindDevice = false;
             }
         },
         deactivated() {
@@ -576,6 +587,28 @@
                 _enter = true;
                 this.$MKOPop()
             },
+            bindQRCode() {
+                if(!this.isEdit) return false;
+                if(!this.formData.isBindDevice) {
+                    this.$MKOPush({
+                        path: '/QRCode',
+                        query: {
+                            fromPath: this.$route.fullPath
+                        }
+                    });
+                } else {
+                    this.$MKODialog({
+                        title: "确定解除绑定吗？",
+                        msg: '解除绑定后，设备二维码将永久失效，且无法绑定其他设备',
+                        cancelBtn: true,
+                        cancelText: "取消"
+                    }).then(msg => {
+                        if (msg == "confirm") {
+                            this.formData.isBindDevice = false;
+                        }
+                    });
+                }
+            }
         },
         components: {
             PhotoBox, selSpot, editStatus

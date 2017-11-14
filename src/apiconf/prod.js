@@ -2,8 +2,8 @@
  * Created by enjoyzhou on 17-2-16.
  */
 export default {
-    // domain: 'http://www.aqfwy.com/api/qy', // 社会端API
-    domain: 'http://10.0.1.2:3000',
+    domain: 'http://www.aqfwy.com/api/qy', // 社会端API
+    // domain: 'http://10.0.1.2:3000',
     taskDomain: 'http://www.aqfwy.com/api/task',
     directoriesDomain: 'http://www.aqfwy.com/api/directories',
     appDomain: 'http://www.aqfwy.com/app/api/qy',
