@@ -1,10 +1,12 @@
 <template>
     <div>
         <mko-header title="水系统监测"
-                    :right-icon-text="time||'0'"
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap sxt-chart-module-wrap">
+            <div class="timer-bar">
+                <div class="timer">倒计时：{{time || '0'}}</div>
+            </div>
             <div class="chart-wrap clear">
                 <div class="dashboard" ref="dashboard-mid"></div>
             </div>
@@ -58,8 +60,10 @@
                 this.DrawChart4(echarts);
             },
             DrawChart2(ec){
-                let data = parseInt(Math.random() * 1000);
-
+                let names = ['压力值(Pa)', '水位值(米)'];
+                let maxs = [1000, 200];
+                let max = maxs[this.$route.params.id - 1];
+                let data = parseInt(Math.random() * max);
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -75,7 +79,7 @@
                     },
                     series: [
                         {
-                            max: 1000,
+                            max: max,
                             name: '',
                             type: 'gauge',
                             splitNumber: 10,       // 分割段数，默认为5
@@ -131,11 +135,12 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: data, name: names[type]}]
+                            data: [{value: data, name: names[this.$route.params.id - 1]}]
                         }
                     ]
                 })
             },
+
             DrawChart4(ec){
 
                 let xData = [];
@@ -246,6 +251,14 @@
     @import "../../../config.less";
 
     .sxt-chart-module-wrap {
+        .timer-bar {
+            height: 30px;
+            background-color: #fff;
+            .timer {
+                float: right;
+                padding:10px 10px 0 0;
+            }
+        }
         .chart-wrap {
             margin-bottom: 14px;
             background-color: #fff;
