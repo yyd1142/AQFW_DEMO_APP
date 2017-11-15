@@ -55,7 +55,7 @@
                 this.tabI = i;
             },
             goAllChart(){
-                let id = 1;
+                let id = this.$route.params.id;
                 this.$MKOPush('/monitorSxtDeviceChart/' + id);
             },
             changeStatus() {
@@ -85,7 +85,9 @@
             },
             DrawChart2(ec){
                 let names = ['压力值(Pa)', '水位值(米)'];
-                let data = parseInt(Math.random() * 1000);
+                let maxs = [1000, 200];
+                let max = maxs[this.$route.params.id - 1];
+                let data = parseInt(Math.random() * max);
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -101,7 +103,7 @@
                     },
                     series: [
                         {
-                            max: 1000,
+                            max: max,
                             name: '',
                             type: 'gauge',
                             splitNumber: 10,       // 分割段数，默认为5

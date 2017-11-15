@@ -7,9 +7,18 @@
         <div class="page-wrap monitor-dq-device-wrap">
             <div class="chart-module-wrap">
                 <div class="chart-wrap clear">
-                    <div class="dashboard" ref="dashboard-left"></div>
-                    <div class="dashboard" ref="dashboard-mid"></div>
-                    <div class="dashboard" ref="dashboard-right"></div>
+                    <div class="dashboard-wrap">
+                        <div class="dashboard" ref="dashboard-left"></div>
+                        <div class="sign">电压(V)</div>
+                    </div>
+                    <div class="dashboard-wrap">
+                        <div class="dashboard" ref="dashboard-mid"></div>
+                        <div class="sign">电流(mA)</div>
+                    </div>
+                    <div class="dashboard-wrap">
+                        <div class="dashboard" ref="dashboard-right"></div>
+                        <div class="sign">线温(℃)</div>
+                    </div>
                 </div>
                 <div class="more" @click="goAllChart">
                     查看全部图表 <span class="sign icon-link-arrow"></span>
@@ -163,7 +172,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: data, name: '电压()'}]
+                            data: [{value: data, name: ''}]
                         }
                     ]
                 })
@@ -241,7 +250,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: data, name: '电流(mA)'}]
+                            data: [{value: data, name: ''}]
                         }
                     ]
                 })
@@ -324,7 +333,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: data, name: '线温(℃)'}]
+                            data: [{value: data, name: ''}]
                         }
                     ]
                 })
@@ -347,11 +356,25 @@
             margin-bottom: 14px;
             .chart-wrap {
                 background-color: #fff;
-                .dashboard {
-                    margin: auto;
-                    height: 150px;
+                .dashboard-wrap {
+                    position: relative;
                     width: 33.33%;
                     float: left;
+                    .dashboard{
+                        margin: auto;
+                        height: 150px;
+                    }
+                    .sign {
+                        position: absolute;
+                        bottom: 7px;
+                        left: 50%;
+                        transform: translate(-50%, 0);
+                        -webkit-transform: translate(-50%, 0);
+                        min-width: 75px;
+                        font-size: 12px;
+                        text-align: center;
+                        color: @mainBlue;
+                    }
                 }
             }
             .more {

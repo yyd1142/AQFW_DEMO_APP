@@ -1,14 +1,25 @@
 <template>
     <div>
         <mko-header title="电气监测"
-                    :right-icon-text="time||'0'"
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap dq-chart-module-wrap">
+            <div class="timer-bar clear">
+                <div class="timer">倒计时：{{time || '0'}}</div>
+            </div>
             <div class="chart-wrap clear">
-                <div class="dashboard" ref="dashboard-left"></div>
-                <div class="dashboard" ref="dashboard-mid"></div>
-                <div class="dashboard" ref="dashboard-right"></div>
+                <div class="dashboard-wrap">
+                    <div class="dashboard" ref="dashboard-left"></div>
+                    <div class="sign">电压(V)</div>
+                </div>
+                <div class="dashboard-wrap">
+                    <div class="dashboard" ref="dashboard-mid"></div>
+                    <div class="sign">电流(mA)</div>
+                </div>
+                <div class="dashboard-wrap">
+                    <div class="dashboard" ref="dashboard-right"></div>
+                    <div class="sign">线温(℃)</div>
+                </div>
             </div>
             <div class="chart-wrap clear">
                 <div class="line-chart" ref="lineChart-1"></div>
@@ -82,7 +93,7 @@
                     series: [
                         {
                             max: 220,
-                            name: '业务指标',
+                            name: '',
                             type: 'gauge',
                             splitNumber: 5,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
@@ -126,7 +137,7 @@
 
                                 textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                                     fontWeight: 'normal',
-                                    fontSize: 5,
+                                    fontSize: 12,
                                 },
 
                             },
@@ -137,7 +148,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: data, name: '电压()'}]
+                            data: [{value: data, name: ''}]
                         }
                     ]
                 })
@@ -215,7 +226,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: data, name: '电流(mA)'}]
+                            data: [{value: data, name: ''}]
                         }
                     ]
                 })
@@ -298,7 +309,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: data, name: '线温(℃)'}]
+                            data: [{value: data, name: ''}]
                         }
                     ]
                 })
@@ -597,14 +608,36 @@
     @import "../../../config.less";
 
     .dq-chart-module-wrap {
+        .timer-bar {
+            height: 30px;
+            background-color: #fff;
+            .timer {
+                float: right;
+                padding: 10px 10px 0 0;
+            }
+        }
         .chart-wrap {
             margin-bottom: 14px;
             background-color: #fff;
-            .dashboard {
-                margin: auto;
-                height: 150px;
+            .dashboard-wrap {
+                position: relative;
                 width: 33.33%;
                 float: left;
+                .dashboard{
+                    margin: auto;
+                    height: 150px;
+                }
+                .sign {
+                    position: absolute;
+                    bottom: 7px;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                    -webkit-transform: translate(-50%, 0);
+                    min-width: 75px;
+                    font-size: 12px;
+                    text-align: center;
+                    color: @mainBlue;
+                }
             }
             .line-chart {
                 margin: auto;

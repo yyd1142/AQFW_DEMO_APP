@@ -43,6 +43,12 @@
                 let data = sessionStorage.getItem('sxtAlarmData');
                 if (data) {
                     this.list = JSON.parse(data);
+                    let num = 0;
+                    this.list.forEach(item => {
+                        if (item.status != 0)
+                            num++;
+                    });
+                    this.$emit('get', num)
                 }
             },
             goDetail(id){

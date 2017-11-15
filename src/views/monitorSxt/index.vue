@@ -6,7 +6,7 @@
                 <mko-tab-item :label="`${item.text} ${item.count}`" :activied="tabI==i" @handleTabClick="tab(i)"
                               v-for="(item,i) in headerBtnItems"></mko-tab-item>
             </mko-nav-bar>
-            <alarm-list v-show="tabI==0"></alarm-list>
+            <alarm-list @get="getAlarmData" v-show="tabI==0"></alarm-list>
             <device-list v-show="tabI==1"></device-list>
         </div>
     </div>
@@ -38,6 +38,9 @@
         methods: {
             tab(i){
                 this.tabI = i;
+            },
+            getAlarmData(num){
+                this.headerBtnItems[0].count = num;
             },
             back(){
                 this.$MKOPop();
