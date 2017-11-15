@@ -188,7 +188,7 @@
                 if (item.count == 0) {
                     return item.name;
                 } else {
-                    return `<span class='dingding'>${item.count}</span>${item.name}`;
+                    return `<span class='badge'>${item.count}</span>${item.name}`;
                 }
             }
         },
@@ -316,6 +316,15 @@
                     }
                 }
             }
+        }
+        .badge {
+            margin-right: 8px;
+            padding: 1px 12px;
+            border-radius: 2px;
+            font-size: 12px;
+            vertical-align: bottom;
+            background-color: @mainDanger;
+            color: #fff;
         }
     }
 </style>
