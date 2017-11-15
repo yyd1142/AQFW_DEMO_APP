@@ -15,7 +15,9 @@
     import xuncha from 'store/modules/xuncha'
     import * as types from 'store/mutation-types'
     import cloneDeep from 'lodash/cloneDeep'
-    const taskId = '1639840V74p8'
+    var taskId = '1639840V74p8';
+    var deviceQRCodeString = 'WXE2A116623122Z83'; //WX: '地区', E2: '设备类型', A1: '供应商', 16623: '设备投入使用日期', 122: '拓展码', Z83: '唯一标识'
+    var posationQRCodeString = 'WXD2T1343299098K';
     function compare(property) {
         return function (a, b) {
             var value1 = a[property];

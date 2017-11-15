@@ -38,13 +38,15 @@
                 return this.$refs.videoPlayer ? this.$refs.videoPlayer.player : null;
             },
             playerOptions() {
-//                let src = 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8';
-//                src = 'http://121.40.182.225:8080/hls/100961/index.m3u8'
+                let src = 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8';
+                let id = this.$route.params.id;
+                let liveVideoSrc = ['', 'http://61.177.139.216:8891/hls/100961/index.m3u8', 'http://61.177.139.216:8891/hls/100962/index.m3u8', 'http://61.177.139.216:8891/hls/100963/index.m3u8', 'http://61.177.139.216:8891/hls/100964/index.m3u8']
+                src = liveVideoSrc[id];
                 let options = {
                     sources: [{
                         withCredentials: false,
                         type: 'application/x-mpegURL',
-                        src: 'http://121.40.182.225:8080/hls/100961/index.m3u8'
+                        src: src
                     }],
                     controlBar: {
                         timeDivider: false,
