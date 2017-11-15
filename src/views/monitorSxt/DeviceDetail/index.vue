@@ -1,7 +1,7 @@
 <template>
     <div>
         <mko-header title="水系统监测"
-                    :right-icon-text="status == 0 ? '启用设备': '停用设备'" @handleRightClick="changeStatus"
+                    :right-icon-text="status == 0 ? '启用': '停用'" @handleRightClick="changeStatus"
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap monitor-sxt-device-wrap">
@@ -63,7 +63,7 @@
                 let list = JSON.parse(sessionStorage.getItem('sxtDeviceData'));
                 this.$MKODialog({
                     title: "提示",
-                    msg: `确定${status === 0 ? '启用' : '停用'}设备吗？`,
+                    msg: `确定${status === 0 ? '启用' : '停用'}吗？`,
                     cancelBtn: true,
                     cancelText: "取消"
                 }).then(msg => {

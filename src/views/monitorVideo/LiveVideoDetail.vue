@@ -1,7 +1,7 @@
 <template>
     <div class="LiveVideoDetail">
         <div class="placeholder-item"></div>
-        <mko-header title="设备详情" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="status == 0 ? '启用设备': '停用设备'" @handleRightClick="changeStatus"></mko-header>
+        <mko-header title="设备详情" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="status == 0 ? '启用': '停用'" @handleRightClick="changeStatus"></mko-header>
         <div class="page-wrap">
             <div class="player-wrap">
                 <video-player id="videoPlayer" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions"></video-player>
@@ -13,8 +13,8 @@
                     <span v-text="text"></span>
                 </div>
             </div>
-            <device-detail v-show="tabI == 0" :status="status"></device-detail>
-            <alarm-record v-show="tabI == 1"></alarm-record>
+            <device-detail v-show="tabI == 0" :status="status" :address="address"></device-detail>
+            <alarm-record v-show="tabI == 1" :address="address"></alarm-record>
         </div>
     </div>
 </template>
@@ -30,7 +30,8 @@
                 tabI: 0,
                 tabItems: ['设备信息', '报警记录'],
                 isPlayer: true,
-                status: ''
+                status: '',
+                address: ''
             }
         },
         computed: {
@@ -50,7 +51,8 @@
                     }],
                     controlBar: {
                         timeDivider: false,
-                        durationDisplay: false
+                        durationDisplay: false,
+                        fullscreenToggle: false
                     },
                     autoplay: true,
                     flash: {hls: {withCredentials: false}},
@@ -62,6 +64,7 @@
         activated() {
             this.setBackButton();
             this.status = this.$route.query.status;
+            this.address = this.$route.query.address;
             if(!this.isPlayer) {
 
             }
@@ -91,7 +94,7 @@
                 let json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
                 this.$MKODialog({
                     title: "提示",
-                    msg: `确定${status === 0 ? '启用' : '停用'}设备吗？`,
+                    msg: `确定${status === 0 ? '启用' : '停用'}吗？`,
                     cancelBtn: true,
                     cancelText: "取消"
                 }).then(msg => {

@@ -26,7 +26,7 @@
                 <li class="surveillance-table-cell" v-for="item in deviceMonitorDatas" @click="goLiveViedo(item)">
                     <div class="padding">
                         <!--<video-player class="vjs-custom-skin" :options="item.playerOptions"></video-player>-->
-                        <img src="/static/video_default.png"/>
+                        <img :src="item.url"/>
                         <div class="item">
                             <span class="dingding"></span>
                             <div class="name">{{item.name}}</div>
@@ -44,46 +44,50 @@
     var json = {
         deviceAlarmDatas: [{
             id: 1,
-            address: 'A栋|B1|131（应急出口）',
+            address: '无锡万象城|1楼|安全出口',
             count: 3,
-            name: '明火监测',
-            status: 2
-        }, {
-            id: 2,
-            address: 'A栋|B1|122（电压房）',
-            count: 1,
             name: '消防通道堵塞监测',
             status: 2
         }, {
+            id: 2,
+            address: '无锡万象城|1楼|商铺中心',
+            count: 1,
+            name: '明火监测',
+            status: 2
+        }, {
             id: 3,
-            address: 'A栋|B1|89（安全出口）',
+            address: '无锡万象城|2楼|商铺中心',
             count: 3,
-            name: '消防门闭合监测',
+            name: '明火监测',
             status: 2
         }],
         deviceMonitorDatas: [{
             id: 1,
-            address: 'A栋|B1|131（应急出口）',
+            address: '无锡万象城|1楼|安全出口',
             count: 0,
-            name: '明火监测',
+            name: '安全出口',
+            url: '/static/liveimg1.png',
             status: 1
         }, {
             id: 2,
-            address: 'A栋|B1|122（电压房）',
+            address: '无锡万象城|1楼|商铺中心',
             count: 0,
-            name: '消防通道堵塞监测',
+            name: '1楼商铺中心',
+            url: '/static/liveimg2.png',
             status: 1
         }, {
             id: 3,
-            address: 'A栋|B1|89（安全出口）',
+            address: '无锡万象城|2楼|商铺中心',
             count: 0,
-            name: '消防门闭合监测',
+            name: '2楼商铺中心',
+            url: '/static/liveimg3.png',
             status: 1
         }, {
             id: 4,
-            address: 'B栋|B1|84（安全出口）',
+            address: '无锡万象城|3楼|商铺中心',
             count: 0,
-            name: '消防控制室值班人员脱岗监测',
+            name: '3楼商铺中心',
+            url: '/static/liveimg4.png',
             status: 1
         }]
     }
@@ -118,7 +122,7 @@
                     deviceMonitorProblemCounts.push(item.count);
                     deviceMonitorProblemCount = eval(deviceMonitorProblemCounts.join("+"));
                 }
-                return [`设备报警 ${deviceAlarmProblemCount ? deviceAlarmProblemCount : ''}`, `监控设备 ${deviceMonitorProblemCount ? deviceMonitorProblemCount : ''}`];
+                return [`设备报警 ${deviceAlarmProblemCount ? deviceAlarmProblemCount : ''}`, `监控设备 4`];
             },
         },
         mounted() {
@@ -167,7 +171,8 @@
                     query: {
                         liveUrl: item.url,
                         type: item.liveVideoType,
-                        status: item.status
+                        status: item.status,
+                        address: item.address
                     }
                 })
             },

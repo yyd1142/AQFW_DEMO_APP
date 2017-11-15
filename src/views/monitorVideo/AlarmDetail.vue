@@ -21,6 +21,14 @@
                     </div>
                 </li>
             </ul>
+            <div class="title-bar">
+                <div class="label">警情处理状态跟踪</div>
+            </div>
+            <div class="alarm-record-wrap">
+                <!--<mko-double-cell icon="icon-device-succ" title="已确认正常" label="2017-11-08 14:30"></mko-double-cell>-->
+                <mko-double-cell icon="icon-device-warn" :title="'已通知负责人：' + personFilter(choosePersonResults.datas)" :label="timeFomat(choosePersonResults.time)" v-if="choosePersonResults.datas.length > 0"></mko-double-cell>
+                <mko-double-cell icon="icon-device-danger" title="待处理" label="2017-11-08 12:30"></mko-double-cell>
+            </div>
             <div class="btn" v-if="$route.query.status == 2">
                 <mko-button size="large" @click="choosePerson">通知责任人</mko-button>
                 <mko-button class="paichu" size="large" plain @click="submit">排除风险</mko-button>
@@ -30,9 +38,26 @@
 </template>
 <script>
     import { Toast } from 'mint-ui'
+    import moment from 'moment'
     export default {
         data() {
-            return {}
+            return {
+                choosePersonResults: {
+                    datas: [],
+                    time: ''
+                }
+            }
+        },
+        activated() {
+            let CacheKey = `videoDeviceAlarmDetail_${this.$route.params.id}`;
+            if(sessionStorage.getItem(CacheKey)) {
+                this.choosePersonResults = JSON.parse(sessionStorage.getItem(CacheKey));
+            } else {
+                this.choosePersonResults = {
+                    datas: [],
+                    time: ''
+                }
+            }
         },
         methods: {
             back() {
@@ -43,6 +68,10 @@
                     name: 'LiveVideoDetail',
                     params: {
                         id: this.$route.params.id
+                    },
+                    query: {
+                        status: this.$route.query.status,
+                        address: this.$route.query.address
                     }
                 })
             },
@@ -76,6 +105,16 @@
                         this.back();
                     }
                 });
+            },
+            timeFomat(time) {
+                return moment(time).format('YYYY-MM-DD HH:mm');
+            },
+            personFilter(datas) {
+                let text = []
+                for(let item of datas) {
+                    text.push(item.name);
+                }
+                return text.join(',');
             }
         }
     }
@@ -85,7 +124,6 @@
 
     .AlarmDetail {
         .page-wrap {
-            background-color: #ffffff;
             .title-wrap-a {
                 width: 100%;
                 height: 44px;
@@ -123,14 +161,11 @@
             }
             .surveillance-table-view {
                 width: 100%;
-                background-color: #ffffff;
-                margin-bottom: 45px;
                 box-sizing: border-box;
                 padding: 0 14px;
                 .surveillance-table-cell {
                     width: 50%;
                     position: relative;
-                    background-color: #ffffff;
                     box-sizing: border-box;
                     display: -webkit-inline-box;
                     margin-bottom: 14px;
@@ -169,6 +204,31 @@
                 margin-top: 14px;
                 .paichu {
                     margin-top: 10px;
+                }
+            }
+        }
+        .title-bar {
+            height: 34px;
+            padding: 14px 14px 8px;
+            line-height: 12px;
+            font-size: 12px;
+            letter-spacing: 0;
+            background-color: @baseBG01;
+            .label {
+                color: @baseText02;
+            }
+        }
+        .alarm-record-wrap {
+            .mko-double-cell + .mko-double-cell {
+                position: relative;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: 23px;
+                    top: -19px;
+                    height: 38px;
+                    width: 3px;
+                    background-color: @baseBorder;
                 }
             }
         }

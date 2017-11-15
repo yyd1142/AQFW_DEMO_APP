@@ -2,17 +2,18 @@
     <div class="AlarmRecord">
         <div class="title-wrap-a">
             <div class="left">
-                <div class="title">万象城C座L1</div>
+                <div class="title" v-text="address"></div>
             </div>
             <div class="right">共{{datas.length}}条记录</div>
         </div>
-        <mko-double-cell :title="titleFilter(item)" :label="item.address" v-for="item in datas">
+        <mko-double-cell :title="titleFilter(item)" :label="address" v-for="item in datas">
             <span>{{statusFilter[item.status]}}</span>
         </mko-double-cell>
     </div>
 </template>
 <script>
     export default {
+        props: ['address'],
         data() {
             return {
                 datas: [{

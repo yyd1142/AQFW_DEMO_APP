@@ -1,8 +1,7 @@
 <template>
     <div class="ChoosePerson">
         <div class="placeholder-item"></div>
-        <mko-search-bar v-model="searchValue" is-header autofocus @onCancel="cancel">
-        </mko-search-bar>
+        <mko-search-bar v-model="searchValue" is-header @onCancel="cancel"></mko-search-bar>
         <div class="page-wrap">
             <div class="search-bar-wrap">
                 <ul class="person-table-view">
@@ -107,11 +106,16 @@
             submit() {
                 if (this.$route.query.from === 'monitorVideo') {
                     let json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
+                    let CacheKey = `videoDeviceAlarmDetail_${this.$route.params.id}`;
                     for (let [index, item] of json.deviceAlarmDatas.entries()) {
                         if (item.id === this.$route.params.id) {
                             item.status = 1;
                         }
                     }
+                    sessionStorage.setItem(CacheKey, JSON.stringify({
+                        datas: this.chooseResults,
+                        time: new Date().getTime()
+                    }));
                     sessionStorage.setItem('videoDeviceDatas', JSON.stringify(json));
                     Toast({message: "已通知相应负责人", duration: 2000});
                     setTimeout(() => {
