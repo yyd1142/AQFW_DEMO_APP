@@ -45,7 +45,7 @@
         deviceAlarmDatas: [{
             id: 1,
             address: '无锡万象城|1楼|安全出口',
-            count: 3,
+            count: 1,
             name: '消防通道堵塞监测',
             status: 2
         }, {
@@ -57,7 +57,7 @@
         }, {
             id: 3,
             address: '无锡万象城|2楼|商铺中心',
-            count: 3,
+            count: 1,
             name: '明火监测',
             status: 2
         }],
@@ -158,7 +158,8 @@
                     query: {
                         status: item.status,
                         address: item.address,
-                        count: item.count
+                        count: parseInt(item.count),
+                        name: item.name
                     }
                 })
             },
