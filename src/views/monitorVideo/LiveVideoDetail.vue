@@ -4,7 +4,7 @@
         <mko-header title="设备详情" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="status == 0 ? '启用': '停用'" @handleRightClick="changeStatus"></mko-header>
         <div class="page-wrap">
             <div class="player-wrap">
-                <video-player id="videoPlayer" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions"></video-player>
+                <video-player id="videoPlayer" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions" @ready="playerReadied"></video-player>
                 <!--<div class="address">深圳湾体育中心-游泳馆，2层，西南角巡查点</div>-->
             </div>
             <div class="tab-wrap">
@@ -39,15 +39,13 @@
                 return this.$refs.videoPlayer ? this.$refs.videoPlayer.player : null;
             },
             playerOptions() {
-                let src = 'https://as-all1.secdn.net/steftest-channel/play/scaleengine-promo/chunklist_w1460433603.m3u8';
                 let id = this.$route.params.id;
                 let liveVideoSrc = ['', 'http://61.177.139.216:8891/hls/100961/index.m3u8', 'http://61.177.139.216:8891/hls/100962/index.m3u8', 'http://61.177.139.216:8891/hls/100963/index.m3u8', 'http://61.177.139.216:8891/hls/100964/index.m3u8']
-                src = liveVideoSrc[id];
                 let options = {
                     sources: [{
                         withCredentials: false,
                         type: 'application/x-mpegURL',
-                        src: src
+                        src: liveVideoSrc[id]
                     }],
                     controlBar: {
                         timeDivider: false,
@@ -55,14 +53,13 @@
                         fullscreenToggle: false
                     },
                     autoplay: true,
-                    flash: {hls: {withCredentials: false}},
-                    html5: {hls: {withCredentials: false}}
+                    flash: {hls: {withCredentials: true}},
+                    html5: {hls: {withCredentials: true}}
                 }
                 return options;
             },
         },
         activated() {
-            this.setBackButton();
             this.status = this.$route.query.status;
             this.address = this.$route.query.address;
             if(!this.isPlayer) {
@@ -80,13 +77,6 @@
                         this.tabI = i;
                         return;
                     }
-                }
-            },
-            setBackButton() {
-                window.mkoBackButton = {};
-                window.mkoBackButton.bInputData = true;
-                if (window.mkoBackButton.bInputData) {
-                    window.mkoBackButton.callback = this.back;
                 }
             },
             changeStatus() {
@@ -113,6 +103,13 @@
                         }, 1500)
                     }
                 });
+            },
+            playerReadied(player) {
+                var hls = player.tech({ IWillNotUseThisInPlugins: true }).hls
+                player.tech_.hls.xhr.beforeRequest = function(options) {
+                    // console.log(options)
+                    return options
+                }
             }
         },
         components: {
