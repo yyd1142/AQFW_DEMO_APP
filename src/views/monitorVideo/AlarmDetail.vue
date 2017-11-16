@@ -4,40 +4,56 @@
         <mko-header title="报警详情" left-icon="icon-back" @handleLeftClick="back" right-icon="icon-message-prompt-no"
                     @handleRightClick="liveVideo"></mko-header>
         <div class="page-wrap">
-            <div class="title-wrap-a">
-                <div class="left">
-                    <div class="title" v-text="$route.query.address"></div>
+            <div class="title-card">
+                <div class="cell clear">
+                    <div class="title">报警部件</div>
+                    <div class="value">{{$route.query.name}}</div>
                 </div>
-                <div class="right">共{{$route.query.count}}条记录</div>
+                <div class="cell clear">
+                    <div class="title">安装位置</div>
+                    <div class="value">{{$route.query.address}}</div>
+                </div>
+                <div class="cell clear">
+                    <div class="title">首次报警时间</div>
+                    <div class="value">2017-11-08 13:33</div>
+                </div>
+                <div class="cell clear">
+                    <div class="title">最近报警时间</div>
+                    <div class="value">2017-11-08 13:33</div>
+                </div>
+                <div class="cell clear">
+                    <div class="title">报警次数</div>
+                    <div class="value">{{$route.query.count}}</div>
+                </div>
             </div>
-            <ul class="surveillance-table-view">
-                <li class="surveillance-table-cell" v-for="item in $route.query.count">
-                    <div class="padding">
-                        <img src="/static/WX20171101-165733.png"/>
-                        <div class="time">
-                            <span>2017-11-11</span>
-                            <span>09:18</span>
-                        </div>
-                    </div>
-                </li>
-            </ul>
             <div class="title-bar">
                 <div class="label">警情处理状态跟踪</div>
             </div>
             <div class="alarm-record-wrap">
                 <!--<mko-double-cell icon="icon-device-succ" title="已确认正常" label="2017-11-08 14:30"></mko-double-cell>-->
-                <mko-double-cell icon="icon-device-warn" :title="'已通知负责人：' + personFilter(choosePersonResults.datas)" :label="timeFomat(choosePersonResults.time)" v-if="choosePersonResults.datas.length > 0"></mko-double-cell>
-                <mko-double-cell icon="icon-device-danger" title="待处理" label="2017-11-08 12:30"></mko-double-cell>
+                <mko-double-cell icon="icon-device-warn" :title="'已通知负责人：' + personFilter(choosePersonResults.datas)"
+                                 :label="timeFomat(choosePersonResults.time)"
+                                 v-if="choosePersonResults.datas.length > 0"></mko-double-cell>
+                <mko-double-cell icon="icon-device-danger" title="待处理" label="2017-11-08 13:33" v-for="item in $route.query.count" @click="popupShow = true;">
+                    <img class="alarm-img" src="/static/WX20171101-165733.png"/>
+                </mko-double-cell>
             </div>
             <div class="btn" v-if="$route.query.status == 2">
                 <mko-button size="large" @click="choosePerson">通知责任人</mko-button>
                 <mko-button class="paichu" size="large" plain @click="submit">排除风险</mko-button>
             </div>
         </div>
+        <div class="photo-preview">
+            <mt-popup v-model="popupShow">
+                <div class="photo">
+                    <img src="/static/WX20171101-165733.png" width="350" height="350">
+                </div>
+            </mt-popup>
+        </div>
     </div>
 </template>
 <script>
-    import { Toast } from 'mint-ui'
+    import {Toast} from 'mint-ui'
     import moment from 'moment'
     export default {
         data() {
@@ -45,12 +61,13 @@
                 choosePersonResults: {
                     datas: [],
                     time: ''
-                }
+                },
+                popupShow: false
             }
         },
         activated() {
             let CacheKey = `videoDeviceAlarmDetail_${this.$route.params.id}`;
-            if(sessionStorage.getItem(CacheKey)) {
+            if (sessionStorage.getItem(CacheKey)) {
                 this.choosePersonResults = JSON.parse(sessionStorage.getItem(CacheKey));
             } else {
                 this.choosePersonResults = {
@@ -95,8 +112,8 @@
                 }).then(msg => {
                     if (msg === "confirm") {
                         let json = JSON.parse(sessionStorage.getItem('videoDeviceDatas'));
-                        for(let [index, item] of json.deviceAlarmDatas.entries()) {
-                            if(item.id === this.$route.params.id) {
+                        for (let [index, item] of json.deviceAlarmDatas.entries()) {
+                            if (item.id === this.$route.params.id) {
                                 json.deviceAlarmDatas.splice(index, 1);
                             }
                         }
@@ -111,7 +128,7 @@
             },
             personFilter(datas) {
                 let text = []
-                for(let item of datas) {
+                for (let item of datas) {
                     text.push(item.name);
                 }
                 return text.join(',');
@@ -124,6 +141,31 @@
 
     .AlarmDetail {
         .page-wrap {
+            .title-card {
+                margin: 14px;
+                padding: 8px 14px;
+                border-radius: 4px;
+                box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.10);
+                letter-spacing: 0;
+                background-color: #FFFFFF;
+                .cell {
+                    padding: 6px 0;
+                    line-height: 14px;
+                    .title {
+                        float: left;
+                        width: 24%;
+                        margin-right: 14px;
+                        font-size: 14px;
+                        color: @baseText03;
+                    }
+                    .value {
+                        float: left;
+                        width: 70%;
+                        font-size: 14px;
+                        color: @baseText02;
+                    }
+                }
+            }
             .title-wrap-a {
                 width: 100%;
                 height: 44px;
@@ -200,10 +242,13 @@
                 }
             }
             .btn {
+                position: fixed;
+                bottom: 0;
                 width: 100%;
-                margin-top: 14px;
-                .paichu {
-                    margin-top: 10px;
+                background-color: #fff;
+                padding: 14px 0;
+                .mko-button + .mko-button {
+                    margin-top: 14px;
                 }
             }
         }
@@ -219,6 +264,10 @@
             }
         }
         .alarm-record-wrap {
+            .alarm-img {
+                width: auto;
+                height: 43px;
+            }
             .mko-double-cell + .mko-double-cell {
                 position: relative;
                 &:after {
@@ -230,6 +279,32 @@
                     width: 3px;
                     background-color: @baseBorder;
                 }
+            }
+        }
+        .photo-preview {
+            .mint-popup {
+                padding-top: 30px;
+                background: none;
+                .photo {
+                    img {
+                        border-radius: 4px;
+                    }
+                }
+                .cancel {
+                    position: absolute;
+                    right: 0;
+                    top: -10px;
+                    font-size: 36px;
+                    font-weight: 600;
+                    color: #fff;
+                }
+                .delete {
+                    margin-top: 20px;
+                }
+            }
+            .v-modal {
+                opacity: .8;
+                background: #565656;
             }
         }
     }
