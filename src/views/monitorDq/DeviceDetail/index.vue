@@ -100,7 +100,10 @@
                 });
             },
             DrawChart1(ec){
-                let data = parseInt(Math.random() * 220);
+                let datas = [19.5, 26.1, 20.3, 19.8];
+                let i = parseInt(Math.random() * 4);
+                let data = datas[i];
+
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -116,8 +119,8 @@
                     },
                     series: [
                         {
-                            max: 220,
-                            name: '业务指标',
+                            max: 100,
+                            name: '',
                             type: 'gauge',
                             splitNumber: 5,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
@@ -178,7 +181,9 @@
                 })
             },
             DrawChart2(ec){
-                let data = parseInt(Math.random() * 1000);
+                let datas = [0.23, 0.24, 0.25, 0.22];
+                let i = parseInt(Math.random() * 4);
+                let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -194,8 +199,8 @@
                     },
                     series: [
                         {
-                            max: 1000,
-                            name: '业务指标',
+                            max: 1,
+                            name: '',
                             type: 'gauge',
                             splitNumber: 10,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
@@ -256,11 +261,9 @@
                 })
             },
             DrawChart3(ec){
-                let data = parseInt(Math.random() * 150);
-                while (data < 20) {
-                    console.log(data);
-                    data = parseInt(Math.random() * 150);
-                }
+                let datas = [31, 32, 35, 42];
+                let i = parseInt(Math.random() * 4);
+                let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-right'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -276,8 +279,8 @@
                     },
                     series: [
                         {
-                            min: 20,
-                            max: 150,
+                            min: 0,
+                            max: 80,
                             name: '线温',
                             type: 'gauge',
                             splitNumber: 5,       // 分割段数，默认为5
@@ -360,7 +363,7 @@
                     position: relative;
                     width: 33.33%;
                     float: left;
-                    .dashboard{
+                    .dashboard {
                         margin: auto;
                         height: 150px;
                     }

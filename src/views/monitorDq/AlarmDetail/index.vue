@@ -28,6 +28,10 @@
                     <div class="title">报警值</div>
                     <div class="value">{{data.alarmData}}</div>
                 </div>
+                <div class="cell clear">
+                    <div class="title">警告值</div>
+                    <div class="value">{{data.desc?data.desc.split('：')[1]:''}}</div>
+                </div>
             </div>
 
             <div class="title-bar">

@@ -85,9 +85,16 @@
             },
             DrawChart2(ec){
                 let names = ['压力值(Pa)', '水位值(米)'];
-                let maxs = [1000, 200];
+                let maxs = [1000, 3];
                 let max = maxs[this.$route.params.id - 1];
-                let data = parseInt(Math.random() * max);
+                let datas = [
+                    [200, 250, 300, 350],
+                    [1.5, 1.7, 1.4, 1.45],
+                ];
+                let i = parseInt(Math.random() * 4);
+                let data = datas[this.$route.params.id - 1][i];
+
+
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
