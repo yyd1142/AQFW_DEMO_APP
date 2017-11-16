@@ -49,6 +49,10 @@
         },
         activated(){
             this.refreshData();
+            this.DrawChart4(echarts);
+            this.DrawChart5(echarts);
+            this.DrawChart6(echarts);
+
             this.time = 30;
             let that = this;
             timer = setInterval(function () {
@@ -71,12 +75,11 @@
                 this.DrawChart1(echarts);
                 this.DrawChart2(echarts);
                 this.DrawChart3(echarts);
-                this.DrawChart4(echarts);
-                this.DrawChart5(echarts);
-                this.DrawChart6(echarts);
             },
             DrawChart1(ec){
-                let data = parseInt(Math.random() * 220);
+                let datas = [19.5, 26.1, 20.3, 19.8];
+                let i = parseInt(Math.random() * 4);
+                let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -92,7 +95,7 @@
                     },
                     series: [
                         {
-                            max: 220,
+                            max: 100,
                             name: '',
                             type: 'gauge',
                             splitNumber: 5,       // 分割段数，默认为5
@@ -154,7 +157,9 @@
                 })
             },
             DrawChart2(ec){
-                let data = parseInt(Math.random() * 1000);
+                let datas = [0.23, 0.24, 0.25, 0.22];
+                let i = parseInt(Math.random() * 4);
+                let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -170,8 +175,8 @@
                     },
                     series: [
                         {
-                            max: 1000,
-                            name: '业务指标',
+                            max: 1,
+                            name: '',
                             type: 'gauge',
                             splitNumber: 10,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
@@ -232,11 +237,9 @@
                 })
             },
             DrawChart3(ec){
-                let data = parseInt(Math.random() * 150);
-                while (data < 20) {
-                    console.log(data);
-                    data = parseInt(Math.random() * 150);
-                }
+                let datas = [31, 32, 35, 42];
+                let i = parseInt(Math.random() * 4);
+                let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-right'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -252,8 +255,8 @@
                     },
                     series: [
                         {
-                            min: 20,
-                            max: 150,
+                            min: 0,
+                            max: 100,
                             name: '线温',
                             type: 'gauge',
                             splitNumber: 5,       // 分割段数，默认为5
@@ -317,8 +320,8 @@
             DrawChart4(ec){
 
                 let xData = [];
-                let initDate = new Date(1968, 10, 4);
-                for (let i = 0; i < 60; i++) {
+                let initDate = new Date(2017, 10, 1);
+                for (let i = 0; i < 6; i++) {
                     if (i != 0)
                         initDate.setDate(initDate.getDate() + 1);
 
@@ -327,17 +330,12 @@
 
                 }
 
-                let yData = [];
-                let initValue = 10;
-                for (let i = 0; i < 60; i++) {
-                    let r = parseInt(Math.random() * 20);
-                    let f = r % 2 == 0 ? r : (-1 * r);
-                    initValue += f;
-                    if (initValue < 0) {
-                        initValue += Math.abs(f) * 2;
-                    }
-                    yData.push(initValue);
-                }
+                let yDatas = [
+                    [19.5, 26.1, 20.3, 19.8, 19.6, 20.1],
+                    [19.2, 19.4, 19.5, 19.6, 20.1, 20.2],
+                ];
+                let i = Math.round(Math.random() * 1, 0);
+                let yData = yDatas[i];
 
                 let myChart = ec.init(this.$refs['lineChart-1'], theme);
                 myChart.setOption({
@@ -372,9 +370,9 @@
                                 }
                             },
                             axisLabel: {
-//                                interval: 0,
+                                interval: 0,
                                 textStyle: {
-                                    fontSize: 1,
+                                    fontSize: 10,
                                     fontWeight: 100
                                 }
                             },
@@ -403,7 +401,7 @@
                     ],
                     series: [
                         {
-                            name: '成交',
+                            name: '电压值',
                             type: 'line',
                             smooth: true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
@@ -415,8 +413,8 @@
             DrawChart5(ec){
 
                 let xData = [];
-                let initDate = new Date(1968, 10, 4);
-                for (let i = 0; i < 60; i++) {
+                let initDate = new Date(2017, 10, 1);
+                for (let i = 0; i < 6; i++) {
                     if (i != 0)
                         initDate.setDate(initDate.getDate() + 1);
 
@@ -425,17 +423,12 @@
 
                 }
 
-                let yData = [];
-                let initValue = 10;
-                for (let i = 0; i < 60; i++) {
-                    let r = parseInt(Math.random() * 20);
-                    let f = r % 2 == 0 ? r : (-1 * r);
-                    initValue += f;
-                    if (initValue < 0) {
-                        initValue += (Math.abs(f) * 2);
-                    }
-                    yData.push(initValue);
-                }
+                let yDatas = [
+                    [0.31, 0.23, 0.24, 0.28, 0.32, 0.35],
+                    [0.23, 0.24, 0.25, 0.22, 0.46, 0.42],
+                ];
+                let i = Math.round(Math.random() * 1, 0);
+                let yData = yDatas[i];
 
                 let myChart = ec.init(this.$refs['lineChart-2'], theme);
                 myChart.setOption({
@@ -452,7 +445,7 @@
                         trigger: 'axis'
                     },
                     legend: {
-                        data: ['电压']
+                        data: ['电流']
                     },
                     toolbox: {
                         show: true,
@@ -470,9 +463,9 @@
                                 }
                             },
                             axisLabel: {
-//                                interval: 0,
+                                interval: 0,
                                 textStyle: {
-                                    fontSize: 1,
+                                    fontSize: 10,
                                     fontWeight: 100
                                 }
                             },
@@ -501,7 +494,7 @@
                     ],
                     series: [
                         {
-                            name: '成交',
+                            name: '电流值',
                             type: 'line',
                             smooth: true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
@@ -513,7 +506,23 @@
             DrawChart6(ec){
                 let myChart = ec.init(this.$refs['lineChart-3'], theme);
 
-                let xData = ['13:30', '13:31', '13:32', '13:33', '13:34'];
+                let xData = [];
+                let initDate = new Date(2017, 10, 1);
+                for (let i = 0; i < 6; i++) {
+                    if (i != 0)
+                        initDate.setDate(initDate.getDate() + 1);
+
+                    let date = `${initDate.getFullYear()}/${initDate.getMonth() || 12}/${initDate.getDate()}`;
+                    xData.push(date);
+
+                }
+
+                let yDatas = [
+                    [31, 32, 35, 42, 34, 29],
+                    [29, 31, 34, 41, 32, 28],
+                ];
+                let i = Math.round(Math.random() * 1, 0);
+                let yData = yDatas[i];
 
 
                 myChart.setOption({
@@ -546,6 +555,13 @@
                                     color: '#333'
                                 }
                             },
+                            axisLabel: {
+                                interval: 0,
+                                textStyle: {
+                                    fontSize: 10,
+                                    fontWeight: 100
+                                }
+                            },
                         }
                     ],
                     yAxis: [
@@ -563,9 +579,9 @@
                     ],
                     series: [
                         {
-                            name: '最高气温',
+                            name: '温度值',
                             type: 'line',
-                            data: [11, 11, 15, 13, 12],
+                            data: yData,
                             markPoint: {
                                 data: [
                                     {type: 'max', name: '最大值'},
@@ -578,21 +594,6 @@
                                 ]
                             }
                         },
-                        {
-                            name: '最低气温',
-                            type: 'line',
-                            data: [1, -2, 2, 5, 3],
-                            markPoint: {
-                                data: [
-                                    {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
-                                ]
-                            },
-                            markLine: {
-                                data: [
-                                    {type: 'average', name: '平均值'}
-                                ]
-                            }
-                        }
                     ]
                 });
             },
@@ -623,7 +624,7 @@
                 position: relative;
                 width: 33.33%;
                 float: left;
-                .dashboard{
+                .dashboard {
                     margin: auto;
                     height: 150px;
                 }

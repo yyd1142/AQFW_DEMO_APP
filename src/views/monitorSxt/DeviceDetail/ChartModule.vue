@@ -35,7 +35,11 @@
         mounted() {
         },
         activated(){
+            type = this.$route.params.id - 1;
+
             this.refreshData();
+            this.DrawChart4(echarts);
+
             this.time = 30;
             let that = this;
             timer = setInterval(function () {
@@ -46,7 +50,6 @@
                 }
             }, 1000);
 
-            type = this.$route.params.id - 1;
         },
         deactivated() {
             clearInterval(timer);
@@ -57,13 +60,18 @@
         methods: {
             refreshData(){
                 this.DrawChart2(echarts);
-                this.DrawChart4(echarts);
             },
             DrawChart2(ec){
                 let names = ['压力值(Pa)', '水位值(米)'];
-                let maxs = [1000, 200];
+                let maxs = [1000, 3];
                 let max = maxs[this.$route.params.id - 1];
-                let data = parseInt(Math.random() * max);
+                let datas = [
+                    [200, 250, 300, 350],
+                    [1.5, 1.7, 1.4, 1.45],
+                ];
+                let i = parseInt(Math.random() * 4);
+                let data = datas[this.$route.params.id - 1][i];
+
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -80,7 +88,7 @@
                     series: [
                         {
                             max: max,
-                            name: '',
+                            name: names[type],
                             type: 'gauge',
                             splitNumber: 10,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
@@ -144,8 +152,8 @@
             DrawChart4(ec){
 
                 let xData = [];
-                let initDate = new Date(1968, 10, 4);
-                for (let i = 0; i < 60; i++) {
+                let initDate = new Date(2017, 10, 1);
+                for (let i = 0; i < 6; i++) {
                     if (i != 0)
                         initDate.setDate(initDate.getDate() + 1);
 
@@ -154,17 +162,11 @@
 
                 }
 
-                let yData = [];
-                let initValue = 10;
-                for (let i = 0; i < 60; i++) {
-                    let r = parseInt(Math.random() * 20);
-                    let f = r % 2 == 0 ? r : (-1 * r);
-                    initValue += f;
-                    if (initValue < 0) {
-                        initValue += Math.abs(f) * 2;
-                    }
-                    yData.push(initValue);
-                }
+                let yDatas = [
+                    [200, 250, 300, 350, 320, 360],
+                    [1.5, 1.7, 1.4, 1.45, 1.43, 1.51],
+                ];
+                let yData = yDatas[type];
 
                 let myChart = ec.init(this.$refs['lineChart-1'], theme);
                 myChart.setOption({
@@ -181,7 +183,7 @@
                         trigger: 'axis'
                     },
                     legend: {
-                        data: ['压力值']
+//                        data: ['压力值']
                     },
                     toolbox: {
                         show: true,
@@ -199,9 +201,9 @@
                                 }
                             },
                             axisLabel: {
-//                                interval: 0,
+                                interval: 0,
                                 textStyle: {
-                                    fontSize: 1,
+                                    fontSize: 10,
                                     fontWeight: 100
                                 }
                             },
@@ -230,7 +232,7 @@
                     ],
                     series: [
                         {
-                            name: '',
+                            name: names[type],
                             type: 'line',
                             smooth: true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
@@ -256,7 +258,7 @@
             background-color: #fff;
             .timer {
                 float: right;
-                padding:10px 10px 0 0;
+                padding: 10px 10px 0 0;
             }
         }
         .chart-wrap {
