@@ -14,7 +14,7 @@
                 </div>
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-mid"></div>
-                    <div class="sign">电流(mA)</div>
+                    <div class="sign">电流(A)</div>
                 </div>
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-right"></div>
@@ -433,7 +433,7 @@
                 let myChart = ec.init(this.$refs['lineChart-2'], theme);
                 myChart.setOption({
                     title: {
-                        text: '电流(mA)',
+                        text: '电流(A)',
                         padding: 10,
                         textStyle: {
                             fontWeight: 'normal',

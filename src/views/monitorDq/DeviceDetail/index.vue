@@ -13,7 +13,7 @@
                     </div>
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-mid"></div>
-                        <div class="sign">电流(mA)</div>
+                        <div class="sign">电流(A)</div>
                     </div>
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-right"></div>
