@@ -41,14 +41,14 @@
 
             <!--列表-->
             <div class="sel-wrap" @click.self="isSel=false" v-show="isSel">
-                <mko-cell title="全部" @click="getDvcList">
+                <mko-cell class="sel-item" title="全部" @click="getDvcList">
                     <div class="icon-tick-blue-1 fr" v-show="isSelAll"></div>
                 </mko-cell>
-                <mko-cell :class="t.isSel?'active':''" :title="`只看${t.unitName}`" @click="selDvcList(i)"
+                <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`" @click="selDvcList(i)"
                           v-show="tabI==0" v-for="(t,i) in dvcXfTypeList">
                     <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
                 </mko-cell>
-                <mko-cell :class="t.isSel?'active':''" :title="`只看${t.unitName}`" @click="selDvcList(i)"
+                <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`" @click="selDvcList(i)"
                           v-show="tabI==1" v-for="(t,i) in dvcAjTypeList">
                     <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
                 </mko-cell>
@@ -540,10 +540,13 @@
         .sel-wrap {
             position: fixed;
             z-index: 1;
-            top: @headerHeight+@headerTop+186px;
+            top: @headerHeight+@headerTop+262px;
             bottom: 0;
             width: 100%;
             background-color: @baseMasking;
+            .sel-item {
+                background-color: @baseBG02;
+            }
         }
 
         .badge {
