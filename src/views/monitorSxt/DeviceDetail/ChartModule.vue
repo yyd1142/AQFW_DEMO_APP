@@ -26,6 +26,8 @@
     let timer = null;
     let type = '';
     let names = ['压力值(Pa)', '水位值(米)'];
+    let i = 0;
+
     export default {
         data () {
             return {
@@ -41,6 +43,7 @@
         activated(){
             type = this.$route.params.id - 1;
 
+            i = 0;
             this.refreshData();
             this.DrawChart4(echarts);
 
@@ -64,16 +67,18 @@
         methods: {
             refreshData(){
                 this.DrawChart2(echarts);
+                i++;
+                if (i > 4)
+                    i = 0;
             },
             DrawChart2(ec){
                 let maxs = [1000, 3];
-                let max = maxs[this.$route.params.id - 1];
+                let max = maxs[type];
                 let datas = [
-                    [200, 250, 300, 350],
-                    [1.5, 1.7, 1.4, 1.45],
+                    [200, 250, 300, 350, 310],
+                    [1.5, 1.7, 1.4, 1.45, 1.46],
                 ];
-                let i = parseInt(Math.random() * 4);
-                let data = datas[this.$route.params.id - 1][i];
+                let data = datas[type][i];
 
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({

@@ -100,9 +100,9 @@
                 });
             },
             DrawChart1(ec){
-                let datas = [19.5, 26.1, 20.3, 19.8];
-                let i = parseInt(Math.random() * 4);
-                let data = datas[i];
+//                let datas = [19.5, 26.1, 20.3, 19.8];
+//                let i = parseInt(Math.random() * 4);
+                let data = 19.5;
 
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
                 myChart.setOption({
@@ -183,7 +183,7 @@
             DrawChart2(ec){
                 let datas = [0.23, 0.24, 0.25, 0.22];
                 let i = parseInt(Math.random() * 4);
-                let data = datas[i];
+                let data = datas[0];
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
                     tooltip: {
@@ -263,7 +263,7 @@
             DrawChart3(ec){
                 let datas = [31, 32, 35, 42];
                 let i = parseInt(Math.random() * 4);
-                let data = datas[i];
+                let data = datas[0];
                 let myChart = ec.init(this.$refs['dashboard-right'], theme);
                 myChart.setOption({
                     tooltip: {

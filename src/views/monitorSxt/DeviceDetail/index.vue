@@ -96,7 +96,7 @@
                     [1.5, 1.7, 1.4, 1.45],
                 ];
                 let i = parseInt(Math.random() * 4);
-                let data = datas[this.$route.params.id - 1][i];
+                let data = datas[this.$route.params.id - 1][0];
 
 
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);

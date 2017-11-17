@@ -34,7 +34,7 @@
     import echarts from 'echarts';
     let theme = 'macarons';
     let timer = null;
-
+    let i = 0;
 
     export default {
         data () {
@@ -48,6 +48,7 @@
         mounted() {
         },
         activated(){
+            i = 0;
             this.refreshData();
             this.DrawChart4(echarts);
             this.DrawChart5(echarts);
@@ -75,10 +76,12 @@
                 this.DrawChart1(echarts);
                 this.DrawChart2(echarts);
                 this.DrawChart3(echarts);
+                i++;
+                if (i > 4)
+                    i = 0;
             },
             DrawChart1(ec){
-                let datas = [19.5, 26.1, 20.3, 19.8];
-                let i = parseInt(Math.random() * 4);
+                let datas = [19.5, 19.6, 19.4, 19.5, 19.3];
                 let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
                 myChart.setOption({
@@ -157,8 +160,7 @@
                 })
             },
             DrawChart2(ec){
-                let datas = [0.23, 0.24, 0.25, 0.22];
-                let i = parseInt(Math.random() * 4);
+                let datas = [0.23, 0.24, 0.25, 0.22, 0.23];
                 let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
@@ -237,8 +239,7 @@
                 })
             },
             DrawChart3(ec){
-                let datas = [31, 32, 35, 42];
-                let i = parseInt(Math.random() * 4);
+                let datas = [31, 32, 35, 42, 44];
                 let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-right'], theme);
                 myChart.setOption({
@@ -335,7 +336,7 @@
                     [19.2, 19.4, 19.5, 19.6, 20.1, 20.2],
                 ];
                 let i = Math.round(Math.random() * 1, 0);
-                let yData = yDatas[i];
+                let yData = yDatas[0];
 
                 let myChart = ec.init(this.$refs['lineChart-1'], theme);
                 myChart.setOption({
@@ -428,7 +429,7 @@
                     [0.23, 0.24, 0.25, 0.22, 0.46, 0.42],
                 ];
                 let i = Math.round(Math.random() * 1, 0);
-                let yData = yDatas[i];
+                let yData = yDatas[0];
 
                 let myChart = ec.init(this.$refs['lineChart-2'], theme);
                 myChart.setOption({
@@ -522,7 +523,7 @@
                     [29, 31, 34, 41, 32, 28],
                 ];
                 let i = Math.round(Math.random() * 1, 0);
-                let yData = yDatas[i];
+                let yData = yDatas[0];
 
 
                 myChart.setOption({
