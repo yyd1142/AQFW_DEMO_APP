@@ -8,7 +8,7 @@
         <mko-cell title="安装时间" val="2017-11-01"></mko-cell>
         <mko-cell title="设备有效期" val="2020-11-01"></mko-cell>
         <mko-cell title="监控类型" val="自动火灾报警监控"></mko-cell>
-        <mko-cell title="安装位置" :val="data.pos"></mko-cell>
+        <mko-cell title="安装位置" :val="data.pos" @click="showHiddenValue(data.pos,'安装位置')"></mko-cell>
         <mko-cell title="设备状态" :val="data.status==0?'停用':'正常'"></mko-cell>
         <!--<mko-cell title="设备编号" val="无"></mko-cell>-->
     </div>
@@ -44,6 +44,12 @@
                     this.data = JSON.parse(data)[parseInt(this.$route.params.id) - 1];
                 }
             },
+            showHiddenValue(msg, title){
+                this.$MKODialog({
+                    title: title,
+                    msg: msg
+                })
+            }
         },
         components: {}
     }
