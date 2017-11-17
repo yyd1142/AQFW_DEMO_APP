@@ -46,7 +46,7 @@ export default {
                 { class: 'sheshi-icon', text: '设施设备', url: '/device' },
                 { class: 'shipin-icon', text: '视频监控', url: '/monitorVideo' },
                 { class: 'dianqi-icon', text: '电气监测', url: '/monitorDq' },
-                { class: 'jibenxinxi-icon', text: '水系统监测', url: '/monitorSxt' }
+                { class: 'icon-sxt-monitor', text: '水系统监测', url: '/monitorSxt' }
                 ],
             aq_actions: [
                 { class: 'jibenxinxi-icon', text: '基本信息', url: '/basic_info' },
