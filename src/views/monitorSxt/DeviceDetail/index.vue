@@ -7,7 +7,10 @@
         <div class="page-wrap monitor-sxt-device-wrap">
             <div class="chart-module-wrap">
                 <div class="chart-wrap clear">
-                    <div class="dashboard" ref="dashboard-mid"></div>
+                    <div class="dashboard-wrap">
+                        <div class="dashboard" ref="dashboard-mid"></div>
+                        <div class="sign">{{chartNames[$route.params.id - 1]}}</div>
+                    </div>
                 </div>
                 <div class="more" @click="goAllChart">
                     查看全部图表 <span class="sign icon-link-arrow"></span>
@@ -35,6 +38,7 @@
             return {
                 tabI: 0,
                 tabItems: ['设备信息', '报警记录'],
+                chartNames: ['压力值(Pa)', '水位值(米)'],
                 status: '',
             }
         },
@@ -84,7 +88,7 @@
                 });
             },
             DrawChart2(ec){
-                let names = ['压力值(Pa)', '水位值(米)'];
+                let names = ['', ''];
                 let maxs = [1000, 3];
                 let max = maxs[this.$route.params.id - 1];
                 let datas = [
@@ -190,11 +194,23 @@
             margin-bottom: 14px;
             .chart-wrap {
                 background-color: #fff;
-                .dashboard {
-                    margin: auto;
-                    height: 280px;
-                    /*width: 33.33%;*/
-                    /*float: left;*/
+                .dashboard-wrap {
+                    position: relative;
+                    .dashboard {
+                        margin: auto;
+                        height: 280px;
+                    }
+                    .sign {
+                        position: absolute;
+                        bottom: 24px;
+                        left: 50%;
+                        transform: translate(-50%, 0);
+                        -webkit-transform: translate(-50%, 0);
+                        min-width: 75px;
+                        font-size: 12px;
+                        text-align: center;
+                        color: @mainBlue;
+                    }
                 }
             }
             .more {

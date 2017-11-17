@@ -8,7 +8,10 @@
                 <div class="timer">倒计时：{{time || '0'}}</div>
             </div>
             <div class="chart-wrap clear">
-                <div class="dashboard" ref="dashboard-mid"></div>
+                <div class="dashboard-wrap">
+                    <div class="dashboard" ref="dashboard-mid"></div>
+                    <div class="sign">{{chartNames[$route.params.id - 1]}}</div>
+                </div>
             </div>
             <div class="chart-wrap clear">
                 <div class="line-chart" ref="lineChart-1"></div>
@@ -28,6 +31,7 @@
             return {
                 allShow: false,
                 time: 30,
+                chartNames: ['压力值(Pa)', '水位值(米)'],
             }
         },
         watch: {},
@@ -62,7 +66,6 @@
                 this.DrawChart2(echarts);
             },
             DrawChart2(ec){
-                let names = ['压力值(Pa)', '水位值(米)'];
                 let maxs = [1000, 3];
                 let max = maxs[this.$route.params.id - 1];
                 let datas = [
@@ -88,7 +91,7 @@
                     series: [
                         {
                             max: max,
-                            name: names[type],
+                            name: '',
                             type: 'gauge',
                             splitNumber: 10,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
@@ -143,7 +146,7 @@
                                     fontWeight: 'thin'
                                 }
                             },
-                            data: [{value: data, name: names[this.$route.params.id - 1]}]
+                            data: [{value: data, name: ''}]
                         }
                     ]
                 })
@@ -264,9 +267,23 @@
         .chart-wrap {
             margin-bottom: 14px;
             background-color: #fff;
-            .dashboard {
-                margin: auto;
-                height: 280px;
+            .dashboard-wrap {
+                position: relative;
+                .dashboard {
+                    margin: auto;
+                    height: 280px;
+                }
+                .sign {
+                    position: absolute;
+                    bottom: 24px;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                    -webkit-transform: translate(-50%, 0);
+                    min-width: 75px;
+                    font-size: 12px;
+                    text-align: center;
+                    color: @mainBlue;
+                }
             }
             .line-chart {
                 margin: auto;
