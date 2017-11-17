@@ -119,6 +119,7 @@
     }
 </script>
 <style lang="less">
+    @import "../../config.less";
     .LiveVideoDetail {
         .player-wrap {
             position: relative;
@@ -150,19 +151,19 @@
                 float: left;
                 text-align: CENTER;
                 height: 24px;
-                line-height: 24px;
+                line-height: 26px;
+                color: @mainBlue;
                 &.activied {
-                    color: #3CA0E8;
                     span {
-                        border-bottom: 2px solid #3CA0E8;
+                        border-bottom: 2px solid @mainBlue;
                         display: block;
-                        width: 56px;
+                        width: 62px;
                         margin-left: auto;
                         margin-right: auto;
                     }
                 }
                 span {
-                    font-size: 14px;
+                    font-size: 15px;
                 }
             }
         }

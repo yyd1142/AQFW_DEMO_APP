@@ -236,20 +236,20 @@
                 width: 50%;
                 float: left;
                 height: 24px;
-                line-height: 24px;
+                line-height: 26px;
                 text-align: CENTER;
                 color: @mainBlue;
                 &.active {
                     span {
                         border-bottom: 2px solid @mainBlue;
                         display: block;
-                        width: 56px;
+                        width: 62px;
                         margin-left: auto;
                         margin-right: auto;
                     }
                 }
                 span {
-                    font-size: 14px;
+                    font-size: 15px;
                 }
             }
         }

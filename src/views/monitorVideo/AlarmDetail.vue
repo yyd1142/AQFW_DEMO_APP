@@ -34,7 +34,7 @@
                 <mko-double-cell icon="icon-device-warn" :title="'已通知负责人：' + personFilter(choosePersonResults.datas)"
                                  :label="timeFomat(choosePersonResults.time)"
                                  v-if="choosePersonResults.datas.length > 0"></mko-double-cell>
-                <mko-double-cell icon="icon-device-danger" title="待处理" label="2017-11-08 13:33" v-for="item in $route.query.count" @click="popupShow = true;">
+                <mko-double-cell icon="icon-device-danger" title="待处理" :label="'2017-11-08 13:33 ' + dangerFilter($route.query.name)" v-for="item in $route.query.count" @click="popupShow = true;">
                     <img class="alarm-img" src="/static/WX20171101-165733.png"/>
                 </mko-double-cell>
             </div>
@@ -132,6 +132,15 @@
                     text.push(item.name);
                 }
                 return text.join(',');
+            },
+            dangerFilter(name) {
+                if(name === '消防通道堵塞监测') {
+                    return '消防通道堵塞'
+                } else if (name === '明火监测'){
+                    return '监测到明火'
+                } else {
+
+                }
             }
         }
     }
