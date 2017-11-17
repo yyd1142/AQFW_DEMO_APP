@@ -60,16 +60,6 @@
 
     .monitor-dq-device-wrap {
         .device-info-wrap {
-            .mko-basic-cell {
-                .title {
-                    width: 80px;
-                }
-                .value {
-                    flex: auto;
-                    -webkit-flex: auto;
-                    width: auto;
-                }
-            }
         }
     }
 </style>

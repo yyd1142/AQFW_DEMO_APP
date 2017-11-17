@@ -83,22 +83,16 @@
                 -webkit-transform: translate(0, -50%);
             }
             .title-icon {
-                /*position: relative;*/
                 margin-right: 14px;
                 min-width: 10px;
                 .icon {
                     display: block;
-                    /*position: absolute;*/
-                    /*margin: auto;*/
-                    /*left: 0;*/
-                    /*top: 0;*/
-                    /*bottom: 0;*/
                 }
             }
             .title {
-                flex: auto;
-                -webkit-flex: auto;
-                width: 60%;
+                flex: 0 0 112px;
+                -webkit-flex: 0 0 112px;
+                width: 112px;
                 margin-right: 10px;
                 line-height: @cellHeight;
                 font-size: 16px;
@@ -106,9 +100,9 @@
                 font-family: STHeitiSC-Light;
             }
             > .value {
-                flex: 0 0 120px;
-                -webkit-flex: 0 0 120px;
-                width: 120px;
+                flex: auto;
+                -webkit-flex: auto;
+                width: 40%;
                 line-height: @cellHeight;
                 text-align: right;
                 color: @baseText01;
