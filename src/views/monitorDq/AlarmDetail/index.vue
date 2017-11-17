@@ -40,8 +40,8 @@
             <div class="alarm-record-wrap">
                 <mko-double-cell icon="icon-device-succ" title="已确认正常" label="2017-11-08 14:30" v-if="data.status==0"></mko-double-cell>
                 <mko-double-cell icon="icon-device-warn" title="已通知" label="2017-11-08 12:47" v-if="data.status<=1"></mko-double-cell>
-                <mko-double-cell icon="icon-device-danger" title="待处理" label="2017-11-08 12:30"></mko-double-cell>
-                <mko-double-cell icon="icon-device-danger" title="待处理" label="2017-11-06 12:27"></mko-double-cell>
+                <mko-double-cell icon="icon-device-danger" title="待处理" :label="`2017-11-08 12:30 ${data.alarmType}`"></mko-double-cell>
+                <mko-double-cell icon="icon-device-danger" title="待处理" :label="`2017-11-06 12:27 ${data.alarmType}`"></mko-double-cell>
             </div>
 
             <div class="button-wrap" v-if="data.status!==0">

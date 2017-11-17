@@ -62,6 +62,8 @@
         .device-info-wrap {
             .mko-basic-cell {
                 .title {
+                    flex: 0 0 80px;
+                    -webkit-flex: 0 0 80px;
                     width: 80px;
                 }
                 .value {

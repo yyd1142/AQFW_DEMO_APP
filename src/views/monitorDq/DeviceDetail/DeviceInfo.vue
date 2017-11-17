@@ -60,6 +60,16 @@
 
     .monitor-dq-device-wrap {
         .device-info-wrap {
+            .title {
+                flex: 0 0 80px;
+                -webkit-flex: 0 0 80px;
+                width: 80px;
+            }
+            .value {
+                flex: auto;
+                -webkit-flex: auto;
+                width: auto;
+            }
         }
     }
 </style>

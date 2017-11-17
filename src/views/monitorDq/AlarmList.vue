@@ -18,8 +18,23 @@
         data () {
             return {
                 list: [
-                    {id: 1, name: '电气火灾监控探测', desc: '温度报警，警告值：0.0-60℃', alarmData: '72℃', count: 2, status: 2},
-                    {id: 2, name: '电气火灾监控探测', desc: '电流报警，警告值：0.0~0.6A', alarmData: '7.0A', status: 1}
+                    {
+                        id: 1,
+                        name: '电气火灾监控探测',
+                        desc: '温度报警，警告值：0.0-60℃',
+                        alarmType: '温度过高',
+                        alarmData: '72℃',
+                        count: 2,
+                        status: 2
+                    },
+                    {
+                        id: 2,
+                        name: '电气火灾监控探测',
+                        desc: '电流报警，警告值：0.0~0.6A',
+                        alarmType: '电流过高',
+                        alarmData: '7.0A',
+                        status: 1
+                    }
                 ]
             }
         },

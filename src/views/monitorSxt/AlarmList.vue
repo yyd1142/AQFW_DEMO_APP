@@ -18,8 +18,23 @@
         data () {
             return {
                 list: [
-                    {id: 1, name: '水压监测', desc: '水压报警，警告值：20.0~666.0kPa', alarmData: '672.0kPa', count: 2, status: 2},
-                    {id: 2, name: '水位监测', desc: '高度报警，警告值：0.5-2.0M', alarmData: '3.0M', status: 1}
+                    {
+                        id: 1,
+                        name: '水压监测',
+                        desc: '水压报警，警告值：20.0~666.0kPa',
+                        alarmType: '水压过高',
+                        alarmData: '672.0kPa',
+                        count: 2,
+                        status: 2
+                    },
+                    {
+                        id: 2,
+                        name: '水位监测',
+                        desc: '高度报警，警告值：0.5-2.0M',
+                        alarmType: '水位过高',
+                        alarmData: '3.0M',
+                        status: 1
+                    }
                 ]
             }
         },
