@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="placeholder-item"></div>
         <mko-header title="水系统监测"
                     :right-icon-text="status == 0 ? '启用': '停用'" @handleRightClick="changeStatus"
                     left-icon="icon-back" @handleLeftClick="back">

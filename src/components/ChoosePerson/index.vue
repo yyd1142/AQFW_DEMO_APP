@@ -190,7 +190,7 @@
         .person-table-view {
             width: 100%;
             background-color: #ffffff;
-            margin-top: 44px;
+            margin-top: 44px + @headerTop;
             .person-table-cell {
                 width: 100%;
                 box-sizing: border-box;

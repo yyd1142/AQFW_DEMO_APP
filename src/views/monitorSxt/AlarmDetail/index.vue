@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="placeholder-item"></div>
         <mko-header title="报警详情" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap monitor-sxt-alarm-wrap">
             <mko-info-bar v-if="data.status==0">已于2017-11-08 15:12排除该风险</mko-info-bar>

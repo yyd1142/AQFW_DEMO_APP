@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="placeholder-item"></div>
         <mko-header title="水系统监测" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap monitor-sxt-wrap">
             <mko-nav-bar>
