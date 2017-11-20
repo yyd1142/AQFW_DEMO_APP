@@ -18,7 +18,7 @@
             <mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel"></mko-form-cell>
             <mko-form-cell title="需要巡查" :val="(isEdit?formData.isC:info.isC)?'是':'否'" type="sel" :edit="isEdit"
                            @click="goSelIsC"></mko-form-cell>
-            <mko-form-cell title="绑定二维码" :val="isBindDevice ? '已绑定（012922）' : '绑定'" type="sel" :edit="isEdit"
+            <mko-form-cell title="绑定二维码" :val="isBindDevice ? '已绑定（'+ qrcode +'）' : '绑定'" type="sel" :edit="isEdit"
                            @click="bindQRCode"></mko-form-cell>
 
             <!--tab-->
@@ -141,7 +141,8 @@
                     {flex: 1, values: [{text: '否', value: false}, {text: '是', value: true}]}
                 ],
                 popupTitle: '',
-                isBindDevice: false
+                isBindDevice: false,
+                qrcode: ''
             }
         },
         watch: {
@@ -420,12 +421,14 @@
             bindQRCode() {
                 if (!this.isEdit) return false;
                 if (!this.isBindDevice) {
-                    this.$MKOPush({
-                        path: '/QRCode',
-                        query: {
-                            fromPath: this.$route.fullPath
+                    this.$ScanQRCode(result => {
+                        let data = result.response;
+                        if (data.length === 17) {
+                            this.readerQRCode(data);
+                        } else {
+                            this.$MKODialog({msg: '无效二维码'});
                         }
-                    });
+                    })
                 } else {
                     this.$MKODialog({
                         title: "确定解除绑定吗？",
@@ -437,6 +440,22 @@
                             this.isBindDevice = false;
                         }
                     });
+                }
+            },
+            readerQRCode(data) {
+                //WX: '地区', E2: '设备类型', A1: '供应商', 16623: '设备投入使用日期', 122: '拓展码', Y01: '唯一标识'
+                let area = data.substring(0, 2);
+                let deviceType = data.substring(2, 4);
+                let supplier = data.substring(4, 6);
+                let installDate = data.substring(6, 11);
+                let expandCode = data.substring(11, 14);
+                let code = data.substring(14, 17);
+                if (code === 'Y04') {
+                    this.$MKODialog({ msg: '绑定成功' });
+                    this.isBindDevice = true;
+                    this.qrcode = code;
+                } else {
+                    this.$MKODialog({ msg: '无法绑定该二维码' });
                 }
             }
         },

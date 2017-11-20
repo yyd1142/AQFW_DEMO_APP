@@ -1,7 +1,7 @@
 <template>
     <div class="AlarmDetail">
         <div class="placeholder-item"></div>
-        <mko-header title="报警详情" left-icon="icon-back" @handleLeftClick="back" right-icon="icon-message-prompt-no"
+        <mko-header title="报警详情" left-icon="icon-back" @handleLeftClick="back" right-icon="icon-alarm-video"
                     @handleRightClick="liveVideo"></mko-header>
         <div class="page-wrap">
             <div class="title-card">

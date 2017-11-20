@@ -455,7 +455,7 @@ export default {
                         this.adminActions[0].class = data.task > 0 ? 'task-icon admin-has-data-icon' : 'task-icon'
                         this.adminActions[1].class = data.notice > 0 ? 'notice-icon admin-has-data-icon' : 'notice-icon'
                         this.aq_actions[1].class = data.notice > 0 ? 'has-tongzhigonggao-icon' : 'tongzhigonggao-icon'
-                        this.hasMessageDataClass = data.message > 0 ? 'icon-message-prompt-has' : 'icon-message-prompt-no'
+                        this.hasMessageDataClass = data.message > 0 ? true : false
                         this.actions[1].class = data.dwYHK > 0 ? "has-yinhuan-icon" : 'yinhuan-icon'
                         this.resError = false;
                     }
@@ -466,7 +466,7 @@ export default {
                     this.adminActions[0].class = data.task > 0 ? 'task-icon admin-has-data-icon' : 'task-icon'
                     this.adminActions[1].class = data.notice > 0 ? 'notice-icon admin-has-data-icon' : 'notice-icon'
                     this.aq_actions[1].class = data.notice > 0 ? 'has-tongzhigonggao-icon' : 'tongzhigonggao-icon'
-                    this.hasMessageDataClass = data.message > 0 ? 'icon-message-prompt-has' : 'icon-message-prompt-no'
+                    this.hasMessageDataClass = data.message > 0 ? true : false
                     this.actions[1].class = data.dwYHK > 0 ? "has-yinhuan-icon" : 'yinhuan-icon'
                     localStorage.setItem('hasNewMessage', JSON.stringify(data))
                 } else {
@@ -487,7 +487,6 @@ export default {
             })
         },
         QRCode() {
-            // this.readerQRCode('WXE2A116623122Y03');
             this.$ScanQRCode(result => {
                 let data = result.response;
                 if (data.length === 17) {
@@ -523,8 +522,6 @@ export default {
                 this.goBindDevice()
             } else if (code === 'Y03') {
                 this.goSpotInfo();
-            } else {
-
             }
         },
         goDeviceDetail() {
