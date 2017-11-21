@@ -519,9 +519,13 @@ export default {
                     }
                 });
             } else if (code === 'Y02') {
-                this.goBindDevice()
+                this.goBindDevice(false)
             } else if (code === 'Y03') {
                 this.goSpotInfo();
+            } else if (code === 'Y08') {
+                this.goBindDevice(true);
+            } else {
+
             }
         },
         goDeviceDetail() {
@@ -537,14 +541,15 @@ export default {
             let from = '/enter/home';
             this.$MKOPush(nextPath, from, true);
         },
-        goBindDevice() {
+        goBindDevice(type) {
             let nextPath = {
                 name: 'BindDevice',
                 params: {
                     id: '38986'
                 },
                 query: {
-                    from: 'home'
+                    from: 'home',
+                    isBindDevice: type
                 }
             }
             let from = '/enter/home';

@@ -121,8 +121,8 @@
                     let zhibanTasks = [];
                     if (routineXunchaTask.code == 0) {
                         if (routineXunchaTask.response && routineXunchaTask.response.length > 0) {
-                            for (let item of routineXunchaTask.response) {
-                                if (item.name === '日常巡查') item.name = '日常巡查（默认）';
+                            for(let item of routineXunchaTask.response) {
+                                if(item.ruleId === 0) item.name = `${item.name}（默认）`;
                             }
                             xunchaTasks = routineXunchaTask.response;
                         }

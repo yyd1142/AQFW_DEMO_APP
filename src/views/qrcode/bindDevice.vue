@@ -2,7 +2,7 @@
     <div class="bind-device">
         <div v-show="!$route.query.sel">
             <div class="placeholder-item"></div>
-            <mko-header title="绑定设施设备" left-icon="icon-back" @handleLeftClick="back">
+            <mko-header :title="isBindDevice ? '绑定设施设备' : '绑定巡查点'" left-icon="icon-back" @handleLeftClick="back">
             </mko-header>
             <div class="page-wrap">
                 <img class="qr-code" src="/static/image-square.png"/>
@@ -11,10 +11,12 @@
                 <mko-form-cell title="类型" val="巡查点二维码"></mko-form-cell>
                 <mko-form-cell title="绑定巡查点" :val="selSpot ? selSpot : '请选择'" :edit="true" type="sel"
                                @click="goSelSpot(true)"></mko-form-cell>
+                <mko-form-cell title="绑定设备" :val="selDevice ? selDevice : '请选择'" :edit="true" type="sel"
+                               @click="goSelDevice(true)" v-if="isBindDevice"></mko-form-cell>
                 <mko-button class="footer-btn" size="large" @click="confirm" no-radius>确认</mko-button>
             </div>
         </div>
-        <sel-spot @sel="selSpotOnList" :selected-form="formData" v-if="$route.query.sel"></sel-spot>
+        <sel-spot @sel="selSpotOnList" :selected-form="formData" v-if="$route.query.sel === 'spot'"></sel-spot>
     </div>
 </template>
 
@@ -25,7 +27,13 @@
         data() {
             return {
                 selSpot: null,
-                formData: []
+                formData: [],
+                selDevice: null
+            }
+        },
+        computed: {
+            isBindDevice() {
+                return this.$route.query.isBindDevice;
             }
         },
         methods: {
@@ -40,8 +48,17 @@
                     this.$MKOPop();
                 }
             },
+            goSelDevice(bool) {
+                if (bool) {
+                    let path = this.$route.fullPath;
+                    this.$MKOPush(path + '&sel=device');
+                } else {
+                    this.$MKOPop();
+                }
+            },
             selSpotOnList(form){
-                this.selSpot = `${form.jz.jzName},${form.jzLevel.label},${form.spot[0].jzPosition}`
+                this.selSpot = `${form.jz.jzName},${form.jzLevel.label},${form.spot[0].jzPosition}`;
+                this.getDevices(form.spot[0].positionId)
             },
             confirm() {
                 if (!this.selSpot) return false;
@@ -59,6 +76,9 @@
                         }, 1500);
                     }
                 });
+            },
+            getDevices(positionId) {
+
             }
         },
         components: {

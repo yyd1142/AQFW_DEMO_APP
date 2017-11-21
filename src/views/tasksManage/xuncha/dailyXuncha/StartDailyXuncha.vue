@@ -1,7 +1,8 @@
 <template>
     <div class="StartDailyXuncha">
         <div class="placeholder-item"></div>
-        <mko-header :title="decodeURI($route.query.name)" left-icon="icon-back" @handleLeftClick="back"></mko-header>
+        <mko-header :title="decodeURI($route.query.name)" left-icon="icon-back" @handleLeftClick="back">
+        </mko-header>
         <div class="page-wrap">
             <timer :status="status" :used-timer="dailyXunchaUsedTimer"></timer>
             <task-summary :task-info="taskInfo" :style="{marginTop: (status == 2 ? '30px' : 0)}"
@@ -51,6 +52,9 @@
             </div>
             <div class="xuncha-btn end" @click.stop="actionTask" v-if="status == 2">
                 <span>结束巡查</span>
+            </div>
+            <div class="xuncha-btn qrcode" @click.stop="QRCode" v-if="status == 2">
+                <span>扫一扫</span>
             </div>
         </div>
     </div>
@@ -339,6 +343,41 @@
                         doDumpTaskData();
                     }
                 });
+            },
+            QRCode() {
+                if (this.status == 2) {
+                    this.$ScanQRCode(result => {
+                        let data = result.response;
+                        if (data.length === 17) {
+                            this.readerQRCode(data);
+                        } else {
+                            this.$MKODialog({msg: '无效二维码'});
+                        }
+                    })
+                } else {
+                    Toast({message: "请先开始巡查任务!", duration: 2000});
+                }
+            },
+            readerQRCode(data) {
+                let area = data.substring(0, 2);
+                let deviceType = data.substring(2, 4);
+                let supplier = data.substring(4, 6);
+                let installDate = data.substring(6, 11);
+                let expandCode = data.substring(11, 14);
+                let code = data.substring(14, 17);
+                if (code === 'Y06') {
+                    this.$MKOPush({
+                        path: `/qiandaoDailyXuncha/${this.$route.params.id}`,
+                        query: {
+                            positionId: this.builds[0].floors[0].positions[0].positionId,
+                            buildIndex: 0,
+                            floorIndex: 0,
+                            name: this.builds[0].floors[0].positions[0].name
+                        }
+                    });
+                } else {
+
+                }
             }
         },
         components: {
@@ -621,9 +660,15 @@
             z-index: 24;
             &.end {
                 background: #ff6666;
+                width: 50%;
+                left: 0;
             }
             &.disabled {
                 background: #cccccc;
+            }
+            &.qrcode {
+                width: 50%;
+                right: 0;
             }
             span {
                 font-size: 16px;
@@ -695,6 +740,15 @@
                 line-height: 40px;
                 display: table-cell;
                 vertical-align: middle;
+            }
+        }
+        .header-right {
+            .icon-qr-code {
+                position: absolute;
+                right: 14px;
+                margin: auto;
+                top: 0;
+                bottom: 0;
             }
         }
     }

@@ -83,7 +83,9 @@
             <div class="xuncha-btn end" @click.stop="startXunCha" v-if="status == 2">
                 <span>结束巡查</span>
             </div>
-
+            <div class="xuncha-btn qrcode" @click.stop="QRCode" v-if="status == 2">
+                <span>扫一扫</span>
+            </div>
         </div>
     </div>
 </template>
@@ -350,6 +352,51 @@
                     jzInfo,
                     fixedPositionId: position.fixedPositionId
                 });
+            },
+            QRCode() {
+                if (this.status == 2) {
+                    this.$ScanQRCode(result => {
+                        let data = result.response;
+                        if (data.length === 17) {
+                            this.readerQRCode(data);
+                        } else {
+                            this.$MKODialog({msg: '无效二维码'});
+                        }
+                    })
+                } else {
+                    Toast({message: "请先开始巡查任务!", duration: 2000});
+                }
+            },
+            readerQRCode(data) {
+                let area = data.substring(0, 2);
+                let deviceType = data.substring(2, 4);
+                let supplier = data.substring(4, 6);
+                let installDate = data.substring(6, 11);
+                let expandCode = data.substring(11, 14);
+                let code = data.substring(14, 17);
+                if (code === 'Y07') {
+                    if (this.status == 1) {
+                        Toast({message: '请先开始巡查任务', duration: 2000})
+                        return;
+                    }
+                    let lastXunChaTaskId = localStorage.getItem('lastXunChaTaskId');
+                    let nextPath = `/xuncha/${lastXunChaTaskId}/qiandao`;
+                    let query = {
+                        jzId: this.builds[0].jzId,
+                        jzLevel: this.builds[0].positions[0].level,
+                        jzPosition: this.builds[0].positions[0].name,
+                        title: this.builds[0].title + this.builds[0].positions[0].name,
+                        positionId: this.builds[0].positions[0].positionId,
+                        status: this.builds[0].positions[0].status,
+                        fixedPositionId: this.builds[0].positions[0].fixedPositionId
+                    }
+                    this.$MKOPush({
+                        path: nextPath,
+                        query: query
+                    })
+                } else {
+
+                }
             }
         },
         components: {
@@ -630,7 +677,16 @@
             bottom: 0;
             z-index: 22;
             &.end {
-                background: #FF6666;
+                background: #ff6666;
+                width: 50%;
+                left: 0;
+            }
+            &.disabled {
+                background: #cccccc;
+            }
+            &.qrcode {
+                width: 50%;
+                right: 0;
             }
             span {
                 font-size: 16px;
