@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="placeholder-item"></div>
         <mko-header title="电气监测" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap monitor-dq-wrap">
             <mko-nav-bar>

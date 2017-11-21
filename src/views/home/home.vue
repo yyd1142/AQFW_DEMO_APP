@@ -1,7 +1,12 @@
 <template>
   <div style="margin-bottom: 64px;">
     <div class="placeholder-item" :class="isAdmin ? '' : 'home-purple-color'" :style="{backgroundColor:calcHeadColor(score)}"></div>
-    <mko-header title="安全服务云" :background-color="calcHeadColor(score)" left-icon="icon-add" @handleLeftClick="QRCode" :right-icon="hasMessageDataClass" @handleRightClick="goMessage"></mko-header>
+    <mko-header title="安全服务云" :background-color="calcHeadColor(score)" left-icon="icon-qr-code" @handleLeftClick="QRCode">
+        <div class="header-right" slot="custom">
+            <span class="more-message-count" v-if="hasMessageDataClass"></span>
+            <i class="icon-message" @click="goMessage"></i>
+        </div>
+    </mko-header>
     <mt-loadmore style="margin-top: 40px;" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="bottomAllLoaded" ref="loadmore" :auto-fill="autoFill">
       <!--<div class="page-wrap home-wrap" ref="wrapper" :style="{ marginTop: 0 }" v-if="!resError">-->
       <div class="page-wrap home-wrap" ref="wrapper" :style="{ marginTop: 0 }">

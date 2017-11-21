@@ -1,8 +1,8 @@
 import api from 'api';
 import moment from 'moment';
-import { NoData, Tabs, ScoreBanner, ResError } from 'components';
-import { Toast } from 'mint-ui';
-import { formatDate, calcHeadColor } from 'filters'
+import {NoData, Tabs, ScoreBanner, ResError} from 'components';
+import {Toast} from 'mint-ui';
+import {formatDate, calcHeadColor} from 'filters'
 import * as types from 'store/mutation-types'
 import xuncha from 'store/modules/xuncha'
 import zhiban from 'store/modules/zhiban'
@@ -14,13 +14,20 @@ var isloadTop = false;
 var page = 1;
 var needUpdate = [
     {},
-    { isupdate: true, datas: [], type: 1, bottomAllLoaded: false, page: 1 },
-    { isupdate: true, datas: [], type: 2, bottomAllLoaded: false, page: 1 },
-    { isupdate: true, datas: [], type: 3, bottomAllLoaded: false, page: 1 },
-    { isupdate: true, datas: [], type: 4, bottomAllLoaded: false, page: 1 }];
+    {isupdate: true, datas: [], type: 1, bottomAllLoaded: false, page: 1},
+    {isupdate: true, datas: [], type: 2, bottomAllLoaded: false, page: 1},
+    {isupdate: true, datas: [], type: 3, bottomAllLoaded: false, page: 1},
+    {isupdate: true, datas: [], type: 4, bottomAllLoaded: false, page: 1}];
 var needUpdateTodayTasks = true;
 var updateTodayTasks = {};
 let _scoTop = 0;
+function compare(property) {
+    return function (a, b) {
+        var value1 = a[property];
+        var value2 = b[property];
+        return value1 - value2;
+    }
+}
 export default {
     data() {
         return {
@@ -36,27 +43,27 @@ export default {
             swipeable: true,
             actionClass: 'action-item',
             adminActions: [
-                { class: 'task-icon ', text: '任务执行', url: '/taskComply' },
-                { class: 'notice-icon ', text: '通知公告', url: '/notice' },  //admin-has-data-icon
-                { class: 'activity-icon', text: '安全活动', url: '/safe_activity' }],
+                {class: 'task-icon ', text: '任务执行', url: '/taskComply'},
+                {class: 'notice-icon ', text: '通知公告', url: '/notice'},  //admin-has-data-icon
+                {class: 'activity-icon', text: '安全活动', url: '/safe_activity'}],
             actions: [
                 // { class: 'jibenxinxi-icon', text: '基本信息', url: '/basic_info' },
-                { class: 'peixun-icon', text: '教育培训', url: '/train' },
-                { class: 'yinhuan-icon', text: '风险管理', url: '/hidden_danger' },
-                { class: 'sheshi-icon', text: '设施设备', url: '/device' },
-                { class: 'shipin-icon', text: '视频监控', url: '/monitorVideo' },
-                { class: 'dianqi-icon', text: '电气监测', url: '/monitorDq' },
-                { class: 'icon-sxt-monitor', text: '水系统监测', url: '/monitorSxt' }
-                ],
+                {class: 'peixun-icon', text: '教育培训', url: '/train'},
+                {class: 'yinhuan-icon', text: '风险管理', url: '/hidden_danger'},
+                {class: 'sheshi-icon', text: '设施设备', url: '/device'},
+                {class: 'shipin-icon', text: '视频监控', url: '/monitorVideo'},
+                {class: 'dianqi-icon', text: '电气监测', url: '/monitorDq'},
+                {class: 'icon-sxt-monitor', text: '水系统监测', url: '/monitorSxt'}
+            ],
             aq_actions: [
-                { class: 'jibenxinxi-icon', text: '基本信息', url: '/basic_info' },
-                { class: 'tongzhigonggao-icon', text: '通知公告', url: '/notice' },
-                { class: 'peixun-icon', text: '教育培训', url: '/train' }],
-            newsTabs: [{ text: '新闻通知', selected: 'news-table-actived', type: 1 }, {
+                {class: 'jibenxinxi-icon', text: '基本信息', url: '/basic_info'},
+                {class: 'tongzhigonggao-icon', text: '通知公告', url: '/notice'},
+                {class: 'peixun-icon', text: '教育培训', url: '/train'}],
+            newsTabs: [{text: '新闻通知', selected: 'news-table-actived', type: 1}, {
                 text: '安全知识',
                 selected: false,
                 type: 2
-            }, { text: '法律法规', selected: false, type: 3 }, { text: '经典案例', selected: false, type: 4 }],
+            }, {text: '法律法规', selected: false, type: 3}, {text: '经典案例', selected: false, type: 4}],
             newsType: 1,
             newsDatas: [],
             autoFill: false,
@@ -75,7 +82,10 @@ export default {
         }
     },
     activated() {
-
+        if (this.$store.state.xuncha) {
+            this.$store.dispatch('clearXunChaTimer');
+            this.$store.unregisterModule('xuncha');
+        }
         window.addEventListener('scroll', this.handleScroll);
         scrollTo(0, _scoTop);
         this.$nextTick(() => {
@@ -360,7 +370,7 @@ export default {
                     this.todayTasksItem = {
                         time: '',
                         today: moment(new Date()).format("YYYY年MM月DD日"),
-                        data: { description: '今日暂无任务', notTask: true },
+                        data: {description: '今日暂无任务', notTask: true},
                         text: '',
                         class: 'not-task-item',
                         notData: true
@@ -381,13 +391,13 @@ export default {
             if (this.topStatus != 'loading' && this.score != 0) {
                 this.$MKOPush(`/score`)
             } else {
-                this.$MKODialog({msg:'暂无安全评分'});
+                this.$MKODialog({msg: '暂无安全评分'});
             }
         },
         goTaskInfo() {
             let task = this.todayTasksItem.data;
             if (task.notTask) {
-                this.$MKODialog({msg:task.description});
+                this.$MKODialog({msg: task.description});
                 return false;
             }
             let name = 'xuncha'
@@ -400,8 +410,8 @@ export default {
                 localStorage.setItem('lastXunChaTaskId', task.taskId);
                 this.$MKOPush({
                     name: name,
-                    params: { taskId: task.taskId },
-                    query: { from: 'home', isReview: false, fromPath: '/enter/home', name: task.description, }
+                    params: {taskId: task.taskId},
+                    query: {from: 'home', isReview: false, fromPath: '/enter/home', name: task.description,}
                 })
                 return false;
             }
@@ -445,7 +455,7 @@ export default {
                         this.adminActions[0].class = data.task > 0 ? 'task-icon admin-has-data-icon' : 'task-icon'
                         this.adminActions[1].class = data.notice > 0 ? 'notice-icon admin-has-data-icon' : 'notice-icon'
                         this.aq_actions[1].class = data.notice > 0 ? 'has-tongzhigonggao-icon' : 'tongzhigonggao-icon'
-                        this.hasMessageDataClass = data.message > 0 ? 'icon-message-prompt-has' : 'icon-message-prompt-no'
+                        this.hasMessageDataClass = data.message > 0 ? true : false
                         this.actions[1].class = data.dwYHK > 0 ? "has-yinhuan-icon" : 'yinhuan-icon'
                         this.resError = false;
                     }
@@ -456,7 +466,7 @@ export default {
                     this.adminActions[0].class = data.task > 0 ? 'task-icon admin-has-data-icon' : 'task-icon'
                     this.adminActions[1].class = data.notice > 0 ? 'notice-icon admin-has-data-icon' : 'notice-icon'
                     this.aq_actions[1].class = data.notice > 0 ? 'has-tongzhigonggao-icon' : 'tongzhigonggao-icon'
-                    this.hasMessageDataClass = data.message > 0 ? 'icon-message-prompt-has' : 'icon-message-prompt-no'
+                    this.hasMessageDataClass = data.message > 0 ? true : false
                     this.actions[1].class = data.dwYHK > 0 ? "has-yinhuan-icon" : 'yinhuan-icon'
                     localStorage.setItem('hasNewMessage', JSON.stringify(data))
                 } else {
@@ -477,12 +487,199 @@ export default {
             })
         },
         QRCode() {
-            this.$MKOPush({
-                path: '/QRCode'
+            this.$ScanQRCode(result => {
+                let data = result.response;
+                if (data.length === 17) {
+                    this.readerQRCode(data);
+                } else {
+                    this.$MKODialog({msg: '无效二维码'});
+                }
             })
-            // this.$ScanQRCode(result => {
-            //
-            // })
+        },
+        readerQRCode(data) {
+            //WX: '地区', E2: '设备类型', A1: '供应商', 16623: '设备投入使用日期', 122: '拓展码', Y01: '唯一标识'
+            let area = data.substring(0, 2);
+            let deviceType = data.substring(2, 4);
+            let supplier = data.substring(4, 6);
+            let installDate = data.substring(6, 11);
+            let expandCode = data.substring(11, 14);
+            let code = data.substring(14, 17);
+            if (code === 'Y01') {
+                this.$MKODialog({
+                    title: "提示",
+                    msg: '检测到该设备所在巡查点正在进行巡查任务，需要查看吗？',
+                    cancelBtn: true,
+                    confirmText: '查看设备详情',
+                    cancelText: "查看巡查点"
+                }).then(msg => {
+                    if (msg === "confirm") {
+                        this.goDeviceDetail();
+                    } else {
+                        this.getTaskBuilds();
+                    }
+                });
+            } else if (code === 'Y02') {
+                this.goBindDevice()
+            } else if (code === 'Y03') {
+                this.goSpotInfo();
+            }
+        },
+        goDeviceDetail() {
+            let nextPath = {
+                name: 'deviceDetail',
+                params: {
+                    pid: '38986'
+                },
+                query: {
+                    from: 'home'
+                }
+            }
+            let from = '/enter/home';
+            this.$MKOPush(nextPath, from, true);
+        },
+        goBindDevice() {
+            let nextPath = {
+                name: 'BindDevice',
+                params: {
+                    id: '38986'
+                },
+                query: {
+                    from: 'home'
+                }
+            }
+            let from = '/enter/home';
+            this.$MKOPush(nextPath, from, true);
+        },
+        goSpotInfo() {
+            let nextPath = {
+                name: 'spotInfo',
+                params: {
+                    pid: '26145'
+                },
+                query: {
+                    from: 'home'
+                }
+            }
+            let from = '/enter/home';
+            this.$MKOPush(nextPath, from, true);
+        },
+        getTaskBuilds() {
+            api.getXCTaskPosition({
+                taskId: '6Z9m31x78173'
+            }).then(res => {
+                let positions = res.response;
+                let checkPoints = {};
+                let builds = [];
+                let status = 0;
+                for (let p of positions) {
+                    let v = p.positionName.split('|');
+                    let v2 = p.positionValue.split('|');
+                    let k = `${v[0]}${v[1]}`
+                    let obj = checkPoints[k];
+                    if (!p.status) {
+                        status = 0;
+                    } else {
+                        status = state.status == 6 ? p.status : 0;
+                    }
+                    if (obj) {
+                        obj.positions.push({
+                            positionId: p.positionId,
+                            fixedPositionId: p.fixedPositionId,
+                            name: v[2],
+                            status: status,
+                            level: parseInt(v2[1])
+                        });
+                    } else {
+                        obj = {
+                            jzId: parseInt(v2[0]),
+                            title: k,
+                            level: parseInt(v2[1]),
+                            positions: [{
+                                positionId: p.positionId,
+                                fixedPositionId: p.fixedPositionId,
+                                name: v[2],
+                                status: status,
+                                level: parseInt(v2[1])
+                            }],
+                            status: 0
+                        };
+                        checkPoints[k] = obj;
+                    }
+                }
+                for (let k of Object.keys(checkPoints)) {
+                    builds.push(checkPoints[k]);
+                }
+                builds.forEach((item) => {
+                    let level = item.positions[0].level;
+                    item['level'] = level;
+                });
+                builds.sort(compare('level'));
+                this.getTaskInfo();
+            })
+        },
+        getTaskInfo() {
+            api.getTaskInfo({
+                taskId: '6Z9m31x78173'
+            }).then(res => {
+                if (!res) return false;
+                if (res.code == 0) {
+                    if (res.response.groupId == this.$store.getters.groupId) {
+                        if (res.response.status == 5) {
+                            this.$MKODialog({msg: '无法查看该任务'});
+                        } else {
+                            this.goXunchaTask(res.response);
+                        }
+                    } else {
+                        this.$MKODialog({msg: '无法查看该任务'});
+                    }
+                } else {
+                    this.$MKODialog({msg: '无法查看该任务'});
+                }
+            })
+        },
+        goXunchaTask(task) {
+            if (task.status == 5 || task.status == 6) {
+                let name = 'xuncha'
+                localStorage.setItem('lastReviewXunChaData', JSON.stringify(task));
+                localStorage.setItem('lastXunChaTaskId', task.taskId);
+                this.$MKOPush({
+                    name: name,
+                    params: {
+                        taskId: task.taskId
+                    },
+                    query: {
+                        from: 'home',
+                        fromQuery: this.$route.query,
+                        isReview: true
+                    }
+                })
+                return;
+            }
+            if (task.status == 4) {
+                this.$MKODialog({title: '提示', msg: '数据正在处理中，请稍后查看...'})
+                return;
+            }
+            let routerPath = {};
+            let taskData = cloneDeep(task);
+            this.$store.registerModule('xuncha', xuncha);
+            this.$store.commit(types.XUNCHA_INIT_TASK_DATA, taskData);
+            localStorage.setItem('lastXunChaTaskId', task.taskId);
+            routerPath = {
+                name: 'xuncha',
+                params: {
+                    taskId: task.taskId
+                },
+                query: {
+                    from: 'home',
+                    fromPath: '/enter/home',
+                    name: task.description,
+                    taskDescribe: task.taskDescribe ? task.taskDescribe : task.description,
+                    to: 'qiandao'
+                }
+            }
+            this.$MKOPush(routerPath, {
+                path: '/enter/home'
+            });
         }
     },
     components: {
