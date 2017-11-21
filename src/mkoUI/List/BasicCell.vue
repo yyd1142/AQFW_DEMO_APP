@@ -1,16 +1,16 @@
 <template>
-    <div class="mko-basic-cell" @click="click">
+    <div class="mko-basic-cell" @click="handleClick">
         <div class="cell">
             <div class="title-icon fl" @click.stop="clickIconFn" v-show="$slots.icon||icon">
                 <slot name="icon">
                     <span class="icon" :class="icon"></span>
                 </slot>
             </div>
-            <div class="title fl no-overflow">{{title}}</div>
+            <div class="title fl no-overflow" :class="{'main-left':main=='left'}">{{title}}</div>
             <span class="link-arrow" :class="linkIcon||(fr(active)?'icon-arrow-right':'icon-link-arrow')" v-if="fr(isLink)"></span>
-            <div class="value fr no-overflow" :class="{'is-link':fr(isLink),'is-active':fr(active)}">
+            <div class="value fr no-overflow" :class="{'main-left':main=='left','is-link':fr(isLink),'is-active':fr(active)}">
                 <slot>
-                    <span v-if="!fr(phone)||!val">{{val || nonText}}</span>
+                    <span v-if="!fr(phone)||!val" :class="valStyle">{{val || nonText}}</span>
                     <a class="phone" :href="'tel:' + val" v-if="fr(phone)&&val">{{val || nonText}}</a>
                 </slot>
             </div>
@@ -20,7 +20,7 @@
 
 <script>
     export default {
-        props: ['icon', 'title', 'val', 'is-link', 'link-icon', 'active', 'non-text', 'phone'],
+        props: ['main', 'icon', 'title', 'val', 'non-text', 'is-link', 'link-icon', 'val-style', 'active', 'phone', 'show-val'],
         data () {
             return {}
         },
@@ -40,6 +40,20 @@
             },
             clickIconFn(){
                 this.$emit('clickIcon')
+            },
+            handleClick(){
+                if (this.showVal) {
+                    this.showValue();
+                } else {
+                    this.click();
+                }
+            },
+            showValue(){
+                let datas = this.showVal;
+                this.$MKODialog({
+                    title: datas.title,
+                    msg: datas.msg || datas
+                })
             },
             click(){
                 this.$emit('click');
@@ -90,23 +104,33 @@
                 }
             }
             .title {
-                flex: 0 0 112px;
-                -webkit-flex: 0 0 112px;
-                width: 112px;
+                flex: 0 0 128px;
+                -webkit-flex: 0 0 128px;
+                width: 128px;
                 margin-right: 10px;
                 line-height: @cellHeight;
                 font-size: 16px;
                 color: @baseText01;
                 font-family: STHeitiSC-Light;
+                &.main-left {
+                    flex: auto;
+                    -webkit-flex: auto;
+                    width: 44%;
+                }
             }
             > .value {
                 flex: auto;
                 -webkit-flex: auto;
-                width: 40%;
+                width: 37%;
                 line-height: @cellHeight;
                 text-align: right;
                 color: @baseText01;
                 font-family: HelveticaNeue-Light;
+                &.main-left {
+                    flex: 0 0 108px;
+                    -webkit-flex: 0 0 108px;
+                    width: 108px;
+                }
                 &.is-link {
                     padding-right: 12px;
                 }

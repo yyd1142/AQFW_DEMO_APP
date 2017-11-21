@@ -117,7 +117,8 @@
                 line-height: 22px;
                 font-size: 14px;
                 letter-spacing: 0;
-                text-align: justify;
+                /*text-align: justify;*/
+                text-align: center;
                 color: #72787D;
                 .content {
                     &.flow {
