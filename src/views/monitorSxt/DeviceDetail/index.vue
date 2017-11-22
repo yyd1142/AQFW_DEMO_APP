@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="placeholder-item"></div>
-        <mko-header title="水系统监测"
+        <mko-header :title="titleNames[$route.params.id - 1]"
                     :right-icon-text="status == 0 ? '启用': '停用'" @handleRightClick="changeStatus"
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
@@ -40,6 +40,7 @@
                 tabI: 0,
                 tabItems: ['设备信息', '报警记录'],
                 chartNames: ['压力值(Pa)', '水位值(米)'],
+                titleNames: ['水压监测', '水位监测'],
                 status: '',
             }
         },

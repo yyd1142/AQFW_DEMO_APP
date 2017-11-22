@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="placeholder-item"></div>
-        <mko-header title="水系统监测"
+        <mko-header :title="titleNames[$route.params.id - 1]"
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap sxt-chart-module-wrap">
@@ -35,6 +35,7 @@
                 allShow: false,
                 time: 30,
                 chartNames: ['压力值(Pa)', '水位值(米)'],
+                titleNames: ['水压实时监测', '水位实时监测'],
             }
         },
         watch: {},
