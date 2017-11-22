@@ -487,15 +487,15 @@ export default {
             })
         },
         QRCode() {
-            this.readerQRCode('WXE2A116623122Y08');
-            // this.$ScanQRCode(result => {
-            //     let data = result.response;
-            //     if (data.length === 17) {
-            //         this.readerQRCode(data);
-            //     } else {
-            //         this.$MKODialog({msg: '无效二维码'});
-            //     }
-            // })
+            // this.readerQRCode('WXE2A116623122Y08');
+            this.$ScanQRCode(result => {
+                let data = result.response;
+                if (data.length === 17) {
+                    this.readerQRCode(data);
+                } else {
+                    this.$MKODialog({msg: '无效二维码'});
+                }
+            })
         },
         readerQRCode(data) {
             //WX: '地区', E2: '设备类型', A1: '供应商', 16623: '设备投入使用日期', 122: '拓展码', Y01: '唯一标识'
@@ -506,7 +506,7 @@ export default {
             let expandCode = data.substring(11, 14);
             let code = data.substring(14, 17);
             if (code === 'Y01') {
-                this.$MKODialog({
+                this.$MKODialog({ //扫码-弹框选择跳转
                     title: "提示",
                     msg: '检测到该设备所在巡查点正在进行巡查任务，需要查看吗？',
                     cancelBtn: true,
@@ -519,11 +519,11 @@ export default {
                         this.getTaskBuilds();
                     }
                 });
-            } else if (code === 'Y02') {
+            } else if (code === 'Y02') { //扫码-绑定巡查点
                 this.goBindDevice(false)
-            } else if (code === 'Y03') {
+            } else if (code === 'Y03') { //扫码-查看巡查点详情
                 this.goSpotInfo();
-            } else if (code === 'Y08') {
+            } else if (code === 'Y08') { //扫码-绑定设备
                 this.goBindDevice(true);
             } else {
 
