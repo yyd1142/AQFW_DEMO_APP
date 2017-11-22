@@ -487,14 +487,15 @@ export default {
             })
         },
         QRCode() {
-            this.$ScanQRCode(result => {
-                let data = result.response;
-                if (data.length === 17) {
-                    this.readerQRCode(data);
-                } else {
-                    this.$MKODialog({msg: '无效二维码'});
-                }
-            })
+            this.readerQRCode('WXE2A116623122Y08');
+            // this.$ScanQRCode(result => {
+            //     let data = result.response;
+            //     if (data.length === 17) {
+            //         this.readerQRCode(data);
+            //     } else {
+            //         this.$MKODialog({msg: '无效二维码'});
+            //     }
+            // })
         },
         readerQRCode(data) {
             //WX: '地区', E2: '设备类型', A1: '供应商', 16623: '设备投入使用日期', 122: '拓展码', Y01: '唯一标识'

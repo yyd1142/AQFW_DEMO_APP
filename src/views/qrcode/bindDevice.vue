@@ -12,23 +12,27 @@
                 <mko-form-cell title="绑定巡查点" :val="selSpot ? selSpot : '请选择'" :edit="true" type="sel"
                                @click="goSelSpot(true)"></mko-form-cell>
                 <mko-form-cell title="绑定设备" :val="selDevice ? selDevice : '请选择'" :edit="true" type="sel"
-                               @click="goSelDevice(true)" v-if="isBindDevice"></mko-form-cell>
+                               @click="goSelDevice(true)" v-if="positionId && isBindDevice"></mko-form-cell>
                 <mko-button class="footer-btn" size="large" @click="confirm" no-radius>确认</mko-button>
             </div>
         </div>
         <sel-spot @sel="selSpotOnList" :selected-form="formData" v-if="$route.query.sel === 'spot'"></sel-spot>
+        <sel-device :position-id="positionId" @sel="selDeviceOnList" :selected-form="formDeviceData" v-if="$route.query.sel === 'device'"></sel-device>
     </div>
 </template>
 
 <script>
     import { Toast } from 'mint-ui'
     import SelSpot from './components/selSpot.vue'
+    import SelDevice from './components/selDevice.vue'
     export default {
         data() {
             return {
                 selSpot: null,
                 formData: [],
-                selDevice: null
+                formDeviceData: [],
+                selDevice: null,
+                positionId: ''
             }
         },
         computed: {
@@ -36,9 +40,15 @@
                 return this.$route.query.isBindDevice;
             }
         },
+        deactivated() {
+           this.resetData()
+        },
         methods: {
             back() {
                 this.$MKOPop()
+            },
+            resetData () {
+                Object.assign(this.$data, this.$options.data());
             },
             goSelSpot(bool){
                 if (bool) {
@@ -58,7 +68,11 @@
             },
             selSpotOnList(form){
                 this.selSpot = `${form.jz.jzName},${form.jzLevel.label},${form.spot[0].jzPosition}`;
-                this.getDevices(form.spot[0].positionId)
+                this.positionId = form.spot[0].positionId;
+            },
+            selDeviceOnList(form) {
+                this.formDeviceData = form;
+                this.selDevice = form.device.unitName;
             },
             confirm() {
                 if (!this.selSpot) return false;
@@ -76,13 +90,11 @@
                         }, 1500);
                     }
                 });
-            },
-            getDevices(positionId) {
-
             }
         },
         components: {
-            SelSpot
+            SelSpot,
+            SelDevice
         }
     }
 </script>
