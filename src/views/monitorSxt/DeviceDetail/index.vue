@@ -34,8 +34,8 @@
     import DeviceInfo from './DeviceInfo.vue'
     import { Indicator, Toast } from 'mint-ui'
     import echarts from 'echarts';
-//    水压监测报警范围：20.0～666.0kPa
-//    水位监测报警范围：0.5～2.0M
+    //    水压监测报警范围：20.0～666.0kPa
+    //    水位监测报警范围：0.5～2.0M
     let theme = 'macarons';
     export default {
         data () {
@@ -208,22 +208,22 @@
                     }
                     .sign {
                         position: absolute;
-                        bottom: 12px;
+                        bottom: 15px;
                         left: 50%;
                         transform: translate(-50%, 0);
                         -webkit-transform: translate(-50%, 0);
                         min-width: 75px;
                         font-size: 12px;
                         text-align: center;
-                        color: @mainBlue;
+                        color: @baseText02;
                     }
                     .fanwei {
                         position: absolute;
-                        bottom: 37px;
+                        bottom: 30px;
                         width: 100%;
                         font-size: 12px;
                         text-align: center;
-                        color: @mainBlue;
+                        color: @baseText01;
                     }
                 }
             }

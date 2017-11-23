@@ -126,6 +126,7 @@
                             max: 500,
                             name: '',
                             type: 'gauge',
+                            center: ['50%', '40%'],
                             splitNumber: 5,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
                                 lineStyle: {       // 属性lineStyle控制线条样式
@@ -206,6 +207,7 @@
                             max: 1000,
                             name: '',
                             type: 'gauge',
+                            center: ['50%', '40%'],
                             splitNumber: 10,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
                                 lineStyle: {       // 属性lineStyle控制线条样式
@@ -287,6 +289,7 @@
                             max: 80,
                             name: '线温',
                             type: 'gauge',
+                            center: ['50%', '40%'],
                             splitNumber: 5,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
                                 lineStyle: {       // 属性lineStyle控制线条样式
@@ -369,7 +372,7 @@
                     float: left;
                     .dashboard {
                         margin: auto;
-                        height: 180px;
+                        height: 160px;
                     }
                     .sign {
                         position: absolute;
@@ -380,15 +383,15 @@
                         min-width: 75px;
                         font-size: 12px;
                         text-align: center;
-                        color: @mainBlue;
+                        color: @baseText02;
                     }
                     .fanwei {
                         position: absolute;
-                        bottom: 27px;
+                        bottom: 25px;
                         width: 100%;
                         text-align: center;
                         font-size: 12px;
-                        color: @mainBlue;
+                        color: @baseText01;
                     }
                 }
             }

@@ -306,22 +306,22 @@
                 }
                 .sign {
                     position: absolute;
-                    bottom: 12px;
+                    bottom: 15px;
                     left: 50%;
                     transform: translate(-50%, 0);
                     -webkit-transform: translate(-50%, 0);
                     min-width: 75px;
                     font-size: 12px;
                     text-align: center;
-                    color: @mainBlue;
+                    color: @baseText02;
                 }
                 .fanwei {
                     position: absolute;
-                    bottom: 37px;
+                    bottom: 30px;
                     width: 100%;
                     font-size: 12px;
                     text-align: center;
-                    color: @mainBlue;
+                    color: @baseText01;
                 }
             }
             .line-chart {
