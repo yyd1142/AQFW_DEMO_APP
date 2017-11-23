@@ -11,17 +11,17 @@
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-left"></div>
                         <div class="sign">电压(V)</div>
-                        <div class="fanwei">范围:187V～242V</div>
+                        <div class="fanwei">187V～242V</div>
                     </div>
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-mid"></div>
                         <div class="sign">电流(mA)</div>
-                        <div class="fanwei">范围:300mA～999mA</div>
+                        <div class="fanwei">300mA～999mA</div>
                     </div>
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-right"></div>
                         <div class="sign">线温(℃)</div>
-                        <div class="fanwei">范围:0～60℃</div>
+                        <div class="fanwei">0～60℃</div>
                     </div>
                 </div>
                 <div class="more" @click="goAllChart">
@@ -369,11 +369,11 @@
                     float: left;
                     .dashboard {
                         margin: auto;
-                        height: 170px;
+                        height: 180px;
                     }
                     .sign {
                         position: absolute;
-                        bottom: 27px;
+                        bottom: 10px;
                         left: 50%;
                         transform: translate(-50%, 0);
                         -webkit-transform: translate(-50%, 0);
@@ -384,11 +384,11 @@
                     }
                     .fanwei {
                         position: absolute;
+                        bottom: 27px;
+                        width: 100%;
                         text-align: center;
                         font-size: 12px;
-                        color: #333;
-                        width: 100%;
-                        bottom: 7px;
+                        color: @mainBlue;
                     }
                 }
             }

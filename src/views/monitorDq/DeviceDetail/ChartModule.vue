@@ -5,25 +5,25 @@
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap dq-chart-module-wrap">
-            <div class="timer-bar clear">
-                <div class="timer">倒计时：{{time || '0'}}</div>
-            </div>
-            <timer :status="2" :text="usedTimeString"></timer>
+            <!--<div class="timer-bar clear">-->
+            <!--<div class="timer">倒计时：{{time || '0'}}</div>-->
+            <!--</div>-->
+            <timer :status="2" :text="`${time||0}秒自动刷新`"></timer>
             <div class="chart-wrap clear">
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-left"></div>
                     <div class="sign">电压(V)</div>
-                    <div class="fanwei">范围:187V～242V</div>
+                    <div class="fanwei">187V～242V</div>
                 </div>
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-mid"></div>
                     <div class="sign">电流(mA)</div>
-                    <div class="fanwei">范围:300mA～999mA</div>
+                    <div class="fanwei">300mA～999mA</div>
                 </div>
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-right"></div>
                     <div class="sign">线温(℃)</div>
-                    <div class="fanwei">范围:0～60℃</div>
+                    <div class="fanwei">0～60℃</div>
                 </div>
             </div>
             <div class="chart-wrap clear">
@@ -37,7 +37,7 @@
 
 <script>
     import echarts from 'echarts';
-    import {Timer} from 'components'
+    import { Timer } from 'components'
     let theme = 'macarons';
     let timer = null;
     let i = 0;
@@ -50,11 +50,7 @@
             }
         },
         watch: {},
-        computed: {
-            usedTimeString() {
-                return `${this.time}秒自动刷新`
-            }
-        },
+        computed: {},
         mounted() {
         },
         activated(){
@@ -635,15 +631,16 @@
             background-color: #fff;
             .dashboard-wrap {
                 position: relative;
+                padding-top: 14px;
                 width: 33.33%;
                 float: left;
                 .dashboard {
                     margin: auto;
-                    height: 170px;
+                    height: 180px;
                 }
                 .sign {
                     position: absolute;
-                    bottom: 27px;
+                    bottom: 10px;
                     left: 50%;
                     transform: translate(-50%, 0);
                     -webkit-transform: translate(-50%, 0);
@@ -656,9 +653,9 @@
                     position: absolute;
                     text-align: center;
                     font-size: 12px;
-                    color: #333;
                     width: 100%;
-                    bottom: 7px;
+                    bottom: 27px;
+                    color: @mainBlue;
                 }
             }
             .line-chart {

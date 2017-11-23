@@ -11,7 +11,7 @@
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-mid"></div>
                         <div class="sign">{{chartNames[$route.params.id - 1]}}</div>
-                        <div class="fanwei">范围:{{fanwei[$route.params.id - 1]}}</div>
+                        <div class="fanwei">{{fanwei[$route.params.id - 1]}}</div>
                     </div>
                 </div>
                 <div class="more" @click="goAllChart">
@@ -208,7 +208,7 @@
                     }
                     .sign {
                         position: absolute;
-                        bottom: 40px;
+                        bottom: 12px;
                         left: 50%;
                         transform: translate(-50%, 0);
                         -webkit-transform: translate(-50%, 0);
@@ -219,11 +219,11 @@
                     }
                     .fanwei {
                         position: absolute;
-                        font-size: 12px;
-                        color: #333;
-                        text-align: center;
+                        bottom: 37px;
                         width: 100%;
-                        bottom: 12px;
+                        font-size: 12px;
+                        text-align: center;
+                        color: @mainBlue;
                     }
                 }
             }

@@ -5,13 +5,15 @@
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap sxt-chart-module-wrap">
-            <div class="timer-bar">
-                <div class="timer">倒计时：{{time || '0'}}</div>
-            </div>
+            <!--<div class="timer-bar">-->
+            <!--<div class="timer">倒计时：{{time || '0'}}</div>-->
+            <!--</div>-->
+            <timer :status="2" :text="`${time||'0'}秒自动刷新`"></timer>
             <div class="chart-wrap clear">
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-mid"></div>
                     <div class="sign">{{chartNames[$route.params.id - 1]}}</div>
+                    <div class="fanwei">{{fanwei[$route.params.id - 1]}}</div>
                 </div>
             </div>
             <div class="chart-wrap clear">
@@ -23,6 +25,8 @@
 
 <script>
     import echarts from 'echarts';
+    import { Timer } from 'components'
+
     let theme = 'macarons';
     let timer = null;
     let type = '';
@@ -36,10 +40,12 @@
                 time: 30,
                 chartNames: ['压力值(Pa)', '水位值(米)'],
                 titleNames: ['水压实时监测', '水位实时监测'],
+                fanwei: ['20.0～666.0kPa', '0.5～2.0M'],
             }
         },
         watch: {},
-        computed: {},
+        computed: {
+        },
         mounted() {
         },
         activated(){
@@ -255,7 +261,9 @@
                 this.$MKOPop();
             }
         },
-        components: {}
+        components: {
+            Timer
+        }
     }
 </script>
 
@@ -275,6 +283,7 @@
             margin-bottom: 14px;
             background-color: #fff;
             .dashboard-wrap {
+                padding-top: 14px;
                 position: relative;
                 .dashboard {
                     margin: auto;
@@ -282,11 +291,19 @@
                 }
                 .sign {
                     position: absolute;
-                    bottom: 24px;
+                    bottom: 12px;
                     left: 50%;
                     transform: translate(-50%, 0);
                     -webkit-transform: translate(-50%, 0);
                     min-width: 75px;
+                    font-size: 12px;
+                    text-align: center;
+                    color: @mainBlue;
+                }
+                .fanwei {
+                    position: absolute;
+                    bottom: 37px;
+                    width: 100%;
                     font-size: 12px;
                     text-align: center;
                     color: @mainBlue;
