@@ -1,8 +1,8 @@
 <template>
     <div class="device-info-wrap">
         <mko-cell title="设备名称" :val="data.name"></mko-cell>
-        <mko-cell title="设备品牌" val="飞鹰"></mko-cell>
-        <mko-cell title="设备单位" val="深圳湾体育中心"></mko-cell>
+        <mko-cell title="设备品牌" val="安吉斯"></mko-cell>
+        <mko-cell title="设备单位" val="华润新鸿基房地产（无锡）有限公司（万象城）"></mko-cell>
         <mko-cell title="型号" val="A522"></mko-cell>
         <mko-cell title="所属系统" val="电气火灾监控系统"></mko-cell>
         <mko-cell title="安装时间" val="2017-11-01"></mko-cell>
