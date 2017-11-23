@@ -8,6 +8,7 @@
             <div class="timer-bar clear">
                 <div class="timer">倒计时：{{time || '0'}}</div>
             </div>
+            <timer :status="2" :text="usedTimeString"></timer>
             <div class="chart-wrap clear">
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-left"></div>
@@ -36,6 +37,7 @@
 
 <script>
     import echarts from 'echarts';
+    import {Timer} from 'components'
     let theme = 'macarons';
     let timer = null;
     let i = 0;
@@ -48,7 +50,11 @@
             }
         },
         watch: {},
-        computed: {},
+        computed: {
+            usedTimeString() {
+                return `${this.time}秒自动刷新`
+            }
+        },
         mounted() {
         },
         activated(){
@@ -606,7 +612,9 @@
                 this.$MKOPop();
             }
         },
-        components: {}
+        components: {
+            Timer
+        }
     }
 </script>
 

@@ -3,7 +3,10 @@
         <transition name="fade">
             <div class="timer-wrap" v-if="status == 2">
                 <div>
-                    <i class="icon icon-clock"></i>进行中, {{usedTimer}}
+                    <span class="icon">
+                        <i class="icon-clock"></i>
+                    </span>
+                    <span class="text">{{text ? text : `进行中,${usedTimer}`}}</span>
                 </div>
             </div>
         </transition>
@@ -12,7 +15,7 @@
 
 <script>
 export default {
-    props: ['status', 'usedTimer']
+    props: ['status', 'usedTimer', 'text']
 }
 </script>
 
@@ -27,23 +30,33 @@ export default {
         z-index: 25;
         top: 44px + @headerTop;
         div {
-            width: 122px;
             margin: 0 auto;
             height: 30px;
             line-height: 30px;
             vertical-align: middle;
-            font-size: 12px;
-            color: #FFFFFF;
             letter-spacing: 0px;
             text-align: center;
             position: relative;
-            padding-left: 14px;
+            display: table;
+            .icon, .text {
+                display: table-cell;
+                height: 30px;
+            }
             .icon {
-                position: absolute;
-                margin: auto;
-                top: 0;
-                bottom: 0;
-                left: 0;
+                position: relative;
+                width: 14px;
+                .icon-clock {
+                    position: absolute;
+                    margin: auto;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                }
+            }
+            .text {
+                font-size: 12px;
+                color: #FFFFFF;
+                padding-left: 10px;
             }
         }
     }
