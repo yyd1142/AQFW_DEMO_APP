@@ -487,7 +487,7 @@ export default {
             })
         },
         QRCode() {
-            // this.readerQRCode('WXE2A116623122Y08');
+            // this.readerQRCode('WXE2A116623122Y01');
             this.$ScanQRCode(result => {
                 let data = result.response;
                 if (data.length === 17) {
@@ -508,7 +508,7 @@ export default {
             if (code === 'Y01') {
                 this.$MKODialog({ //扫码-弹框选择跳转
                     title: "提示",
-                    msg: '检测到该设备所在巡查点正在进行巡查任务，需要查看吗？',
+                    msg: `检测到该设备所在巡查点正在进行巡查任务，<br/>需要查看吗？`,
                     cancelBtn: true,
                     confirmText: '查看设备详情',
                     cancelText: "查看巡查点"
@@ -533,7 +533,7 @@ export default {
             let nextPath = {
                 name: 'deviceDetail',
                 params: {
-                    pid: '38986'
+                    pid: '20764'
                 },
                 query: {
                     from: 'home'
@@ -546,7 +546,7 @@ export default {
             let nextPath = {
                 name: 'BindDevice',
                 params: {
-                    id: '38986'
+                    id: '20764'
                 },
                 query: {
                     from: 'home',
@@ -560,7 +560,7 @@ export default {
             let nextPath = {
                 name: 'spotInfo',
                 params: {
-                    pid: '26145'
+                    pid: '20811'
                 },
                 query: {
                     from: 'home'
@@ -571,7 +571,7 @@ export default {
         },
         getTaskBuilds() {
             api.getXCTaskPosition({
-                taskId: '6Z9m31x78173'
+                taskId: 'U1883019q965'
             }).then(res => {
                 let positions = res.response;
                 let checkPoints = {};
@@ -625,7 +625,7 @@ export default {
         },
         getTaskInfo() {
             api.getTaskInfo({
-                taskId: '6Z9m31x78173'
+                taskId: 'U1883019q965'
             }).then(res => {
                 if (!res) return false;
                 if (res.code == 0) {

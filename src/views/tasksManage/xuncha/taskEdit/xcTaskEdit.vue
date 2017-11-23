@@ -1,13 +1,10 @@
 <template>
     <div>
         <div class="placeholder-item"></div>
-        <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back" right-icon="icon-delete"
-                    @handleRightClick="remove"></mko-header>
+        <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back" right-icon="icon-delete" @handleRightClick="remove"></mko-header>
         <div class="page-wrap xc-task-edit-wrap" ref="wrapper" :style="{ height: wrapperHeight + 'px'}">
             <div class="module-wrap">
                 <mko-form-cell title="巡查任务名" v-model="formData.name" type="text" edit></mko-form-cell>
-                <mko-form-cell title="行业类型" :val="depFilter[formData.dep] || '选择'"
-                               type="sel" edit @click="popupPickerShow('dep')"></mko-form-cell>
                 <mko-form-cell title="执行人员" :val="personFr(formData.person)"
                                type="sel" edit @click="popupPickerShow('person')"></mko-form-cell>
             </div>
@@ -17,11 +14,11 @@
                 <div class="spot-sel-btn" @click="goSelSpot(true)" v-show="formData.spot.length==0">
                     <span class="icon-plus-blue-0 abs-all-middle"></span>
                 </div>
-                <mko-select-box :title="`${item.jzName}，${item.level}`" :options="options_spot[i]" :selected="item.pos"
+                <mko-select-box :title="`${item.jzName}，${item.level}`"
+                                :options="options_spot_0[i].concat(options_spot_1[i])" :selected="item.pos"
                                 :column="2" name-key="name" value-key="positionId" @select="selSpot($event,i)"
                                 v-for="(item,i) in formData.spot">
-                    <button slot="more" class="sel-btn" :style="{margin:'5px 1.4%',width:'47.2%'}"
-                            @click="goSelSpot(true)">
+                    <button slot="more" class="sel-btn" :style="{margin:'5px 1.4%',width:'47.2%'}" @click="goSelSpot(true)">
                         <span class="icon icon-plus-blue-1"></span>
                     </button>
                 </mko-select-box>
@@ -32,15 +29,10 @@
             <mko-button size="large" @click="send" :disabled="!valid">保存</mko-button>
 
             <!--选项-->
-            <sel-spot @sel="selSpotOnList" :selected-form="formData" v-if="$route.query.sel"></sel-spot>
-            <mko-popup-bottom :title="popupName" v-model="selPopupShow" @save="selPickerVal"
-                              @cancel="selPopupShow=false">
+            <sel-spot @sel="selSpotOnList" :selected-form="formData.spot" v-if="$route.query.sel"></sel-spot>
+            <mko-popup-bottom title="执行人员" v-model="selPopupShow" @save="selPickerVal" @cancel="selPopupShow=false">
                 <mko-select-box :selected="history_person" :options="options_person"
-                                name-key="employeeName" value-key="userName" @select="onPersonChange"
-                                v-if="pickerWrapperName === 'person'"></mko-select-box>
-                <mko-select-box :column="4" :options="depOptions" name-key="name" value-key="value" :selected="depDatas"
-                                @select="onDepChange"
-                                v-if="pickerWrapperName === 'dep'"></mko-select-box>
+                                name-key="employeeName" value-key="userName" @select="onPersonChange"></mko-select-box>
             </mko-popup-bottom>
         </div>
     </div>
@@ -49,7 +41,7 @@
 <script>
     import api from 'api'
     import moment from 'moment'
-    import {Indicator, Toast} from 'mint-ui'
+    import { Indicator, Toast } from 'mint-ui'
     import selSpot from './components/selSpot.vue';
     //    import taskInfo from './components/_taskInfo.vue';
     //    import taskSpot from './components/_taskSpot.vue';
@@ -69,23 +61,13 @@
                     person: [],
                     spot: [],
                 },
-                options_spot: [],
+                options_spot_0: [],
+                options_spot_1: [],
                 options_person: [],
                 history_person: [],
                 selPopupShow: false,
                 pickerShow: '',
                 ruleId: '',
-                depOptions: [{
-                    name: '消防', value: 1
-                }, {
-                    name: '安监', value: 2
-                }, {
-                    name: '其他', value: 0
-                }],
-                depDatas: [],
-                depFilter: ['其他', '消防', '安监'],
-                popupName: '',
-                pickerWrapperName: ''
             }
         },
         watch: {
@@ -123,7 +105,8 @@
                     })
                 }
                 let spots = [];
-                let op_spots = [];
+                let op_spots_0 = [];
+                let op_spots_1 = [];
                 builds.forEach(item => {
                     item.floors.forEach(data => {
                         let pos = JSON.stringify(data.positions);
@@ -133,7 +116,8 @@
                             level: data.level,
                             pos: JSON.parse(pos)
                         });
-                        op_spots.push(JSON.parse(pos));
+                        op_spots_0.push(JSON.parse(pos));
+                        op_spots_1.push([]);
                     })
                 });
                 let form_data = {
@@ -143,7 +127,8 @@
                     spot: spots
                 };
                 this.formData = form_data;
-                this.options_spot = op_spots;
+                this.options_spot_0 = op_spots_0;
+                this.options_spot_1 = op_spots_1;
             }
             this.getPersonList()
             // this.initTaskSpotByPositionId()
@@ -179,22 +164,16 @@
             },
             popupPickerShow(picker){
                 let that = this;
-                if (picker == 'person') {
-                    let fns = {
-                        'person': function () {
-                            that.history_person = JSON.parse(JSON.stringify(that.formData.person));
-                        },
+                let fns = {
+                    'person': function () {
+                        that.history_person = JSON.parse(JSON.stringify(that.formData.person));
+                    },
 
-                    };
-                    if (fns[picker])
-                        fns[picker]();
-                    this.popupName = '执行人员';
-                } else if (picker == 'dep') {
-                    this.popupName = '行业类型';
-                }
+                };
+                if (fns[picker])
+                    fns[picker]();
                 this.selPopupShow = true;
                 this.pickerShow = picker;
-                this.pickerWrapperName = picker;
             },
             onPersonChange(item){
                 let p = this.history_person;
@@ -209,17 +188,13 @@
             selPickerVal(){
                 let that = this;
                 let f = this.formData;
-                if (this.pickerWrapperName == 'person') {
-                    let fns = {
-                        'person': function () {
-                            f.person = JSON.parse(JSON.stringify(that.history_person));
-                        },
-                    };
-                    if (fns[this.pickerShow])
-                        fns[this.pickerShow]();
-                } else if (this.pickerWrapperName === 'dep') {
-                    this.formData.dep = this.depDatas[0].value;
-                }
+                let fns = {
+                    'person': function () {
+                        f.person = JSON.parse(JSON.stringify(that.history_person));
+                    },
+                };
+                if (fns[this.pickerShow])
+                    fns[this.pickerShow]();
                 this.selPopupShow = false;
             },
             goSelSpot(bool){
@@ -230,34 +205,48 @@
                     this.$MKOPop();
                 }
             },
-            selSpotOnList(form){
-                let op = this.options_spot;
+            selSpotOnList(res){
+                let op = this.options_spot_1;
+                let op_0 = this.options_spot_0;
                 let f = this.formData.spot;
-                let data = {
-                    jzId: form.jz.jzID,
-                    jzName: form.jz.jzName,
-                    level: form.level.value,
-                    pos: []
 
-                };
-                form.spot.forEach(item => {
-                    data.pos.push({
-                        name: item.jzPosition,
-                        positionId: item.positionId,
-                    })
-                });
-                let fns = function () {
+                let fns = function (form) {
+                    let data = {
+                        jzId: form.jz.jzID,
+                        jzName: form.jz.jzName,
+                        level: form.jzLevel.value,
+                        pos: []
+                    };
+                    form.spot.forEach(item => {
+                        data.pos.push({
+                            name: item.jzPosition || item.name,
+                            positionId: item.positionId,
+                            isInit: item.isInit || false
+                        })
+                    });
                     for (let i in f) {
                         if (f[i].jzId == data.jzId && f[i].level == data.level) {
                             f[i].pos = JSON.parse(JSON.stringify(data.pos));
                             op[i] = JSON.parse(JSON.stringify(data.pos));
+
+                            for (let index = 0; index < op[i].length; index++) {
+                                for (let initItem of op_0[i]) {
+                                    if (initItem.positionId == op[i][index].positionId) {
+                                        op[i].splice(index, 1);
+//                                        index--;
+                                    }
+                                }
+                            }
                             return;
                         }
                     }
                     f.push(JSON.parse(JSON.stringify(data)));
                     op.push(JSON.parse(JSON.stringify(data.pos)));
+                    op_0.push([]);
                 };
-                fns();
+                for (let key in res) {
+                    fns(res[key]);
+                }
             },
             selSpot(item, index){
                 let s = this.formData.spot[index].pos;
@@ -324,7 +313,7 @@
             sendSucc(f, users, userNames) {
                 this.$MKODialog({
                     title: '提示',
-                    msg: `<div class="text-center">编辑成功，新增的巡查点将在第二天零点生效，目前看不到新增的巡查点数据。</div>`
+                    msg: `<div class="text-center">编辑成功！</div>`
                 }).then(msg => {
                     if (msg == 'confirm') {
                         let datas = JSON.parse(sessionStorage.getItem(`ruleData${this.ruleId}`));
@@ -391,10 +380,6 @@
                     }
 
                 })
-            },
-            onDepChange(item) {
-                this.depDatas = [];
-                this.depDatas.push(item);
             }
         },
         components: {

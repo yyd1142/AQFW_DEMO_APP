@@ -1,15 +1,19 @@
 <template>
     <div>
         <div class="placeholder-item"></div>
-        <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="(show[1]&&formData.spot.length!=0)?'确定':''" @handleRightClick="confirm"></mko-header>
+        <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back"
+                    :right-icon-text="show[0]?'确定':''" @handleRightClick="confirm"></mko-header>
         <div class="sel-spot-wrap">
             <mko-cell :title="jz.jzName" @click="selJz(jz)" v-for="jz in options_build">
-                <div class="active" slot="icon" v-show="formData.jz.jzID==jz.jzID"></div>
+                <div class="active" slot="icon" v-show="show[0]&&activeData.jz.jzID==jz.jzID"></div>
             </mko-cell>
             <mko-popup-right v-model="show[0]" inset no-btn>
-                <mko-cell :class="{'disabled':l.posCount==0}"
-                          :title="`${l.label} (${l.posCount})`" @click="l.posCount==0?'':selLevel(l)" v-for="l in options_level">
-                    <div class="active" slot="icon" v-show="formData.jzLevel.value==l.value"></div>
+                <mko-cell :class="{'disabled':l.posCount==0}" @click="l.posCount==0?'':selLevel(l)"
+                          :title="`${l.label} (${l.posCount})`" v-for="l in options_level">
+                    <div class="active" slot="icon" v-show="show[1]&&activeData.jzLevel.value==l.value"></div>
+                    <mko-check-box slot="icon" :active="selAllSpotFr(l)"
+                                   @click="selAllPosition(l)" v-if="l.posCount"></mko-check-box>
+
                 </mko-cell>
             </mko-popup-right>
             <mko-popup-right v-model="show[1]" width="78.6%" inset no-btn>
@@ -18,7 +22,7 @@
                     当前没有巡查点
                 </div>
                 <mko-cell :title="`${s.jzPosition} (${s.count})`" @click="selSpot(s)" v-for="s in options_spot">
-                    <mko-check-box slot="icon" :active="selSpotFr(s.positionId)" @click="selSpot(s)"></mko-check-box>
+                    <mko-check-box slot="icon" :active="selSpotFr(s)" @click="selSpot(s)"></mko-check-box>
                 </mko-cell>
             </mko-popup-right>
         </div>
@@ -27,6 +31,7 @@
 
 <script>
     import api from 'api'
+    import { levelFr } from 'filters'
     import { Indicator } from 'mint-ui'
     var Promise = require("bluebird");
     export default {
@@ -38,12 +43,18 @@
                 options_build: [],
                 options_level: [],
                 options_spot: [],
-                formData: {
+                activeData: {
                     jz: {},
                     jzLevel: {},
-                    spot: []
+//                    spot: []
+                },
+                formData: {
+//                    jz: {},
+//                    jzLevel: {},
+//                    spot: []
                 },
                 title: '建筑',
+                update: false,
             }
         },
         watch: {
@@ -55,14 +66,21 @@
                 } else {
                     this.title = '建筑';
                 }
-            }
+            },
+//            formData: {
+//                handler: () => {
+//                },
+//                deep: true
+//            }
         },
         computed: {},
         mounted() {
             this.getJzList();
+            this.matchSelected();
             this.setBackButton();
         },
         activated(){
+
         },
         deactivated() {
         },
@@ -71,17 +89,50 @@
             window.mkoBackButton.callback = null;
         },
         methods: {
-            selSpotFr(id){
-                for (let item of this.formData.spot) {
-                    if (item.positionId == id)
-                        return true;
-                }
+            levelFr,
+            selAllSpotFr(l){
+                if (!this.formData[l.jzID + '/' + l.value] || !this.formData[l.jzID + '/' + l.value].spot)
+                    return false;
+
+                return this.formData[l.jzID + '/' + l.value].spot.length == l.posCount;
+            },
+            selSpotFr(item){
+                let id = item.positionId;
+                let _key = item.jzID + '/' + item.jzLevel;
+
+                if (this.formData[_key] && (this.update || !this.update))
+                    for (let s of this.formData[_key].spot) {
+                        if (s.positionId == id)
+                            return true;
+                    }
                 return false;
+            },
+            matchSelected(){
+                let s = this.selectedForm;
+                let f = this.formData;
+                for (let item of s) {
+                    let key = item.jz.jzID + '/' + item.jzLevel.value;
+                    if (!f[key]) {
+                        f[key] = {
+                            jz: {
+                                jzID: item.jz.jzID,
+                                jzName: item.jz.jzName
+                            },
+                            jzLevel: {
+                                label: item.jzLevel.label,
+                                value: item.jzLevel.value,
+                            },
+                            spot: []
+                        }
+                    }
+                    f[key].spot = JSON.parse(JSON.stringify(item.spot));
+                }
             },
             getJzList(){
                 Indicator.open({spinnerType: 'fading-circle'});
                 let pas = {
                     groupId: this.$store.getters.groupId,
+//                    groupId: 'QYWX000010',
                     fetchAll: true
                 };
                 api.searchBuild(pas).then(res => {
@@ -94,8 +145,8 @@
                 })
             },
             selJz(item){
-                this.formData.jz = item;
-                this.formData.jzLevel = {};
+                this.activeData.jz = item;
+                this.activeData.jzLevel = {};
                 this.getLevelList(item);
                 this.show[0] = true;
             },
@@ -106,6 +157,8 @@
                 let arr2 = [];
                 for (let i = 1; i <= _ds; i++) {
                     arr1.push({
+                        jzID: item.jzID,
+                        jzName: item.jzName,
                         label: `${i}楼`,
                         value: i,
                         posCount: 0
@@ -113,6 +166,8 @@
                 }
                 for (let i = _dx; i >= 1; i--) {
                     arr2.push({
+                        jzID: item.jzID,
+                        jzName: item.jzName,
                         label: `负${i}楼`,
                         value: -i,
                         posCount: 0
@@ -127,7 +182,8 @@
                     m: 'positionCount',
                     type: this.$route.params.type == 'routine' ? 1 : 2, //1：不包含已分工的 2：包含已分工的
                     groupId: this.$store.getters.groupId,
-                    jzID: this.formData.jz.jzID
+//                    groupId: 'QYWX000010',
+                    jzID: this.activeData.jz.jzID
                 };
                 api.dwFacilities(pas).then(res => {
                     if (res && res.code == 0 && res.response) {
@@ -142,50 +198,97 @@
                     Indicator.close();
                 });
             },
-            selLevel(item){
-                this.formData.jzLevel = item;
-                this.formData.spot = [];
-                this.getJzPosition();
-                this.matchSelected();
-                this.show[1] = true;
-            },
-            matchSelected(){
-                let s = this.selectedForm;
-                let f = this.formData;
-                for (let item of s) {
-                    if (item.jz.jzID == f.jz.jzID && item.jzLevel.value == f.jzLevel.value) {
-                        f.spot = JSON.parse(JSON.stringify(item.spot));
+            selAllPosition(l){
+                let _key = l.jzID + '/' + l.value;
+                if (!this.formData[_key]) {
+                    this.formData[_key] = {
+                        jz: {
+                            jzID: l.jzID,
+                            jzName: l.jzName
+                        },
+                        jzLevel: {
+                            label: l.label,
+                            value: l.value,
+                        },
+                        spot: []
                     }
                 }
+                let f = this.formData[_key];
+                let all = f.spot.length == l.posCount;
+                if (all) {
+                    delete this.formData[_key];
+                    this.options_spot = [];
+                } else {
+                    this.getJzPosition(l, _key);
+                }
             },
-            getJzPosition(){
+            selLevel(item){
+                this.activeData.jzLevel = item;
+                let _key = item.jzID + '/' + item.value;
+                if (!this.formData[_key]) {
+                    this.formData[_key] = {
+                        jz: {
+                            jzID: item.jzID,
+                            jzName: item.jzName
+                        },
+                        jzLevel: {
+                            label: this.levelFr(item.value),
+                            value: item.value,
+                        },
+                        spot: []
+                    }
+                }
+                this.getJzPosition(item);
+                this.show[1] = true;
+            },
+            getJzPosition(level, _key){
                 Indicator.open({spinnerType: 'fading-circle'});
+                this.options_spot = [];
                 let pas = {
                     queryAll: this.$route.params.type == 'routine' ? 0 : 2,//1：不包含已分工的 2：包含已分工的
                     groupId: this.$store.getters.groupId,
-                    jzLevel: this.formData.jzLevel.value,
-                    jzID: this.formData.jz.jzID
+//                    groupId: 'QYWX000010',
+                    jzLevel: level.value,
+                    jzID: level.jzID
                 };
                 api.getJzPosition(pas).then(res => {
+                    Indicator.close();
                     if (res && res.code == 0) {
                         this.options_spot = res.response;
+                        if (_key) {
+                            this.formData[_key].spot = res.response;
+                        }
                     }
-                    Indicator.close();
                 });
             },
             selSpot(item){
-                let s = this.formData.spot;
+                let _key = item.jzID + '/' + item.jzLevel;
+                if (!this.formData[_key]) {
+                    this.formData[_key] = {
+                        jz: {
+                            jzID: item.jzID,
+                            jzName: item.jzName
+                        },
+                        jzLevel: {
+                            label: this.levelFr(item.jzLevel),
+                            value: item.jzLevel,
+                        },
+                        spot: []
+                    }
+                }
+                this.update = !this.update;
+                let s = this.formData[_key].spot;
                 for (let i in s) {
                     if (s[i].positionId == item.positionId) {
-                        this.formData.spot.splice(i, 1);
+                        this.formData[_key].spot.splice(i, 1);
                         return;
                     }
                 }
-                this.formData.spot.push(item);
+                this.formData[_key].spot.push(item);
             },
             confirm(){
-                if (!this.show[1])
-                    return;
+//                if (!this.show[1])
+//                    return;
                 this.$emit('sel', this.formData);
                 this.back();
             },
@@ -220,7 +323,7 @@
             &:last-child .cell {
                 box-shadow: 0 1px 0 0 @baseBorder;
             }
-            &.disabled .cell .title{
+            &.disabled .cell .title {
                 color: @baseText03;
             }
             .title-icon {

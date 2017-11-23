@@ -2,7 +2,7 @@
     <div class="task-info-wrap">
         <div class="body">
             <mko-double-cell title="信息" label="完善任务名称与任务要求" @click="fold">
-                <div class="header-sign" slot="icon" v-show="!isConfirm">2</div>
+                <div class="header-sign" slot="icon" v-show="!isConfirm">1</div>
                 <div class="header-sign succ" slot="icon" v-show="isConfirm">
                     <span class="icon-tick-white-2"></span>
                 </div>
@@ -29,7 +29,7 @@
     export default {
         data () {
             return {
-                isFold: true, //折叠
+                isFold: false, //折叠
                 isConfirm: false, //已保存数据
                 valid: false,
                 history_date: '',

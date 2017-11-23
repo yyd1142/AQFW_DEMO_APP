@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="placeholder-item"></div>
-        <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="(show[1]&&formData.spot.length!=0)?'确定':''" @handleRightClick="confirm"></mko-header>
+        <mko-header background-color="#ffffff" title-color="#333333" border-color="#eee" :title="title" left-icon="icon-back-black" @handleLeftClick="back" :right-icon-text="(show[1]&&formData.spot.length!=0)?'确定':''" right-font-color="black-font" @handleRightClick="confirm"></mko-header>
         <div class="sel-spot-wrap">
             <mko-cell :title="jz.jzName" @click="selJz(jz)" v-for="jz in options_build">
                 <div class="active" slot="icon" v-show="formData.jz.jzID==jz.jzID"></div>
@@ -200,7 +200,9 @@
 
 <style lang="less" rel="stylesheet/less">
     @import "../../../config.less";
-
+    .black-font {
+        color: #333333;
+    }
     .xc-task-add-wrap, .sel-spot-wrap {
         position: fixed;
         top: @headerHeight+@headerTop;

@@ -13,7 +13,7 @@
                     <span v-text="text"></span>
                 </div>
             </div>
-            <device-detail v-show="tabI == 0" :status="status" :address="address"></device-detail>
+            <device-detail v-show="tabI == 0" :status="status" :address="address" :id="$route.params.id"></device-detail>
             <alarm-record v-show="tabI == 1" :address="address"></alarm-record>
         </div>
     </div>

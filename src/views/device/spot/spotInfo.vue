@@ -432,7 +432,7 @@
                 } else {
                     this.$MKODialog({
                         title: "确定解除绑定吗？",
-                        msg: '解除绑定后，设备二维码将永久失效，且无法绑定其他设备',
+                        msg: `解除绑定后，设备二维码将永久失效，<br/>且无法绑定其他设备`,
                         cancelBtn: true,
                         cancelText: "取消"
                     }).then(msg => {
@@ -451,9 +451,18 @@
                 let expandCode = data.substring(11, 14);
                 let code = data.substring(14, 17);
                 if (code === 'Y04') {
-                    this.$MKODialog({ msg: '绑定成功' });
-                    this.isBindDevice = true;
-                    this.qrcode = code;
+                    this.$MKODialog({
+                        title: "提示",
+                        msg: '绑定后此二维码将不能再绑定其他巡查点，确认绑定吗',
+                        cancelBtn: true,
+                        cancelText: "取消"
+                    }).then(msg => {
+                        if (msg == "confirm") {
+                            this.isBindDevice = true;
+                            this.qrcode = code;
+                            Toast({message: "绑定成功", duration: 2000});
+                        }
+                    });
                 } else {
                     this.$MKODialog({ msg: '无法绑定该二维码' });
                 }

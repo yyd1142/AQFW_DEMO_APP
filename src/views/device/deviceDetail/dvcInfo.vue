@@ -621,9 +621,18 @@
                 let expandCode = data.substring(11, 14);
                 let code = data.substring(14, 17);
                 if (code === 'Y05') {
-                    this.$MKODialog({ msg: '绑定成功' });
-                    this.formData.isBindDevice = true;
-                    this.qrcode = code;
+                    this.$MKODialog({
+                        title: "提示",
+                        msg: '绑定后此二维码将不能再绑定其他设备，确认绑定吗',
+                        cancelBtn: true,
+                        cancelText: "取消"
+                    }).then(msg => {
+                        if (msg == "confirm") {
+                            this.formData.isBindDevice = true;
+                            this.qrcode = code;
+                            Toast({message: "绑定成功", duration: 2000});
+                        }
+                    });
                 } else {
                     this.$MKODialog({ msg: '无法绑定该二维码' });
                 }
