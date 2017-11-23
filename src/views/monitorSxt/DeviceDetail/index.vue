@@ -42,7 +42,7 @@
             return {
                 tabI: 0,
                 tabItems: ['设备信息', '报警记录'],
-                chartNames: ['压力值(Pa)', '水位值(米)'],
+                chartNames: ['压力值{kPa)', '水位值(米)'],
                 titleNames: ['水压监测', '水位监测'],
                 fanwei: ['20.0～666.0kPa', '0.5～2.0M'],
                 status: '',

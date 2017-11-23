@@ -30,7 +30,7 @@
     let theme = 'macarons';
     let timer = null;
     let type = '';
-    let names = ['压力值(Pa)', '水位值(米)'];
+    let names = ['压力值{kPa)', '水位值(米)'];
     let i = 0;
 
     export default {
@@ -39,7 +39,7 @@
                 type: 0,
                 allShow: false,
                 time: 30,
-                chartNames: ['压力值(Pa)', '水位值(米)'],
+                chartNames: ['压力值{kPa)', '水位值(米)'],
                 titleNames: ['水压实时监测', '水位实时监测'],
                 fanwei: [
                     {max: 666, min: 20, unit: 'kPa', text: '20.0～666.0kPa'},
