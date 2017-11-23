@@ -1,22 +1,29 @@
 <template>
     <div class="AlarmRecord">
-        <div class="title-wrap-a">
+        <div class="title-wrap-a" v-if="datas.length > 0">
             <div class="left">
                 <div class="title" v-text="address"></div>
             </div>
             <div class="right">共{{datas.length}}条记录</div>
         </div>
+        <no-data v-if="datas.length <= 0" text="暂无记录"></no-data>
         <mko-double-cell :title="titleFilter(item)" :label="address" v-for="item in datas">
             <span>{{statusFilter[item.status]}}</span>
         </mko-double-cell>
     </div>
 </template>
 <script>
+    import {NoData} from 'components'
     export default {
         props: ['address'],
         data() {
             return {
-                datas: [{
+                statusFilter: ['', '已通知', '待处理', '已确认正常']
+            }
+        },
+        computed: {
+            datas() {
+               let datas = [{
                     address: 'A栋|B1|131（应急出口）',
                     count: 0,
                     name: '应急出口堵塞监测',
@@ -26,8 +33,9 @@
                     count: 6,
                     name: '安全出口堵塞监测',
                     status: 3
-                }],
-                statusFilter: ['', '已通知', '待处理', '已确认正常']
+                }]
+                if(this.$route.params.id != 1) datas = [];
+                return datas;
             }
         },
         methods: {
@@ -38,6 +46,9 @@
                     return `<span class='dingding'>${item.count}</span>${item.name}`;
                 }
             }
+        },
+        components: {
+            NoData
         }
     }
 </script>
@@ -95,6 +106,9 @@
             border-radius: 3px;
             line-height: 17px;
             margin-right: 6px;
+        }
+        .no-data-wrap {
+            top: 400px;
         }
     }
 </style>
