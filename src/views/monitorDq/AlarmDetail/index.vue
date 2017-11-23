@@ -14,11 +14,11 @@
                     <div class="value">无锡万象城/1楼/商铺中心东北角巡查点</div>
                 </div>
                 <div class="cell clear">
-                    <div class="title">首次报警时间</div>
+                    <div class="title">首次报警</div>
                     <div class="value">2017-11-08 14:15</div>
                 </div>
                 <div class="cell clear">
-                    <div class="title">最近报警时间</div>
+                    <div class="title">最近报警</div>
                     <div class="value">2017-11-08 13:33</div>
                 </div>
                 <div class="cell clear">

@@ -153,7 +153,10 @@ const BindDevice = resolve => require(['./views/qrcode/BindDevice.vue'], resolve
 Vue.use(Router)
 
 const routers = {
-    // mode: 'history',
+    mode: 'history',
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    },
     routes: [
         //登陆
         {
