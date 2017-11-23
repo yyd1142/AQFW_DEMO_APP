@@ -2,6 +2,9 @@
     <div class="StartDailyXuncha">
         <div class="placeholder-item"></div>
         <mko-header :title="decodeURI($route.query.name)" left-icon="icon-back" @handleLeftClick="back">
+            <div class="header-right" slot="custom" @click="QRCode" v-if="status == 2">
+                <i class="icon-qr-code"></i>
+            </div>
         </mko-header>
         <div class="page-wrap">
             <timer :status="status" :used-timer="dailyXunchaUsedTimer"></timer>
@@ -15,8 +18,8 @@
                 </task-summary>
             </transition>
             <div class="check-point-wrap" v-for="build, buildIndex  in builds">
-                <div class="build-name" v-text="build.jzName"></div>
-                <div class="build-device-count" v-if="build.totalDeviceCount != 0">共{{build.totalDeviceCount}}个设备</div>
+                <div class="build-name" v-text="build.jzName || '暂无建筑名称'"></div>
+                <div class="build-device-count" v-if="build.totalPositionCounts != 0">共{{build.totalPositionCounts}}个巡查点</div>
                 <div class="floor" v-for="floor, floorIndex in build.floors">
                     <div class="padding floor-wrap" @click.stop="open(buildIndex, floorIndex, floor.show)">
                         <div class="floor-name">
@@ -24,7 +27,7 @@
                             <span class="device-account yellow-font"
                                   v-if="floor.problemDeviceCount && status == 3">{{floor.problemDeviceCount}}个风险</span>
                             <span class="device-account"
-                                  v-if="status <= 2">{{floor.positions ? floor.positions.length : ''}}</span>
+                                  v-if="status <= 2">{{floor.positions ? `${floor.positions.length}个巡查点` : ''}}</span>
                             <i class="icon icon-link-arrow-up"></i>
                         </div>
                     </div>
@@ -52,9 +55,6 @@
             </div>
             <div class="xuncha-btn end" @click.stop="actionTask" v-if="status == 2">
                 <span>结束巡查</span>
-            </div>
-            <div class="xuncha-btn qrcode" @click.stop="QRCode" v-if="status == 2">
-                <span>扫一扫</span>
             </div>
         </div>
     </div>
@@ -391,6 +391,11 @@
     @import "../../../../config.less";
 
     .StartDailyXuncha {
+        .hidden {
+            height: inherit;
+            padding-bottom: 100px;
+            margin-top: 44px;
+        }
         .xuncha-top-wrap {
             width: 100%;
             padding: 14px;
@@ -660,7 +665,7 @@
             z-index: 24;
             &.end {
                 background: #ff6666;
-                width: 50%;
+                width: 100%;
                 left: 0;
             }
             &.disabled {

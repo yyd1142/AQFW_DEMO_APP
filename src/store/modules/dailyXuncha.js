@@ -103,17 +103,19 @@ const actions = {
                         item.positions.forEach(position => {
                             position['status'] = 1;
                             deviceCounts.push(position.deviceCount);
-                        })
+                        });
                         item['positionsDeviceCount'] = eval(deviceCounts.join('+'))
                     })
                     jzIDs = Array.from(new Set(jzIDs))
                     for (let item of jzIDs) {
                         let deviceCounts = [];
+                        let positionCounts = [];
                         let floors = CheckPointPositions.filter((subItem) => {
                             return subItem.jzId == item
                         });
                         floors.forEach(floor => {
-                            deviceCounts.push(floor.positionsDeviceCount)
+                            deviceCounts.push(floor.positionsDeviceCount);
+                            positionCounts.push(floor.positions.length);
                         });
                         floors.sort(function (a, b) {
                             return a.level - b.level
@@ -123,7 +125,8 @@ const actions = {
                             jzName: floors[0].jzName ? floors[0].jzName : '',
                             status: 1,
                             floors: floors,
-                            totalDeviceCount: eval(deviceCounts.join('+'))
+                            totalDeviceCount: eval(deviceCounts.join('+')),
+                            totalPositionCounts: eval(positionCounts.join('+'))
                         })
                     }
                     commit(types.DAILYXUNCHA_INIT_POSITION_DATA, builds)

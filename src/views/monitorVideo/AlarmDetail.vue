@@ -35,7 +35,7 @@
                                  :label="timeFomat(choosePersonResults.time)"
                                  v-if="choosePersonResults.datas.length > 0"></mko-double-cell>
                 <mko-double-cell icon="icon-device-danger" title="待处理" :label="'2017-11-08 13:33 ' + dangerFilter($route.query.name)" v-for="item in $route.query.count" @click="popupShow = true;">
-                    <img class="alarm-img" src="/static/WX20171101-165733.png"/>
+                    <img class="alarm-img" :src="$route.query.type === 1 ? '/static/duse.jpg' : '/static/minghuo.jpg'"/>
                 </mko-double-cell>
             </div>
             <div class="btn" v-if="$route.query.status == 2">
@@ -46,7 +46,7 @@
         <div class="photo-preview">
             <mt-popup v-model="popupShow">
                 <div class="photo">
-                    <img src="/static/WX20171101-165733.png" width="350" height="350">
+                    <img :src="$route.query.type === 1 ? '/static/duse.jpg' : '/static/minghuo.jpg'" width="350" height="350">
                 </div>
             </mt-popup>
         </div>
@@ -63,6 +63,13 @@
                     time: ''
                 },
                 popupShow: false
+            }
+        },
+        watch: {
+            popupShow: function (val) {
+                if(val) {
+                    this.setBackButton()
+                }
             }
         },
         activated() {
@@ -141,6 +148,18 @@
                 } else {
 
                 }
+            },
+            setBackButton() {
+                let self = this;
+                window.mkoBackButton = {};
+                window.mkoBackButton.bInputData = true;
+                window.mkoBackButton.callback = function () {
+                    if(window.mkoBackButton.bInputData && self.popupShow) {
+                        window.mkoBackButton.bInputData = false;
+                        self.popupShow = false;
+                    }
+                }
+
             }
         }
     }
