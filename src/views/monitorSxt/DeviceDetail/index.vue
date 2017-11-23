@@ -42,7 +42,7 @@
             return {
                 tabI: 0,
                 tabItems: ['设备信息', '报警记录'],
-                chartNames: ['压力值{kPa)', '水位值(米)'],
+                chartNames: ['压力值(kPa)', '水位值(米)'],
                 titleNames: ['水压监测', '水位监测'],
                 fanwei: ['20.0～666.0kPa', '0.5～2.0M'],
                 status: '',
@@ -173,7 +173,7 @@
                                 formatter: '{value}',
                                 textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                                     color: 'auto',
-                                    fontWeight: 'thin'
+                                    fontSize: 18,
                                 }
                             },
                             data: [{value: data, name: names[this.$route.params.id - 1]}]
