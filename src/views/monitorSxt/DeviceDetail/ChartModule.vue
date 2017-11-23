@@ -56,7 +56,6 @@
 
             i = 0;
             this.refreshData();
-            this.DrawChart4(echarts);
 
             this.time = 30;
             let that = this;
@@ -78,6 +77,7 @@
         methods: {
             refreshData(){
                 this.DrawChart2(echarts);
+                this.DrawChart4(echarts);
                 i++;
                 if (i > 4)
                     i = 0;
