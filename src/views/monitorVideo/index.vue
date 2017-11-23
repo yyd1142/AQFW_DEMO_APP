@@ -49,13 +49,6 @@
             name: '消防通道堵塞监测',
             status: 2,
             type: 1
-        }, {
-            id: 2,
-            address: '无锡万象城|1楼|商铺中心',
-            count: 1,
-            name: '明火监测',
-            status: 2,
-            type: 2
         }],
         deviceMonitorDatas: [{
             id: 1,

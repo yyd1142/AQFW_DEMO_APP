@@ -43,7 +43,7 @@ export default {
     },
     watch: {
         photoList: function() {
-            
+
         }
     },
     created() {
@@ -112,7 +112,7 @@ export default {
                 margin: 12px 0 0 12px;
             }
             &.camera-btn {
-                background-color: #cccccc;
+                background-color: #3399ff;
                 border-radius: 3px;
             }
             span {

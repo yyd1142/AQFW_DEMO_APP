@@ -182,7 +182,7 @@
                 //     return;
                 // }
                 // if (task.status == 4) {
-                //     this.$MKODialog({ title: '提示', msg: '数据正在处理中，请稍后查看...' })
+                //     this.$MKODialog({ title: '提示', msg: '报告上传成功，服务器正在自动处理，某些情况下可能需要1到2天' })
                 //     return;
                 // }
                 // let routerPath = {};

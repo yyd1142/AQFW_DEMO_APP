@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="placeholder-item"></div>
-        <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="(show[0] && formData.device.length != 0) ? '确定' : ''" @handleRightClick="confirm"></mko-header>
+        <mko-header background-color="#ffffff" title-color="#333333" border-color="#eee" :title="title" left-icon="icon-back-black" @handleLeftClick="back" :right-icon-text="(show[0]&&formData.device.length!=0)?'确定':''" right-font-color="black-font" @handleRightClick="confirm"></mko-header>
         <div class="sel-spot-wrap">
             <mko-cell :title="type.name" @click="selType(type)" v-for="type in deviceTypes">
                 <div class="active" slot="icon" v-show="formData.dep == type.dep"></div>
@@ -77,7 +77,7 @@
                 let params = {
                     groupId: this.$store.getters.groupId,
                     isCheck: 1,
-                    id: this.positionId,
+                    id: '20811',
                     dep: dep
                 };
                 api.getDvcPositionInfo(params).then(result => {

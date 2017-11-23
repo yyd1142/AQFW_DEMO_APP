@@ -1,19 +1,17 @@
 <template>
     <div class="bind-device">
         <div v-show="!$route.query.sel">
-            <div class="placeholder-item"></div>
-            <mko-header :title="isBindDevice ? '绑定设施设备' : '绑定巡查点'" left-icon="icon-back" @handleLeftClick="back">
+            <div class="placeholder-item white-placeholder"></div>
+            <mko-header background-color="#ffffff" title-color="#333333" border-color="#eee" :title="isBindDevice ? '绑定设施设备' : '绑定巡查点'" left-icon="icon-back-black" @handleLeftClick="back">
             </mko-header>
             <div class="page-wrap">
-                <img class="qr-code" src="/static/image-square.png"/>
-                <div class="center">绑定后扫描二维码可快速查看设备详情</div>
-                <mko-form-cell title="编号" :val="$route.params.id"></mko-form-cell>
-                <mko-form-cell title="类型" val="巡查点二维码"></mko-form-cell>
-                <mko-form-cell title="绑定巡查点" :val="selSpot ? selSpot : '请选择'" :edit="true" type="sel"
-                               @click="goSelSpot(true)"></mko-form-cell>
-                <mko-form-cell title="绑定设备" :val="selDevice ? selDevice : '请选择'" :edit="true" type="sel"
-                               @click="goSelDevice(true)" v-if="positionId && isBindDevice"></mko-form-cell>
-                <mko-button class="footer-btn" size="large" @click="confirm" no-radius>确认</mko-button>
+                <img class="qr-code" :src="isBindDevice ? '/static/bindDevice_banner.png' : '/static/bindPosition_banner.png'"/>
+                <mko-cell title="二维码类型" :val="isBindDevice ? '设施设备' : '巡查点'"></mko-cell>
+                <mko-form-cell title="巡查点位置" :val="selSpot ? selSpot : '请选择'" :edit="true" type="sel" @click="goSelSpot(true)" v-if="!isBindDevice"></mko-form-cell>
+                <mko-cell title="巡查点位置" val="无锡万象城,负一楼,发电机房" v-else></mko-cell>
+                <mko-form-cell title="设备名称" :val="selDevice ? selDevice : '请选择'" :edit="true" type="sel" @click="goSelDevice(true)" v-if="isBindDevice"></mko-form-cell>
+                <div class="center-text">{{isBindDevice ? '绑定后，扫描该二维码可快速查看设备详情' : '绑定后，扫描该二维码可快速查看巡查点详情'}}</div>
+                <mko-button size="large" @click="confirm">完成</mko-button>
             </div>
         </div>
         <sel-spot @sel="selSpotOnList" :selected-form="formData" v-if="$route.query.sel === 'spot'"></sel-spot>
@@ -75,21 +73,39 @@
                 this.selDevice = form.device.unitName;
             },
             confirm() {
-                if (!this.selSpot) return false;
-                this.$MKODialog({
-                    title: "提示",
-                    msg: '绑定后此二维码将不能再绑定其他设备，确认绑定吗',
-                    cancelBtn: true,
-                    confirmText: '确认',
-                    cancelText: "取消"
-                }).then(msg => {
-                    if (msg == "confirm") {
-                        Toast({message: "绑定成功", duration: 2000});
-                        setTimeout(() => {
-                            this.back();
-                        }, 1500);
-                    }
-                });
+                if(this.isBindDevice) {
+                    if(!this.selDevice) return false;
+                    this.$MKODialog({
+                        title: "提示",
+                        msg: '绑定后此二维码将不能再绑定其他设备，确认绑定吗',
+                        cancelBtn: true,
+                        confirmText: '确认',
+                        cancelText: "取消"
+                    }).then(msg => {
+                        if (msg == "confirm") {
+                            Toast({message: "绑定成功", duration: 2000});
+                            setTimeout(() => {
+                                this.back();
+                            }, 1500);
+                        }
+                    });
+                } else {
+                    if(!this.selSpot) return false;
+                    this.$MKODialog({
+                        title: "提示",
+                        msg: '绑定后此二维码将不能再绑定其他巡查点，确认绑定吗',
+                        cancelBtn: true,
+                        confirmText: '确认',
+                        cancelText: "取消"
+                    }).then(msg => {
+                        if (msg == "confirm") {
+                            Toast({message: "绑定成功", duration: 2000});
+                            setTimeout(() => {
+                                this.back();
+                            }, 1500);
+                        }
+                    });
+                }
             }
         },
         components: {
@@ -102,21 +118,24 @@
     @import "../../config.less";
 
     .bind-device {
+        .white-placeholder {
+            background-color: #ffffff;
+        }
         .page-wrap {
             .qr-code {
-                width: 100px;
-                height: 100px;
+                width: 100%;
+                height: auto;
                 margin-left: auto;
                 margin-right: auto;
                 display: block;
-                margin-top: 30px;
             }
-            .center {
-                font-size: 14px;
-                text-align: center;
-                margin-top: 14px;
-                color: #666;
-                margin-bottom: 14px;
+            .center-text {
+                font-size: 12px;
+                color: #666666;
+                letter-spacing: 0;
+                line-height: 12px;
+                width: 100%;
+                padding: 14px 0 14px 14px;
             }
             .footer-btn {
                 position: fixed;

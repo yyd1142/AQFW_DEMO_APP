@@ -65,7 +65,7 @@
                 }
             },
             solvedProblemCountFilter(item) {
-                return `已解决${item.solvedProblemCount}设备<font class="red-font">${item.checkValue.problemCount || 0}个风险</font>`
+                return `已巡查${item.solvedProblemCount}设备<font class="red-font">${item.checkValue.problemCount || 0}个风险</font>`
             },
             getTaskInfo(item) {
                 if (this.$route.query.formTmpTask) return false;

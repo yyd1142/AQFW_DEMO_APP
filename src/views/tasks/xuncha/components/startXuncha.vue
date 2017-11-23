@@ -156,7 +156,12 @@
         },
         mounted() {
             if (this.$route.query.to && this.$route.query.to === 'qiandao') {
-                this.startQianDao(this.builds[0], this.builds[0].positions[0], true);
+                Indicator.open({spinnerType: 'fading-circle'});
+                setTimeout(() => {
+                    Indicator.close()
+                    this.startQianDao(this.builds[0], this.builds[0].positions[0], true);
+                }, 500)
+
             }
         },
         activated() {

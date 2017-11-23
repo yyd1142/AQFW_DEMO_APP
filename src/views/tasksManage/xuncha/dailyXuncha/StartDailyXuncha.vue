@@ -1,11 +1,7 @@
 <template>
     <div class="StartDailyXuncha">
         <div class="placeholder-item"></div>
-        <mko-header :title="decodeURI($route.query.name)" left-icon="icon-back" @handleLeftClick="back">
-            <div class="header-right" slot="custom" @click="QRCode" v-if="status == 2">
-                <i class="icon-qr-code"></i>
-            </div>
-        </mko-header>
+        <mko-header :title="decodeURI($route.query.name)" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap">
             <timer :status="status" :used-timer="dailyXunchaUsedTimer"></timer>
             <task-summary :task-info="taskInfo" :style="{marginTop: (status == 2 ? '30px' : 0)}"
@@ -18,8 +14,8 @@
                 </task-summary>
             </transition>
             <div class="check-point-wrap" v-for="build, buildIndex  in builds">
-                <div class="build-name" v-text="build.jzName || '暂无建筑名称'"></div>
-                <div class="build-device-count" v-if="build.totalPositionCounts != 0">共{{build.totalPositionCounts}}个巡查点</div>
+                <div class="build-name" v-text="build.jzName"></div>
+                <div class="build-device-count" v-if="build.totalDeviceCount != 0">共{{build.totalDeviceCount}}个设备</div>
                 <div class="floor" v-for="floor, floorIndex in build.floors">
                     <div class="padding floor-wrap" @click.stop="open(buildIndex, floorIndex, floor.show)">
                         <div class="floor-name">
@@ -27,7 +23,7 @@
                             <span class="device-account yellow-font"
                                   v-if="floor.problemDeviceCount && status == 3">{{floor.problemDeviceCount}}个风险</span>
                             <span class="device-account"
-                                  v-if="status <= 2">{{floor.positions ? `${floor.positions.length}个巡查点` : ''}}</span>
+                                  v-if="status <= 2">{{floor.positions ? floor.positions.length : ''}}</span>
                             <i class="icon icon-link-arrow-up"></i>
                         </div>
                     </div>
@@ -41,7 +37,6 @@
                                     <span class="device-account"
                                           v-if="checkPoint.needCheckDeviceCount > 0">{{checkPoint.needCheckDeviceCount}}个设备必须巡查</span>
                                     <span class="device-account" v-else>{{checkPoint.needCheckDeviceCount}}个设备可巡查</span>
-                                    <i :class="checkPoint.status == 1 ? 'icon-not-qiandao' : 'icon-is-qiandao'"></i>
                                     <i class="icon icon-link-arrow"></i>
                                 </li>
                             </ul>
@@ -344,41 +339,6 @@
                         doDumpTaskData();
                     }
                 });
-            },
-            QRCode() {
-                if (this.status == 2) {
-                    this.$ScanQRCode(result => {
-                        let data = result.response;
-                        if (data.length === 17) {
-                            this.readerQRCode(data);
-                        } else {
-                            this.$MKODialog({msg: '无效二维码'});
-                        }
-                    })
-                } else {
-                    Toast({message: "请先开始巡查任务!", duration: 2000});
-                }
-            },
-            readerQRCode(data) {
-                let area = data.substring(0, 2);
-                let deviceType = data.substring(2, 4);
-                let supplier = data.substring(4, 6);
-                let installDate = data.substring(6, 11);
-                let expandCode = data.substring(11, 14);
-                let code = data.substring(14, 17);
-                if (code === 'Y06') {
-                    this.$MKOPush({
-                        path: `/qiandaoDailyXuncha/${this.$route.params.id}`,
-                        query: {
-                            positionId: this.builds[0].floors[0].positions[0].positionId,
-                            buildIndex: 0,
-                            floorIndex: 0,
-                            name: this.builds[0].floors[0].positions[0].name
-                        }
-                    });
-                } else {
-
-                }
             }
         },
         components: {
@@ -392,11 +352,6 @@
     @import "../../../../config.less";
 
     .StartDailyXuncha {
-        .hidden {
-            height: inherit;
-            padding-bottom: 100px;
-            margin-top: 44px;
-        }
         .xuncha-top-wrap {
             width: 100%;
             padding: 14px;
@@ -649,14 +604,7 @@
                                 letter-spacing: 0px;
                                 right: 0;
                                 text-align: right;
-                                padding-right: 56px;
-                            }
-                            .icon-is-qiandao, .icon-not-qiandao {
-                                position: absolute;
-                                top: 0;
-                                bottom: 0;
-                                right: 28px;
-                                margin: auto;
+                                padding-right: 30px;
                             }
                         }
                     }
@@ -673,15 +621,9 @@
             z-index: 24;
             &.end {
                 background: #ff6666;
-                width: 100%;
-                left: 0;
             }
             &.disabled {
                 background: #cccccc;
-            }
-            &.qrcode {
-                width: 50%;
-                right: 0;
             }
             span {
                 font-size: 16px;
@@ -753,15 +695,6 @@
                 line-height: 40px;
                 display: table-cell;
                 vertical-align: middle;
-            }
-        }
-        .header-right {
-            .icon-qr-code {
-                position: absolute;
-                right: 14px;
-                margin: auto;
-                top: 0;
-                bottom: 0;
             }
         }
     }

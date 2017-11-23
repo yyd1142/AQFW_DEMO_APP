@@ -1,11 +1,11 @@
 <template>
     <div id="header">
-        <header class="mko-header-wrap" :style="{ backgroundColor: backgroundColor ? backgroundColor : '#3399FF' }">
+        <header class="mko-header-wrap" :style="{ backgroundColor: backgroundColor ? backgroundColor : '#3399FF', borderBottom: `1px solid ${borderColor}` }">
             <div class="header-left" @click="onLeftClickEvent" v-if="leftIconText || leftIcon">
                 <i class="left-icon icon" :class="leftIcon" v-if="leftIcon"></i>
                 <span class="left-text" v-text="leftIconText" v-if="leftIconText"></span>
             </div>
-            <div class="title" v-text="title" v-if="title"></div>
+            <div class="title" :style="{color: titleColor}" v-text="title" v-if="title"></div>
             <div class="header-right" @click="onRightClickEvent" v-if="rightIconText || rightIcon">
                 <i class="right-icon icon" :class="rightIcon" v-if="rightIcon"></i>
                 <span class="right-text" :class="rightFontColor" v-text="rightIconText" v-if="rightIconText"></span>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    props: ['title', 'leftIcon', 'rightIcon', 'leftIconText', 'rightIconText', 'type', 'backgroundColor', 'rightFontColor'],
+    props: ['title', 'leftIcon', 'rightIcon', 'leftIconText', 'rightIconText', 'type', 'backgroundColor', 'rightFontColor', 'titleColor', 'border-color'],
     methods: {
         onRightClickEvent() {
             this.$emit("handleRightClick");

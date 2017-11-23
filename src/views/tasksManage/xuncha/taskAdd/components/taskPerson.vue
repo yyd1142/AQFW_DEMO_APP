@@ -2,7 +2,7 @@
     <div>
         <div v-show="!$route.query.sel">
             <mko-double-cell title="人员" label="选择执行人员" @click="fold">
-                <div class="header-sign" slot="icon" v-show="!isConfirm">4</div>
+                <div class="header-sign" slot="icon" v-show="!isConfirm">3</div>
                 <div class="header-sign succ" slot="icon" v-show="isConfirm">
                     <span class="icon-tick-white-2"></span>
                 </div>
