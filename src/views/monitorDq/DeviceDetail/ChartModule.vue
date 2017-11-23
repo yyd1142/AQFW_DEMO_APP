@@ -8,7 +8,7 @@
             <!--<div class="timer-bar clear">-->
             <!--<div class="timer">倒计时：{{time || '0'}}</div>-->
             <!--</div>-->
-            <timer :status="2" :text="`${time||0}秒自动刷新`"></timer>
+            <timer :status="2" :text="`${time||0}秒后自动刷新`"></timer>
             <div class="chart-wrap clear">
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-left"></div>
@@ -56,9 +56,9 @@
         activated(){
             i = 0;
             this.refreshData();
-            this.DrawChart4(echarts);
-            this.DrawChart5(echarts);
-            this.DrawChart6(echarts);
+//            this.DrawChart4(echarts);
+//            this.DrawChart5(echarts);
+//            this.DrawChart6(echarts);
 
             this.time = 30;
             let that = this;
@@ -82,6 +82,9 @@
                 this.DrawChart1(echarts);
                 this.DrawChart2(echarts);
                 this.DrawChart3(echarts);
+                this.DrawChart4(echarts);
+                this.DrawChart5(echarts);
+                this.DrawChart6(echarts);
                 i++;
                 if (i > 4)
                     i = 0;
@@ -366,7 +369,7 @@
                         feature: {}
                     },
                     calculable: true,
-
+                    color: ['#3399ff'],
                     xAxis: [
                         {
                             type: 'category',
@@ -392,6 +395,8 @@
                     yAxis: [
                         {
                             type: 'value',
+                            min: 100,
+                            max: 250,
                             axisLine: {
                                 lineStyle: {
                                     color: '#333'
@@ -412,7 +417,18 @@
                             type: 'line',
                             smooth: true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                            data: yData
+                            data: yData,
+                            markLine: {
+                                data: [
+                                    {name: '范围最高值', yAxis: 242},
+                                    {name: '范围最小值', yAxis: 187},
+                                ],
+                                lineStyle: {
+                                    normal: {
+                                        color: '#FF6666'
+                                    },
+                                },
+                            }
                         }
                     ]
                 })
@@ -431,7 +447,7 @@
                 }
 
                 let yDatas = [
-                    [200, 220, 210, 240, 260, 220],
+                    [320, 340, 410, 504, 720, 450],
                     [0.23, 0.24, 0.25, 0.22, 0.46, 0.42],
                 ];
                 let i = Math.round(Math.random() * 1, 0);
@@ -455,11 +471,11 @@
                         data: ['电流']
                     },
                     toolbox: {
-                        show: true,
+                        show: false,
                         feature: {}
                     },
                     calculable: true,
-
+                    color: ['#3399ff'],
                     xAxis: [
                         {
                             type: 'category',
@@ -485,6 +501,8 @@
                     yAxis: [
                         {
                             type: 'value',
+                            min: 100,
+                            max: 1000,
                             axisLine: {
                                 lineStyle: {
                                     color: '#333'
@@ -505,7 +523,18 @@
                             type: 'line',
                             smooth: true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                            data: yData
+                            data: yData,
+                            markLine: {
+                                data: [
+                                    {name: '范围最高值', yAxis: 999},
+                                    {name: '范围最小值', yAxis: 300},
+                                ],
+                                lineStyle: {
+                                    normal: {
+                                        color: '#FF6666'
+                                    },
+                                },
+                            }
                         }
                     ]
                 })
@@ -548,10 +577,12 @@
 //                        data: ['最高气温', '最低气温']
                     },
                     toolbox: {
-                        show: true,
+                        show: false,
                         feature: {}
                     },
                     calculable: true,
+                    color: ['#3399ff'],
+
                     xAxis: [
                         {
                             type: 'category',
@@ -574,8 +605,14 @@
                     yAxis: [
                         {
                             type: 'value',
+                            min: -10,
+                            max: 80,
                             axisLabel: {
-                                formatter: '{value} °C'
+                                formatter: '{value}°C',
+                                textStyle: {
+//                                    fontSize: 1,
+                                    fontWeight: 100
+                                }
                             },
                             axisLine: {
                                 lineStyle: {
@@ -589,16 +626,23 @@
                             name: '温度值',
                             type: 'line',
                             data: yData,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
                             markPoint: {
-                                data: [
-                                    {type: 'max', name: '最大值'},
-                                    {type: 'min', name: '最小值'}
-                                ]
+//                                data: [
+//                                    {type: 'max', name: '最大值'},
+//                                    {type: 'min', name: '最小值'}
+//                                ]
                             },
                             markLine: {
                                 data: [
-                                    {type: 'average', name: '平均值'}
-                                ]
+                                    {name: '范围最高值', yAxis: 60},
+                                    {name: '范围最小值', yAxis: 0},
+                                ],
+                                lineStyle: {
+                                    normal: {
+                                        color: '#FF6666'
+                                    },
+                                },
                             }
                         },
                     ]

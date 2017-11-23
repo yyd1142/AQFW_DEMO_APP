@@ -13,7 +13,7 @@
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-mid"></div>
                     <div class="sign">{{chartNames[$route.params.id - 1]}}</div>
-                    <div class="fanwei">{{fanwei[$route.params.id - 1]}}</div>
+                    <div class="fanwei">{{fanwei[type].text}}</div>
                 </div>
             </div>
             <div class="chart-wrap clear">
@@ -36,20 +36,23 @@
     export default {
         data () {
             return {
+                type: 0,
                 allShow: false,
                 time: 30,
                 chartNames: ['压力值(Pa)', '水位值(米)'],
                 titleNames: ['水压实时监测', '水位实时监测'],
-                fanwei: ['20.0～666.0kPa', '0.5～2.0M'],
+                fanwei: [
+                    {max: 666, min: 20, unit: 'kPa', text: '20.0～666.0kPa'},
+                    {max: 2, min: 0.5, unit: 'M', text: '0.5～2.0M'}
+                ],
             }
         },
         watch: {},
-        computed: {
-        },
+        computed: {},
         mounted() {
         },
         activated(){
-            type = this.$route.params.id - 1;
+            type = this.type = this.$route.params.id - 1;
 
             i = 0;
             this.refreshData();
@@ -183,7 +186,6 @@
                     [1.5, 1.7, 1.4, 1.45, 1.43, 1.51],
                 ];
                 let yData = yDatas[type];
-
                 let myChart = ec.init(this.$refs['lineChart-1'], theme);
                 myChart.setOption({
                     title: {
@@ -206,7 +208,7 @@
                         feature: {}
                     },
                     calculable: true,
-
+                    color: ['#3399ff'],
                     xAxis: [
                         {
                             type: 'category',
@@ -232,6 +234,8 @@
                     yAxis: [
                         {
                             type: 'value',
+                            max: this.fanwei[type].max * 1.1,
+                            min: this.fanwei[type].min * 0.9,
                             axisLine: {
                                 lineStyle: {
                                     color: '#333'
@@ -252,7 +256,18 @@
                             type: 'line',
                             smooth: true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                            data: yData
+                            data: yData,
+                            markLine: {
+                                data: [
+                                    {name: '范围最高值', yAxis: this.fanwei[type].max},
+                                    {name: '范围最小值', yAxis: this.fanwei[type].min},
+                                ],
+                                lineStyle: {
+                                    normal: {
+                                        color: '#FF6666'
+                                    },
+                                },
+                            }
                         }
                     ]
                 })
