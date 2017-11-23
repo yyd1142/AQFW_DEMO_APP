@@ -13,11 +13,11 @@
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-left"></div>
                     <div class="sign">电压(V)</div>
-                    <div class="fanwei">187V～242V</div>
+                    <div class="fanwei">185V～245V</div>
                 </div>
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-mid"></div>
-                    <div class="sign">电流(mA)</div>
+                    <div class="sign">剩余电流(mA)</div>
                     <div class="fanwei">300mA～999mA</div>
                 </div>
                 <div class="dashboard-wrap">
@@ -107,7 +107,8 @@
                     },
                     series: [
                         {
-                            max: 500,
+                            max: 245,
+                            min: 185,
                             name: '',
                             type: 'gauge',
 //                            center: ['50%', '40%'],
@@ -170,7 +171,7 @@
                 })
             },
             DrawChart2(ec){
-                let datas = [200, 220, 210, 240, 260];
+                let datas = [310,320,310,320,330];
                 let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
@@ -187,6 +188,7 @@
                     },
                     series: [
                         {
+                            min: 300,
                             max: 1000,
                             name: '',
                             type: 'gauge',
@@ -268,7 +270,7 @@
                     series: [
                         {
                             min: 0,
-                            max: 100,
+                            max: 60,
                             name: '线温',
                             type: 'gauge',
 //                            center: ['50%', '40%'],
@@ -691,7 +693,7 @@
                     left: 50%;
                     transform: translate(-50%, 0);
                     -webkit-transform: translate(-50%, 0);
-                    min-width: 75px;
+                    min-width: 100px;
                     font-size: 12px;
                     text-align: center;
                     color: @baseText02;
