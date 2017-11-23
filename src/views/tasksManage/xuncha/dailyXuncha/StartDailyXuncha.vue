@@ -41,6 +41,7 @@
                                     <span class="device-account"
                                           v-if="checkPoint.needCheckDeviceCount > 0">{{checkPoint.needCheckDeviceCount}}个设备必须巡查</span>
                                     <span class="device-account" v-else>{{checkPoint.needCheckDeviceCount}}个设备可巡查</span>
+                                    <i :class="checkPoint.status == 1 ? 'icon-not-qiandao' : 'icon-is-qiandao'"></i>
                                     <i class="icon icon-link-arrow"></i>
                                 </li>
                             </ul>
@@ -648,7 +649,14 @@
                                 letter-spacing: 0px;
                                 right: 0;
                                 text-align: right;
-                                padding-right: 30px;
+                                padding-right: 56px;
+                            }
+                            .icon-is-qiandao, .icon-not-qiandao {
+                                position: absolute;
+                                top: 0;
+                                bottom: 0;
+                                right: 28px;
+                                margin: auto;
                             }
                         }
                     }

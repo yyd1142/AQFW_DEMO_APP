@@ -1,7 +1,11 @@
 <template>
     <div class="StartXuncha">
         <div class="placeholder-item"></div>
-        <mko-header :title="$route.query.name" left-icon="icon-back" @handleLeftClick="back"></mko-header>
+        <mko-header :title="$route.query.name" left-icon="icon-back" @handleLeftClick="back">
+            <div class="header-right" slot="custom" @click="QRCode" v-if="status == 2">
+                <i class="icon-qr-code"></i>
+            </div>
+        </mko-header>
         <div class="page-wrap">
             <timer :status="status" :used-timer="usedTimeString"></timer>
             <div class="xuncha-top-wrap" :style="{marginTop: (status == 2 ? '30px' : 0)}" v-if="status != 3">
@@ -63,6 +67,7 @@
             </transition>
             <div class="check-point-wrap" v-for="build, buildIndex  in builds">
                 <div class="build-name" v-text="build.title"></div>
+                <div class="build-device-count" v-if="build.totalPositionCounts != 0">共{{build.positions.length}}个巡查点</div>
                 <div class="floor" v-for="position, positionIndex in build.positions"
                      @click="startQianDao(build, position)">
                     <div class="padding floor-wrap">
@@ -82,9 +87,6 @@
             </div>
             <div class="xuncha-btn end" @click.stop="startXunCha" v-if="status == 2">
                 <span>结束巡查</span>
-            </div>
-            <div class="xuncha-btn qrcode" @click.stop="QRCode" v-if="status == 2">
-                <span>扫一扫</span>
             </div>
         </div>
     </div>
@@ -678,7 +680,7 @@
             z-index: 22;
             &.end {
                 background: #ff6666;
-                width: 50%;
+                width: 100%;
                 left: 0;
             }
             &.disabled {
@@ -719,6 +721,15 @@
                 display: table-cell;
                 text-align: center;
                 box-sizing: border-box;
+            }
+        }
+        .header-right {
+            .icon-qr-code {
+                position: absolute;
+                right: 14px;
+                margin: auto;
+                top: 0;
+                bottom: 0;
             }
         }
     }
