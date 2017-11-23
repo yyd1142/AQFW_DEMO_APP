@@ -5,9 +5,9 @@
                     left-icon="icon-back" @handleLeftClick="back">
         </mko-header>
         <div class="page-wrap dq-chart-module-wrap">
-            <div class="timer-bar clear">
-                <div class="timer">倒计时：{{time || '0'}}</div>
-            </div>
+            <!--<div class="timer-bar clear">-->
+                <!--<div class="timer">倒计时：{{time || '0'}}</div>-->
+            <!--</div>-->
             <timer :status="2" :text="usedTimeString"></timer>
             <div class="chart-wrap clear">
                 <div class="dashboard-wrap">
@@ -635,6 +635,7 @@
             background-color: #fff;
             .dashboard-wrap {
                 position: relative;
+                padding-top: 14px;
                 width: 33.33%;
                 float: left;
                 .dashboard {
