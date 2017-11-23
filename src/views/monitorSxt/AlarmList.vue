@@ -30,7 +30,7 @@
                     {
                         id: 2,
                         name: '水位监测',
-                        desc: '高度报警，警告值：0.5-2.0M',
+                        desc: '高度报警，警告值：0.5~2.0M',
                         alarmType: '水位过高',
                         alarmData: '3.0M',
                         status: 1

@@ -11,6 +11,7 @@
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-mid"></div>
                         <div class="sign">{{chartNames[$route.params.id - 1]}}</div>
+                        <div class="fanwei">范围:{{fanwei[$route.params.id - 1]}}</div>
                     </div>
                 </div>
                 <div class="more" @click="goAllChart">
@@ -33,6 +34,8 @@
     import DeviceInfo from './DeviceInfo.vue'
     import { Indicator, Toast } from 'mint-ui'
     import echarts from 'echarts';
+//    水压监测报警范围：20.0～666.0kPa
+//    水位监测报警范围：0.5～2.0M
     let theme = 'macarons';
     export default {
         data () {
@@ -41,6 +44,7 @@
                 tabItems: ['设备信息', '报警记录'],
                 chartNames: ['压力值(Pa)', '水位值(米)'],
                 titleNames: ['水压监测', '水位监测'],
+                fanwei: ['20.0～666.0kPa', '0.5～2.0M'],
                 status: '',
             }
         },
@@ -200,11 +204,11 @@
                     position: relative;
                     .dashboard {
                         margin: auto;
-                        height: 280px;
+                        height: 290px;
                     }
                     .sign {
                         position: absolute;
-                        bottom: 24px;
+                        bottom: 40px;
                         left: 50%;
                         transform: translate(-50%, 0);
                         -webkit-transform: translate(-50%, 0);
@@ -212,6 +216,14 @@
                         font-size: 12px;
                         text-align: center;
                         color: @mainBlue;
+                    }
+                    .fanwei {
+                        position: absolute;
+                        font-size: 12px;
+                        color: #333;
+                        text-align: center;
+                        width: 100%;
+                        bottom: 12px;
                     }
                 }
             }

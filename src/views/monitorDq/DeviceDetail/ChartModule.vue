@@ -15,7 +15,7 @@
                 </div>
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-mid"></div>
-                    <div class="sign">电流(A)</div>
+                    <div class="sign">电流(mA)</div>
                 </div>
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-right"></div>
@@ -82,7 +82,7 @@
                     i = 0;
             },
             DrawChart1(ec){
-                let datas = [19.5, 19.6, 19.4, 19.5, 19.3];
+                let datas = [220, 210, 200, 211, 190];
                 let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
                 myChart.setOption({
@@ -99,7 +99,7 @@
                     },
                     series: [
                         {
-                            max: 100,
+                            max: 500,
                             name: '',
                             type: 'gauge',
                             splitNumber: 5,       // 分割段数，默认为5
@@ -161,7 +161,7 @@
                 })
             },
             DrawChart2(ec){
-                let datas = [0.23, 0.24, 0.25, 0.22, 0.23];
+                let datas = [200, 220, 210, 240, 260];
                 let data = datas[i];
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
                 myChart.setOption({
@@ -178,7 +178,7 @@
                     },
                     series: [
                         {
-                            max: 1,
+                            max: 1000,
                             name: '',
                             type: 'gauge',
                             splitNumber: 10,       // 分割段数，默认为5
@@ -333,7 +333,7 @@
                 }
 
                 let yDatas = [
-                    [19.5, 26.1, 20.3, 19.8, 19.6, 20.1],
+                    [220, 210, 200, 211, 190, 220],
                     [19.2, 19.4, 19.5, 19.6, 20.1, 20.2],
                 ];
                 let i = Math.round(Math.random() * 1, 0);
@@ -426,7 +426,7 @@
                 }
 
                 let yDatas = [
-                    [0.31, 0.23, 0.24, 0.28, 0.32, 0.35],
+                    [200, 220, 210, 240, 260, 220],
                     [0.23, 0.24, 0.25, 0.22, 0.46, 0.42],
                 ];
                 let i = Math.round(Math.random() * 1, 0);
@@ -435,7 +435,7 @@
                 let myChart = ec.init(this.$refs['lineChart-2'], theme);
                 myChart.setOption({
                     title: {
-                        text: '电流(A)',
+                        text: '电流(mA)',
                         padding: 10,
                         textStyle: {
                             fontWeight: 'normal',

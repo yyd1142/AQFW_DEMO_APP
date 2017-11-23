@@ -11,14 +11,17 @@
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-left"></div>
                         <div class="sign">电压(V)</div>
+                        <div class="fanwei">范围:187V～242V</div>
                     </div>
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-mid"></div>
-                        <div class="sign">电流(A)</div>
+                        <div class="sign">电流(mA)</div>
+                        <div class="fanwei">范围:300mA～999mA</div>
                     </div>
                     <div class="dashboard-wrap">
                         <div class="dashboard" ref="dashboard-right"></div>
                         <div class="sign">线温(℃)</div>
+                        <div class="fanwei">范围:0～60℃</div>
                     </div>
                 </div>
                 <div class="more" @click="goAllChart">
@@ -103,7 +106,7 @@
             DrawChart1(ec){
 //                let datas = [19.5, 26.1, 20.3, 19.8];
 //                let i = parseInt(Math.random() * 4);
-                let data = 19.5;
+                let data = 220;
 
                 let myChart = ec.init(this.$refs['dashboard-left'], theme);
                 myChart.setOption({
@@ -120,7 +123,7 @@
                     },
                     series: [
                         {
-                            max: 100,
+                            max: 500,
                             name: '',
                             type: 'gauge',
                             splitNumber: 5,       // 分割段数，默认为5
@@ -182,7 +185,7 @@
                 })
             },
             DrawChart2(ec){
-                let datas = [0.23, 0.24, 0.25, 0.22];
+                let datas = [200, 220, 210, 240, 260];
                 let i = parseInt(Math.random() * 4);
                 let data = datas[0];
                 let myChart = ec.init(this.$refs['dashboard-mid'], theme);
@@ -200,7 +203,7 @@
                     },
                     series: [
                         {
-                            max: 1,
+                            max: 1000,
                             name: '',
                             type: 'gauge',
                             splitNumber: 10,       // 分割段数，默认为5
@@ -366,11 +369,11 @@
                     float: left;
                     .dashboard {
                         margin: auto;
-                        height: 150px;
+                        height: 170px;
                     }
                     .sign {
                         position: absolute;
-                        bottom: 7px;
+                        bottom: 27px;
                         left: 50%;
                         transform: translate(-50%, 0);
                         -webkit-transform: translate(-50%, 0);
@@ -378,6 +381,14 @@
                         font-size: 12px;
                         text-align: center;
                         color: @mainBlue;
+                    }
+                    .fanwei {
+                        position: absolute;
+                        text-align: center;
+                        font-size: 12px;
+                        color: #333;
+                        width: 100%;
+                        bottom: 7px;
                     }
                 }
             }
