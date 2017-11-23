@@ -24,6 +24,7 @@
                         desc: '水压报警，警告值：20.0~666.0kPa',
                         alarmType: '水压过高',
                         alarmData: '672.0kPa',
+                        pos:'无锡万象城/1楼/商铺中心东北角巡查点',
                         count: 2,
                         status: 2
                     },
@@ -33,6 +34,7 @@
                         desc: '高度报警，警告值：0.5~2.0M',
                         alarmType: '水位过高',
                         alarmData: '3.0M',
+                        pos:'无锡万象城/1楼/商铺中心西南角巡查点',
                         status: 1
                     }
                 ]

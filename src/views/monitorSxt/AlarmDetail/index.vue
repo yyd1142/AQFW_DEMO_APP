@@ -11,7 +11,7 @@
                 </div>
                 <div class="cell clear">
                     <div class="title">安装位置</div>
-                    <div class="value">深圳湾体育中心-体育馆，-1层，东北角巡查点</div>
+                    <div class="value">{{data.pos}}</div>
                 </div>
                 <div class="cell clear">
                     <div class="title">首次报警时间</div>
