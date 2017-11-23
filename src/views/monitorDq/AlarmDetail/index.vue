@@ -14,11 +14,11 @@
                     <div class="value">深圳湾体育中心-体育馆，-1层，东北角巡查点</div>
                 </div>
                 <div class="cell clear">
-                    <div class="title">首次报警时间</div>
+                    <div class="title">首次报警</div>
                     <div class="value">2017-11-08 14:15</div>
                 </div>
                 <div class="cell clear">
-                    <div class="title">最近报警时间</div>
+                    <div class="title">最近报警</div>
                     <div class="value">2017-11-08 13:33</div>
                 </div>
                 <div class="cell clear">

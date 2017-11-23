@@ -22,11 +22,6 @@
                     name: '应急出口堵塞监测',
                     status: 1
                 }, {
-                    address: 'A栋|B1|122（电压房）',
-                    count: 5,
-                    name: '电压房堵塞监测',
-                    status: 2
-                }, {
                     address: 'A栋|B1|89（安全出口）',
                     count: 6,
                     name: '安全出口堵塞监测',

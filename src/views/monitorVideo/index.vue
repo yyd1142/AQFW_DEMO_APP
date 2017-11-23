@@ -56,13 +56,6 @@
             name: '明火监测',
             status: 2,
             type: 2
-        }, {
-            id: 3,
-            address: '无锡万象城|2楼|商铺中心',
-            count: 1,
-            name: '明火监测',
-            status: 2,
-            type: 2
         }],
         deviceMonitorDatas: [{
             id: 1,
