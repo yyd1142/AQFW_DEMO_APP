@@ -66,6 +66,9 @@
 
             }
         },
+        deactivated() {
+            this.tabI = 0
+        },
         methods: {
             back() {
                 this.isPlayer = false;
