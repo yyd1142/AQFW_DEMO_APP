@@ -110,6 +110,7 @@
                             max: 500,
                             name: '',
                             type: 'gauge',
+//                            center: ['50%', '40%'],
                             splitNumber: 5,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
                                 lineStyle: {       // 属性lineStyle控制线条样式
@@ -189,6 +190,7 @@
                             max: 1000,
                             name: '',
                             type: 'gauge',
+//                            center: ['50%', '40%'],
                             splitNumber: 10,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
                                 lineStyle: {       // 属性lineStyle控制线条样式
@@ -269,6 +271,7 @@
                             max: 100,
                             name: '线温',
                             type: 'gauge',
+//                            center: ['50%', '40%'],
                             splitNumber: 5,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
                                 lineStyle: {       // 属性lineStyle控制线条样式
@@ -691,15 +694,15 @@
                     min-width: 75px;
                     font-size: 12px;
                     text-align: center;
-                    color: @mainBlue;
+                    color: @baseText02;
                 }
                 .fanwei {
                     position: absolute;
                     text-align: center;
                     font-size: 12px;
                     width: 100%;
-                    bottom: 27px;
-                    color: @mainBlue;
+                    bottom: 25px;
+                    color: @baseText01;
                 }
             }
             .line-chart {
