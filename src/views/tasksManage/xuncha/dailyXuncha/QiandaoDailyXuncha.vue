@@ -87,11 +87,16 @@
         },
         computed: {
             devices() {
+                let CheckedPointPositionDevices = {
+                    checkPointPhotos: [],
+                    deviceUnits: [],
+                    hasChecked: [],
+                    notChecked: []
+                };
                 if (this.$store.state.dailyXuncha) {
-                    return this.$store.state.dailyXuncha.CheckedPointPositionDevices ? this.$store.state.dailyXuncha.CheckedPointPositionDevices : []
-                } else {
-                    return []
+                    CheckedPointPositionDevices = this.$store.state.dailyXuncha.CheckedPointPositionDevices ? this.$store.state.dailyXuncha.CheckedPointPositionDevices : CheckedPointPositionDevices;
                 }
+                return CheckedPointPositionDevices;
             },
             checkPointPhotos() {
                 return this.$store.state.dailyXuncha ? this.$store.state.dailyXuncha.checkPointPhotos : [];

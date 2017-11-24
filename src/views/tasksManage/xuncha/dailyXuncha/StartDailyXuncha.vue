@@ -14,8 +14,8 @@
                 </task-summary>
             </transition>
             <div class="check-point-wrap" v-for="build, buildIndex  in builds">
-                <div class="build-name" v-text="build.jzName"></div>
-                <div class="build-device-count" v-if="build.totalDeviceCount != 0">共{{build.totalDeviceCount}}个设备</div>
+                <div class="build-name" v-text="build.jzName || '暂无建筑名称'"></div>
+                <div class="build-device-count" v-if="build.totalPositionCounts != 0">共{{build.totalPositionCounts}}个巡查点</div>
                 <div class="floor" v-for="floor, floorIndex in build.floors">
                     <div class="padding floor-wrap" @click.stop="open(buildIndex, floorIndex, floor.show)">
                         <div class="floor-name">
@@ -23,7 +23,7 @@
                             <span class="device-account yellow-font"
                                   v-if="floor.problemDeviceCount && status == 3">{{floor.problemDeviceCount}}个风险</span>
                             <span class="device-account"
-                                  v-if="status <= 2">{{floor.positions ? floor.positions.length : ''}}</span>
+                                  v-if="status <= 2">{{floor.positions ? `${floor.positions.length}个巡查点` : ''}}</span>
                             <i class="icon icon-link-arrow-up"></i>
                         </div>
                     </div>
@@ -36,7 +36,8 @@
                                     <span class="name" v-text="checkPoint.name"></span>
                                     <span class="device-account"
                                           v-if="checkPoint.needCheckDeviceCount > 0">{{checkPoint.needCheckDeviceCount}}个设备必须巡查</span>
-                                    <span class="device-account" v-else>{{checkPoint.needCheckDeviceCount}}个设备可巡查</span>
+                                    <span class="device-account" v-else>{{checkPoint.deviceCount == 0 ? '暂无设备需巡查' : `${checkPoint.deviceCount}个设备可巡查`}}</span>
+                                    <i :class="checkPoint.status == 1 ? 'icon-not-qiandao' : 'icon-is-qiandao'"></i>
                                     <i class="icon icon-link-arrow"></i>
                                 </li>
                             </ul>
@@ -352,6 +353,10 @@
     @import "../../../../config.less";
 
     .StartDailyXuncha {
+        .hidden {
+            padding-bottom: 100px;
+            margin-top: 44px;
+        }
         .xuncha-top-wrap {
             width: 100%;
             padding: 14px;
@@ -602,9 +607,16 @@
                                 font-size: 14px;
                                 color: #3399ff;
                                 letter-spacing: 0px;
-                                right: 0;
+                                right: 28px;
                                 text-align: right;
                                 padding-right: 30px;
+                            }
+                            .icon-is-qiandao, .icon-not-qiandao {
+                                position: absolute;
+                                right: 28px;
+                                margin: auto;
+                                top: 0;
+                                bottom: 0;
                             }
                         }
                     }

@@ -217,6 +217,11 @@ const actions = {
                                     CheckedPointPositionDevices.hasChecked.push(device)
                                 }
                             })
+                            if(CheckedPointPositionDevices.notChecked.length > 0) {
+                                CheckedPointPositionDevices.notChecked.sort(function (a, b) {
+                                    return a.nextCheckTime - b.nextCheckTime
+                                })
+                            }
                         } else {
                             //...
                         }
