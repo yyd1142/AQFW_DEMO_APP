@@ -1,11 +1,14 @@
 <template>
     <div class="StartDailyXuncha">
         <div class="placeholder-item"></div>
-        <mko-header :title="decodeURI($route.query.name)" left-icon="icon-back" @handleLeftClick="back"></mko-header>
+        <mko-header :title="decodeURI($route.query.name)" left-icon="icon-back" @handleLeftClick="back">
+            <div class="header-right" slot="custom" v-if="status == 2">
+                <i class="icon-qr-code"></i>
+            </div>
+        </mko-header>
         <div class="page-wrap">
             <timer :status="status" :used-timer="dailyXunchaUsedTimer"></timer>
-            <task-summary :task-info="taskInfo" :style="{marginTop: (status == 2 ? '30px' : 0)}"
-                          v-if="status != 3"></task-summary>
+            <task-summary :task-info="taskInfo" :style="{marginTop: (status == 2 ? '30px' : 0)}" v-if="status != 3"></task-summary>
             <transition name="fade">
                 <task-summary :task-info="taskCheckedInfo" :status="status" v-if="status == 3">
                     <div class="xuncha-review-btn blue" @click.stop="uploadTask">
@@ -707,6 +710,15 @@
                 line-height: 40px;
                 display: table-cell;
                 vertical-align: middle;
+            }
+        }
+        .header-right {
+            .icon-qr-code {
+                position: absolute;
+                right: 14px;
+                margin: auto;
+                top: 0;
+                bottom: 0;
             }
         }
     }
