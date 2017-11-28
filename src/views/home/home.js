@@ -560,7 +560,7 @@ export default {
             let nextPath = {
                 name: 'spotInfo',
                 params: {
-                    pid: '20811'
+                    pid: '25811'
                 },
                 query: {
                     from: 'home'
