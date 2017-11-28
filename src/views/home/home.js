@@ -487,7 +487,7 @@ export default {
             })
         },
         QRCode() {
-            // this.readerQRCode('WXE2A116623122Y01');
+            // this.readerQRCode('WXE2A116623122Y03');
             this.$ScanQRCode(result => {
                 let data = result.response;
                 if (data.length === 17) {
@@ -558,13 +558,7 @@ export default {
         },
         goSpotInfo() {
             let nextPath = {
-                name: 'spotInfo',
-                params: {
-                    pid: '25811'
-                },
-                query: {
-                    from: 'home'
-                }
+                path: `/spot_info/${20811}`
             }
             let from = '/enter/home';
             this.$MKOPush(nextPath, from, true);

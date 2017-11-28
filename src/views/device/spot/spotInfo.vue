@@ -44,11 +44,13 @@
                 <mko-cell class="sel-item" title="全部" @click="getDvcList">
                     <div class="icon-tick-blue-1 fr" v-show="isSelAll"></div>
                 </mko-cell>
-                <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`" @click="selDvcList(i)"
+                <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`"
+                          @click="selDvcList(i)"
                           v-show="tabI==0" v-for="(t,i) in dvcXfTypeList">
                     <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
                 </mko-cell>
-                <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`" @click="selDvcList(i)"
+                <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`"
+                          @click="selDvcList(i)"
                           v-show="tabI==1" v-for="(t,i) in dvcAjTypeList">
                     <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
                 </mko-cell>
@@ -181,15 +183,17 @@
             window.addEventListener('scroll', this.handleScroll);
             this.setBackButton();
 
-            let info = JSON.parse(sessionStorage.getItem(`spotInfo${this.$route.params.pid}`));
-            this.info = {
-                name: info.pos,
-                jzName: info.jzName,
-                jzId: info.jzId,
-                level: info.level,
-                isC: info.isC == 1
-            };
-            this.title = info.isC == 1 ? '巡查点' : '安装点';
+            if (sessionStorage.getItem(`spotInfo${this.$route.params.pid}`)) {
+                let info = JSON.parse(sessionStorage.getItem(`spotInfo${this.$route.params.pid}`));
+                this.info = {
+                    name: info.pos || null,
+                    jzName: info.jzName || null,
+                    jzId: info.jzId || null,
+                    level: info.level || null,
+                    isC: info.isC == 1
+                };
+                this.title = info.isC == 1 ? '巡查点' : '安装点';
+            }
 
             if (_enter || JSON.parse(sessionStorage.getItem('spotInfoIsUpdate'))) {
                 scrollTo(0, 0);
@@ -198,7 +202,7 @@
             } else {
                 scrollTo(0, _scoTop);
             }
-            if(this.$route.query.from && this.$route.query.from === 'qrcode') {
+            if (this.$route.query.from && this.$route.query.from === 'qrcode') {
                 this.isBindDevice = true;
             } else {
                 this.isBindDevice = false;
@@ -464,7 +468,7 @@
                         }
                     });
                 } else {
-                    this.$MKODialog({ msg: '无法绑定该二维码' });
+                    this.$MKODialog({msg: '无法绑定该二维码'});
                 }
             }
         },
