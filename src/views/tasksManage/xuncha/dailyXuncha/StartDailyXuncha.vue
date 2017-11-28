@@ -583,7 +583,7 @@
                                 color: #333333;
                                 letter-spacing: 0px;
                                 float: left;
-                                padding-right: 133px;
+                                padding-right: 180px;
                                 box-sizing: border-box;
                                 white-space: nowrap;
                                 overflow: hidden;
