@@ -8,13 +8,13 @@
             <div class="form-group" :class="{'has-error': errors.has('用户名')}">
                 <i class="icon-account-user"></i>
                 <div class="xiajiantou-btn" @click="userTableShow = userTableShow ? false : true;"
-                     v-if="userLocalStorages.length > 0"><i class="icon-xiajiantou"></i></div>
+                     v-if="userLocalStorages && userLocalStorages.length > 0"><i class="icon-xiajiantou"></i></div>
                 <input type="text" name="用户名" class="form-control" placeholder="用户名" v-model="account.username"
                        v-validate data-vv-rules="required"/>
                 <p class="help-block">{{errors.first('用户名')}}</p>
             </div>
             <div class="user-table-hidden" @click="userTableShow = false;" v-if="userTableShow"></div>
-            <div class="user-table-wrap" v-if="userLocalStorages.length > 0 && userTableShow">
+            <div class="user-table-wrap" v-if="userLocalStorages && userLocalStorages.length > 0 && userTableShow">
                 <ul class="user-table-view">
                     <li class="user-table-cell" v-for="item in userLocalStorages" @click="selectedUser(item)">
                         <span v-text="item.username"></span>
@@ -235,7 +235,7 @@
             setUserLocalStorages() {
                 if (!this.needRemenberPasswrod) return false;
                 let needPushData = true;
-                if (localStorage.getItem('userLocalStorages')) {
+                if (localStorage.getItem('userLocalStorages') && JSON.parse(localStorage.getItem('userLocalStorages'))) {
                     let userLocalStorage = JSON.parse(localStorage.getItem('userLocalStorages'));
                     userLocalStorage.forEach((item) => {
                         if (item.username == this.account.username) {
