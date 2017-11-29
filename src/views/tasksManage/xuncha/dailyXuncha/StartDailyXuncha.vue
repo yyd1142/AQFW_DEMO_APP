@@ -2,7 +2,7 @@
     <div class="StartDailyXuncha">
         <div class="placeholder-item"></div>
         <mko-header :title="decodeURI($route.query.name)" left-icon="icon-back" @handleLeftClick="back">
-            <div class="header-right" slot="custom" v-if="status == 2">
+            <div class="header-right" slot="custom" v-if="status == 2" @click="QRCode">
                 <i class="icon-qr-code"></i>
             </div>
         </mko-header>
@@ -343,6 +343,41 @@
                         doDumpTaskData();
                     }
                 });
+            },
+            QRCode() {
+                if (this.status == 2) {
+                    this.$ScanQRCode(result => {
+                        let data = result.response;
+                        if (data.indexOf('QRCODE/') === 0) {
+                            this.readerQRCode(data);
+                        } else {
+                            this.$MKODialog({msg: '无效二维码'});
+                        }
+                    })
+                } else {
+                    Toast({message: "请先开始巡查任务!", duration: 2000});
+                }
+            },
+            readerQRCode(data) {
+                data = data.split('/');
+                let codeType = data[1];
+                if (codeType === 'TASKINFO') {
+                    if (this.status == 1) {
+                        Toast({message: '请先开始巡查任务', duration: 2000})
+                        return;
+                    }
+                    this.$MKOPush({
+                        path: `/qiandaoDailyXuncha/${this.$route.params.id}`,
+                        query: {
+                            positionId: this.builds[0].floors[0].positions[0].positionId,
+                            buildIndex: 0,
+                            floorIndex: 0,
+                            name: this.builds[0].floors[0].positions[0].name
+                        }
+                    });
+                } else {
+
+                }
             }
         },
         components: {

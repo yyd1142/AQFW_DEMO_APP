@@ -487,10 +487,9 @@ export default {
             })
         },
         QRCode() {
-            // this.readerQRCode('WXE2A116623122Y03');
             this.$ScanQRCode(result => {
                 let data = result.response;
-                if (data.length === 17) {
+                if (data.indexOf('QRCODE/') === 0) {
                     this.readerQRCode(data);
                 } else {
                     this.$MKODialog({msg: '无效二维码'});
@@ -498,14 +497,9 @@ export default {
             })
         },
         readerQRCode(data) {
-            //WX: '地区', E2: '设备类型', A1: '供应商', 16623: '设备投入使用日期', 122: '拓展码', Y01: '唯一标识'
-            let area = data.substring(0, 2);
-            let deviceType = data.substring(2, 4);
-            let supplier = data.substring(4, 6);
-            let installDate = data.substring(6, 11);
-            let expandCode = data.substring(11, 14);
-            let code = data.substring(14, 17);
-            if (code === 'Y01') {
+            data = data.split('/');
+            let codeType = data[1];
+            if (codeType === 'TMPTASK') {
                 this.$MKODialog({ //扫码-弹框选择跳转
                     title: "提示",
                     msg: `检测到该设备所在巡查点正在进行巡查任务，<br/>需要查看吗？`,
@@ -514,26 +508,24 @@ export default {
                     cancelText: "查看巡查点"
                 }).then(msg => {
                     if (msg === "confirm") {
-                        this.goDeviceDetail();
+                        this.goDeviceDetail(data[3]);
                     } else {
-                        this.getTaskBuilds();
+                        this.getTaskBuilds(data[2]);
                     }
                 });
-            } else if (code === 'Y02') { //扫码-绑定巡查点
-                this.goBindDevice(false)
-            } else if (code === 'Y03') { //扫码-查看巡查点详情
-                this.goSpotInfo();
-            } else if (code === 'Y08') { //扫码-绑定设备
-                this.goBindDevice(true);
-            } else {
-
+            } else if (codeType === 'BDP') { //扫码-绑定巡查点
+                this.goBindDevice(data[2], false)
+            } else if (codeType === 'SPOTINFO') { //扫码-查看巡查点详情
+                this.goSpotInfo(data[2]);
+            } else if (codeType === 'BDD') { //扫码-绑定设备
+                this.goBindDevice(data[2], true);
             }
         },
-        goDeviceDetail() {
+        goDeviceDetail(id) {
             let nextPath = {
                 name: 'deviceDetail',
                 params: {
-                    pid: '20764'
+                    pid: id
                 },
                 query: {
                     from: 'home'
@@ -542,11 +534,11 @@ export default {
             let from = '/enter/home';
             this.$MKOPush(nextPath, from, true);
         },
-        goBindDevice(type) {
+        goBindDevice(id, type) {
             let nextPath = {
                 name: 'BindDevice',
                 params: {
-                    id: '20764'
+                    id: id
                 },
                 query: {
                     from: 'home',
@@ -556,16 +548,16 @@ export default {
             let from = '/enter/home';
             this.$MKOPush(nextPath, from, true);
         },
-        goSpotInfo() {
+        goSpotInfo(id) {
             let nextPath = {
-                path: `/spot_info/${20811}`
+                path: `/spot_info/${id}`
             }
             let from = '/enter/home';
             this.$MKOPush(nextPath, from, true);
         },
-        getTaskBuilds() {
+        getTaskBuilds(taskId) {
             api.getXCTaskPosition({
-                taskId: 'U1883019q965'
+                taskId: taskId
             }).then(res => {
                 let positions = res.response;
                 let checkPoints = {};
@@ -614,12 +606,12 @@ export default {
                     item['level'] = level;
                 });
                 builds.sort(compare('level'));
-                this.getTaskInfo();
+                this.getTaskInfo(taskId);
             })
         },
-        getTaskInfo() {
+        getTaskInfo(taskId) {
             api.getTaskInfo({
-                taskId: 'U1883019q965'
+                taskId: taskId
             }).then(res => {
                 if (!res) return false;
                 if (res.code == 0) {

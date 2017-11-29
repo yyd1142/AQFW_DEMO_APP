@@ -36,7 +36,7 @@
                                v-show="!isEdit">
                     <span :class="dvcStatusColor">{{dvcStatus}}</span>
                 </mko-form-cell>
-                <mko-form-cell title="绑定二维码" :val="formData.isBindDevice ? '已绑定（'+ qrcode +'）' : '绑定'" type="sel" :edit="isEdit"
+                <mko-form-cell title="绑定二维码" :val="formData.isBindDevice ? (isEdit ? qrcode : `已绑定（${qrcode}）`) : '绑定'" type="sel" :edit="isEdit"
                                @click="bindQRCode"></mko-form-cell>
             </mko-edit-card>
 
@@ -593,7 +593,7 @@
                 if(!this.formData.isBindDevice) {
                     this.$ScanQRCode(result => {
                         let data = result.response;
-                        if (data.length === 17) {
+                        if (data.indexOf('QRCODE/') === 0) {
                             this.readerQRCode(data);
                         } else {
                             this.$MKODialog({msg: '无效二维码'});
@@ -613,14 +613,9 @@
                 }
             },
             readerQRCode(data) {
-                //WX: '地区', E2: '设备类型', A1: '供应商', 16623: '设备投入使用日期', 122: '拓展码', Y01: '唯一标识'
-                let area = data.substring(0, 2);
-                let deviceType = data.substring(2, 4);
-                let supplier = data.substring(4, 6);
-                let installDate = data.substring(6, 11);
-                let expandCode = data.substring(11, 14);
-                let code = data.substring(14, 17);
-                if (code === 'Y05') {
+                data = data.split('/');
+                let codeType = data[1];
+                if (codeType === 'BDDEVICEINFO') {
                     this.$MKODialog({
                         title: "提示",
                         msg: '绑定后此二维码将不能再绑定其他设备，确认绑定吗',
@@ -629,7 +624,7 @@
                     }).then(msg => {
                         if (msg == "confirm") {
                             this.formData.isBindDevice = true;
-                            this.qrcode = code;
+                            this.qrcode = 'WXE2A13';
                             Toast({message: "绑定成功", duration: 2000});
                         }
                     });

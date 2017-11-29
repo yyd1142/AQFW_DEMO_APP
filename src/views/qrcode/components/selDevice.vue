@@ -77,7 +77,7 @@
                 let params = {
                     groupId: this.$store.getters.groupId,
                     isCheck: 1,
-                    id: '20811',
+                    id: this.positionId,
                     dep: dep
                 };
                 api.getDvcPositionInfo(params).then(result => {

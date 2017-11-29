@@ -364,7 +364,7 @@
                 if (this.status == 2) {
                     this.$ScanQRCode(result => {
                         let data = result.response;
-                        if (data.length === 17) {
+                        if (data.indexOf('QRCODE/') === 0) {
                             this.readerQRCode(data);
                         } else {
                             this.$MKODialog({msg: '无效二维码'});
@@ -375,13 +375,9 @@
                 }
             },
             readerQRCode(data) {
-                let area = data.substring(0, 2);
-                let deviceType = data.substring(2, 4);
-                let supplier = data.substring(4, 6);
-                let installDate = data.substring(6, 11);
-                let expandCode = data.substring(11, 14);
-                let code = data.substring(14, 17);
-                if (code === 'Y07') {
+                data = data.split('/');
+                let codeType = data[1];
+                if (codeType === 'TASKINFO') {
                     if (this.status == 1) {
                         Toast({message: '请先开始巡查任务', duration: 2000})
                         return;
