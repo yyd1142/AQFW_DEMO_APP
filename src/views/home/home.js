@@ -487,6 +487,7 @@ export default {
             })
         },
         QRCode() {
+            // this.readerQRCode('QRCODE/SPOTINFO/20811');
             this.$ScanQRCode(result => {
                 let data = result.response;
                 if (data.indexOf('QRCODE/') === 0) {
@@ -549,6 +550,8 @@ export default {
             this.$MKOPush(nextPath, from, true);
         },
         goSpotInfo(id) {
+            let data  = {"isC":1,"pos":"H042车位后（西南）","jzId":1866,"jzName":"无锡万象城","level":-2};
+            sessionStorage.setItem(`spotInfo${id}`, JSON.stringify(data));
             let nextPath = {
                 path: `/spot_info/${id}`
             }
