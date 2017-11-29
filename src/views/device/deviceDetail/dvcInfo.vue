@@ -36,7 +36,7 @@
                                v-show="!isEdit">
                     <span :class="dvcStatusColor">{{dvcStatus}}</span>
                 </mko-form-cell>
-                <mko-form-cell title="绑定二维码" :val="formData.isBindDevice ? (isEdit ? qrcode : `已绑定（${qrcode}）`) : '绑定'" type="sel" :edit="isEdit"
+                <mko-form-cell title="绑定二维码" :val="isBindDevice ? (isEdit ? qrcode : `已绑定（${qrcode}）`) : '绑定'" type="sel" :edit="isEdit"
                                @click="bindQRCode"></mko-form-cell>
             </mko-edit-card>
 
@@ -590,7 +590,7 @@
             },
             bindQRCode() {
                 if(!this.isEdit) return false;
-                if(!this.formData.isBindDevice) {
+                if(!this.isBindDevice) {
                     this.$ScanQRCode(result => {
                         let data = result.response;
                         if (data.indexOf('QRCODE/') === 0) {
@@ -607,7 +607,7 @@
                         cancelText: "取消"
                     }).then(msg => {
                         if (msg == "confirm") {
-                            this.formData.isBindDevice = false;
+                            this.isBindDevice = false;
                         }
                     });
                 }
@@ -623,7 +623,7 @@
                         cancelText: "取消"
                     }).then(msg => {
                         if (msg == "confirm") {
-                            this.formData.isBindDevice = true;
+                            this.isBindDevice = true;
                             this.qrcode = 'WXE2A13';
                             Toast({message: "绑定成功", duration: 2000});
                         }

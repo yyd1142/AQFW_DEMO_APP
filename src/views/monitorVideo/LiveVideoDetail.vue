@@ -50,11 +50,13 @@
                     controlBar: {
                         timeDivider: false,
                         durationDisplay: false,
-                        fullscreenToggle: false
+                        fullscreenToggle: true
                     },
                     autoplay: true,
-                    flash: {hls: {withCredentials: true}},
-                    html5: {hls: {withCredentials: true}}
+//                    flash: {hls: {withCredentials: true}},
+                    html5: {
+                        hls: { withCredentials: true }
+                    }
                 }
                 return options;
             },
@@ -140,7 +142,16 @@
             .vjs-custom-skin {
                 width: 100%;
                 .video-js {
-                    height: 228px !important;
+                    height: 228px;
+                    &.vjs-fullscreen {
+                        /*transform:rotate(90deg);*/
+                        /*-ms-transform:rotate(90deg); 	!* IE 9 *!*/
+                        /*-moz-transform:rotate(90deg); 	!* Firefox *!*/
+                        /*-webkit-transform:rotate(90deg); !* Safari 和 Chrome *!*/
+                        /*-o-transform:rotate(90deg); 	!* Opera *!*/
+                        /*width: 100% !important;*/
+                        /*height: 100% !important;*/
+                    }
                 }
             }
         }
