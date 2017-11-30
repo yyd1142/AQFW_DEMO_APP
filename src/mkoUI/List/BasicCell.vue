@@ -77,7 +77,7 @@
         background: #fff;
         padding-left: 14px;
         &:active {
-            /*opacity: 0.8;*/
+            opacity: 0.8;
         }
         .cell {
             display: -webkit-flex;
@@ -88,9 +88,6 @@
             padding-right: 14px;
             height: @cellHeight;
             font-size: 14px;
-            &:active {
-                opacity: 0.8;
-            }
             .link-arrow {
                 position: absolute;
                 right: 14px;
