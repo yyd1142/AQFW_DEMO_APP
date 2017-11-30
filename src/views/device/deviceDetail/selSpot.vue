@@ -3,11 +3,11 @@
         <div class="placeholder-item"></div>
         <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="sel-spot-wrap">
-            <mko-cell :title="jz.jzName" @click="selJz(jz)" v-for="jz in options_build">
+            <mko-cell :title="jz.jzName" main="left" @click="selJz(jz)" v-for="jz in options_build">
                 <div class="active" slot="icon" v-show="formData.jz.jzID==jz.jzID"></div>
             </mko-cell>
             <mko-popup-right v-model="show[0]" inset no-btn>
-                <mko-cell :title="l.label" @click="selLevel(l)" v-for="l in options_level">
+                <mko-cell :title="l.label" main="left" @click="selLevel(l)" v-for="l in options_level">
                     <div class="active" slot="icon" v-show="formData.jzLevel.value==l.value"></div>
                 </mko-cell>
             </mko-popup-right>
@@ -16,7 +16,7 @@
                     <div class="no-data-sign"></div>
                     当前没有安装点
                 </div>
-                <mko-cell :title="s.jzPosition" @click="selSpot(s)" v-for="s in options_spot">
+                <mko-cell :title="s.jzPosition" main="left" @click="selSpot(s)" v-for="s in options_spot">
                     <!--<mko-check-box slot="icon" :active="selSpotFr(s.positionId)"></mko-check-box>-->
                 </mko-cell>
             </mko-popup-right>

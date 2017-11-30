@@ -1,6 +1,6 @@
 <template>
     <div class="xc-list-wrap">
-        <mko-double-cell :title="item.description" is-link @click="go(item)" v-for="item in list_2.concat(list_1)">
+        <mko-double-cell :title="item.description" :is-link="item.status!=2" @click="go(item)" v-for="item in list_2.concat(list_1)">
             <div slot="label">
                 <span class="label-info">{{item.executorName}}</span>
             </div>
@@ -14,7 +14,7 @@
 <script>
     import api from 'api'
     import xcHandleHint from './xcHandleHint.vue';
-    import {Toast, Indicator} from 'mint-ui'
+    import { Toast, Indicator } from 'mint-ui'
     import cloneDeep from 'lodash/cloneDeep';
     import * as types from 'store/mutation-types'
     import xuncha from 'store/modules/xuncha'

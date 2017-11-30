@@ -66,8 +66,9 @@
 
     @cellHeight: 60px;
 
-    .mko-double-cell:last-child .cell {
-        /*box-shadow: none;*/
+    .mko-double-cell:not(:last-child) .cell {
+        .border-btm(@baseBorder);
+
     }
 
     .mko-double-cell {
@@ -86,7 +87,6 @@
             margin-left: 14px;
             padding-right: 14px;
             height: @cellHeight;
-            box-shadow: 0 1px 0 0 @baseBorder;
             font-size: 14px;
             letter-spacing: 0;
             .link-arrow {

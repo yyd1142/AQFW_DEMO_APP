@@ -7,7 +7,7 @@
         <div class="box">
             <div class="sign-wrap" @click="focus">
                 <i class="icon"></i>
-                <span class="sign" v-show="!iptHasValue||!iptOnFocus">{{hintText || '搜索'}}</span>
+                <span class="sign" v-show="!iptHasValue&&!iptOnFocus">{{hintText || '搜索'}}</span>
             </div>
             <input ref="input" class="ipt" type="text" v-model="iptValue" @focus="inputOnFocus" @blur="inputOnBlur">
             <i class="mintui mintui-field-error cancel-xx" @click="inputReset" v-if="iptHasValue"></i>
@@ -27,6 +27,7 @@
                 iptValue: '',
                 iptHasValue: false,
                 iptOnFocus: false,
+                test:false,
             }
         },
         watch: {

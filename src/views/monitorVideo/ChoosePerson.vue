@@ -180,7 +180,7 @@
                 background-color: #ffffff;
                 height: 44px;
                 .padding {
-                    .border-btm(@borderGray);
+                    .border-btm(red);
                     .icon {
                         position: absolute;
                         left: 0;

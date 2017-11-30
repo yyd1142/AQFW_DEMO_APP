@@ -68,8 +68,8 @@
 
     @cellHeight: 44px;
 
-    .mko-basic-cell:last-child .cell {
-        box-shadow: none;
+    .mko-basic-cell:not(:last-child) .cell {
+        .border-btm(@baseBorder);
     }
 
     .mko-basic-cell {
@@ -77,7 +77,7 @@
         background: #fff;
         padding-left: 14px;
         &:active {
-            opacity: 0.8;
+            /*opacity: 0.8;*/
         }
         .cell {
             display: -webkit-flex;
@@ -87,8 +87,10 @@
             position: relative;
             padding-right: 14px;
             height: @cellHeight;
-            box-shadow: 0 1px 0 0 @baseBorder;
             font-size: 14px;
+            &:active {
+                opacity: 0.8;
+            }
             .link-arrow {
                 position: absolute;
                 right: 14px;

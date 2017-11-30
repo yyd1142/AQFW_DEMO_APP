@@ -6,7 +6,8 @@
         <div v-for="item in list">
             <div v-for="(data,li) in item.jzLevel">
                 <div class="build-info">{{item.jzName}}，{{data.jzLevel}}层</div>
-                <mko-cell :title="p.jzPosition" is-link @click="goInfo(item,li,pi)" v-for="(p,pi) in data.pos">
+                <mko-cell :title="p.jzPosition" is-link main="left"
+                          @click="goInfo(item,li,pi)" v-for="(p,pi) in data.pos">
                     <span class="text-danger" v-if="p.malfunctionCount">{{p.malfunctionCount}}个故障</span>
                 </mko-cell>
             </div>

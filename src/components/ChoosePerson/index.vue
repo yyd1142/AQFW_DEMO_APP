@@ -197,8 +197,13 @@
                 padding-left: 14px;
                 background-color: #ffffff;
                 height: 44px;
+                &:not(:last-child) {
+                    .padding {
+                        .border-btm(@baseBorder);
+                    }
+                }
                 .padding {
-                    .border-btm(@borderGray);
+                    position: relative;
                     .icon {
                         position: absolute;
                         left: 0;

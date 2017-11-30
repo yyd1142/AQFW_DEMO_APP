@@ -12,14 +12,17 @@
         </mko-header>
 
         <div class="page-wrap device-spot-info-wrap" ref="wrapper" :style="{ height: wrapperHeight + 'px'}">
-            <mko-form-cell :title="`${title}名称`" :val="info.name" v-model="formData.name" type="text"
-                           :edit="isEdit"></mko-form-cell>
-            <!--<mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel" :edit="isEdit" @click="goSelSpot(true)"></mko-form-cell>-->
-            <mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel"></mko-form-cell>
-            <mko-form-cell title="需要巡查" :val="(isEdit?formData.isC:info.isC)?'是':'否'" type="sel" :edit="isEdit"
-                           @click="goSelIsC"></mko-form-cell>
-            <mko-form-cell title="绑定二维码" :val="isBindDevice ? (isEdit ? qrcode : `已绑定（${qrcode}）`) : '绑定'" type="sel" :edit="isEdit"
-                           @click="bindQRCode"></mko-form-cell>
+            <div>
+                <mko-form-cell :title="`${title}名称`" :val="info.name" v-model="formData.name" type="text"
+                               :edit="isEdit"></mko-form-cell>
+                <!--<mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel" :edit="isEdit" @click="goSelSpot(true)"></mko-form-cell>-->
+                <mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel"></mko-form-cell>
+                <mko-form-cell title="需要巡查" :val="(isEdit?formData.isC:info.isC)?'是':'否'" type="sel" :edit="isEdit"
+                               @click="goSelIsC"></mko-form-cell>
+                <mko-form-cell title="绑定二维码" :val="isBindDevice ? (isEdit ? qrcode : `已绑定（${qrcode}）`) : '绑定'" type="sel" :edit="isEdit"
+                               @click="bindQRCode"></mko-form-cell>
+            </div>
+
 
             <!--tab-->
             <div class="tab-wrap">
@@ -41,28 +44,28 @@
 
             <!--列表-->
             <div class="sel-wrap" @click.self="isSel=false" v-show="isSel">
-                <mko-cell class="sel-item" title="全部" @click="getDvcList">
+                <mko-cell class="sel-item" main="left" title="全部" @click="getDvcList">
                     <div class="icon-tick-blue-1 fr" v-show="isSelAll"></div>
                 </mko-cell>
                 <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`"
-                          @click="selDvcList(i)"
+                          @click="selDvcList(i)" main="left"
                           v-show="tabI==0" v-for="(t,i) in dvcXfTypeList">
                     <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
                 </mko-cell>
                 <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`"
-                          @click="selDvcList(i)"
+                          @click="selDvcList(i)" main="left"
                           v-show="tabI==1" v-for="(t,i) in dvcAjTypeList">
                     <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
                 </mko-cell>
             </div>
             <div class="list-wrap" v-show="tabI==0">
-                <mko-cell :title="`${d.unitName||'未知设备'}${d.SSSBCode||''}`" :icon="d.STATUS|deviceStatusIconFilter"
+                <mko-cell :title="`${d.unitName||'未知设备'}${d.SSSBCode||''}`" main="left" :icon="d.STATUS|deviceStatusIconFilter"
                           :is-link="!isEdit" @click="go('/device/' + d.sssbId)" v-for="d in dvcXfList">
                     <span :class="statusColor[d.STATUS]">{{statusText[d.STATUS]}}</span>
                 </mko-cell>
             </div>
             <div class="list-wrap" v-show="tabI==1">
-                <mko-cell :title="`${d.unitName||'未知设备'}${d.SSSBCode||''}`" :icon="d.STATUS|deviceStatusIconFilter"
+                <mko-cell :title="`${d.unitName||'未知设备'}${d.SSSBCode||''}`" main="left" :icon="d.STATUS|deviceStatusIconFilter"
                           :is-link="!isEdit" @click="go('/device/' + d.sssbId)" v-for="d in dvcAjList">
                     <span :class="statusColor[d.STATUS]">{{statusText[d.STATUS]}}</span>
                 </mko-cell>
@@ -85,9 +88,9 @@
 <script>
     import api from 'api'
     import conf from 'config'
-    import {levelFr} from 'filters'
-    import {NoData} from 'components'
-    import {Toast, Indicator} from 'mint-ui'
+    import { levelFr } from 'filters'
+    import { NoData } from 'components'
+    import { Toast, Indicator } from 'mint-ui'
     import selSpot from './selSpot.vue'
     //    let _page = 1;
     //    let _pageCount = 1;

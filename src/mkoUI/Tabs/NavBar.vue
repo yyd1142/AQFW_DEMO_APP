@@ -31,7 +31,8 @@ export default {
         background-color: transparent;
     }
     &.border-bottom {
-        border-bottom: 1px solid #eeeeee;
+        /*border-bottom: 1px solid #eeeeee;*/
+        .border-btm(@baseBorder);
     }
     .tabs-wrap {
         width: 100%;
