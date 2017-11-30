@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="placeholder-item"></div>
-        <mko-header title="人员" :left-icon="isSearchBar ? '' : 'icon-search'"
+        <mko-header title="人员" :left-icon="isSearchBar ? '' : 'icon-search-l'"
                     :left-icon-text="isSearchBar ? '取消' : null"
                     @handleLeftClick="openSearchBar"
                     :right-icon-text="$store.state.user.isTopAdmin ? '创建账号': null"
