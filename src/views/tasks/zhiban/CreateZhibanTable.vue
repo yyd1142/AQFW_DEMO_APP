@@ -133,10 +133,8 @@
             setHours()
             setMinutes()
         },
-        mounted() {
-            this.$nextTick(() => {
-                this.getEmployeeList();
-            })
+        activated() {
+            this.getEmployeeList();
         },
         deactivated() {
             this.formData = {

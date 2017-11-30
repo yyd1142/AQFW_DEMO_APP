@@ -7,8 +7,8 @@
             </div>
         </mko-header>
         <div class="page-wrap">
-            <timer :status="status" :used-timer="dailyXunchaUsedTimer"></timer>
-            <task-summary :task-info="taskInfo" :style="{marginTop: (status == 2 ? '30px' : 0)}" v-if="status != 3"></task-summary>
+            <timer ref="timerWrapper" :status="status" :used-timer="dailyXunchaUsedTimer" :time="usedTime"></timer>
+            <task-summary :task-info="taskInfo" :style="{marginTop: (status == 2 ? xunchaTop : 0)}" v-if="status != 3"></task-summary>
             <transition name="fade">
                 <task-summary :task-info="taskCheckedInfo" :status="status" v-if="status == 3">
                     <div class="xuncha-review-btn blue" @click.stop="uploadTask">
@@ -162,6 +162,16 @@
                     }
                 ];
                 return taskInfo;
+            },
+            usedTime() {
+                return this.$store.state.dailyXuncha ? this.$store.state.dailyXuncha.usedTime : 0;
+            },
+            xunchaTop() {
+                if(this.$refs.timerWrapper) {
+                    return this.$refs.timerWrapper.timer ? '150px' : '30px';
+                } else {
+                    return '30px';
+                }
             }
         },
         activated() {

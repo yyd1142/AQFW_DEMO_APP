@@ -852,7 +852,7 @@ const routers = {
 const router = new Router(routers);
 
 router.beforeEach((to, from, next) => {
-    if (to.name == 'home' || to.name == 'score' || to.name == 'login' || to.name == 'pastScoreDetail' || to.name == 'BindDevice') {
+    if (to.name == 'home' || to.name == 'score' || to.name == 'login' || to.name == 'pastScoreDetail' || to.name == 'BindDevice' || to.name == 'StartDailyXuncha') {
         NProgress.remove();
     } else {
         NProgress.start();

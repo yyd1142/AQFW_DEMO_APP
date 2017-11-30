@@ -190,8 +190,10 @@
                 this.zhibanTimes[2].values = minutes;
                 this.zhibanTimes[4].values = hours;
                 this.zhibanTimes[6].values = minutes;
-                this.getEmployeeList();
             })
+        },
+        activated() {
+            this.getEmployeeList();
         },
         deactivated() {
             this.formData = {
