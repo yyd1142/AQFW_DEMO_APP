@@ -7,8 +7,8 @@
             </div>
         </mko-header>
         <div class="page-wrap">
-            <timer :status="status" :used-timer="usedTimeString"></timer>
-            <div class="xuncha-top-wrap" :style="{marginTop: (status == 2 ? '30px' : 0)}" v-if="status != 3">
+            <timer ref="timerWrapper" :status="status" :used-timer="usedTimeString" :time="usedTime"></timer>
+            <div class="xuncha-top-wrap" :style="{marginTop: (status == 2 ? xunchaTop : 0)}" v-if="status != 3">
                 <div class="padding">
                     <div class="xuncha-item">
                         <span class="key">执行人员</span>
@@ -147,6 +147,16 @@
             },
             taskSurvey() {
                 return this.$store.state.xuncha ? this.$store.getters.taskSurvey : null;
+            },
+            usedTime() {
+                return this.$store.state.xuncha ? this.$store.state.xuncha.usedTime : 0;
+            },
+            xunchaTop() {
+                if(this.$refs.timerWrapper) {
+                    return this.$refs.timerWrapper.timer ? '150px' : '30px';
+                } else {
+                    return '30px';
+                }
             }
         },
         beforeMount() {
