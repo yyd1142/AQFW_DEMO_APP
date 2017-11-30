@@ -6,7 +6,7 @@
 
         <div class="box">
             <div class="sign-wrap" @click="focus">
-                <i class="icon"></i>
+                <i class="icon icon-search"></i>
                 <span class="sign" v-show="!iptHasValue&&!iptOnFocus">{{hintText || '搜索'}}</span>
             </div>
             <input ref="input" class="ipt" type="text" v-model="iptValue" @focus="inputOnFocus" @blur="inputOnBlur">
@@ -27,7 +27,7 @@
                 iptValue: '',
                 iptHasValue: false,
                 iptOnFocus: false,
-                test:false,
+                test: false,
             }
         },
         watch: {
@@ -107,13 +107,13 @@
             left: 10px;
             right: 50px;
             height: 30px;
-            padding: 0 5px;
+            padding: 0 8px;
             border-radius: 100px;
             background: #FFFFFF;
 
             .ipt {
                 position: relative;
-                top: 2px;
+                top: 4px;
                 left: 24px;
                 width: 90%;
                 height: 20px;
@@ -147,17 +147,14 @@
             letter-spacing: 0.87px;
             color: @baseText03;
             .icon {
-                position: relative;
-                top: -5px;
-                margin-right: 8px;
+                position: absolute;
+                top: 50%;
+                transform: translate(0, -50%);
+                -webkit-transform: translate(0, -50%);
                 font-size: 0;
-                padding: 6px;
-                background: url('/static/icons/resource.png') -822px 0 no-repeat;
-                background-size: @bg-size;
             }
             .sign {
-                position: relative;
-                left: 2px;
+                padding-left: 22px;
             }
         }
         .cancel {

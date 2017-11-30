@@ -68,8 +68,16 @@
 
     @cellHeight: 44px;
 
-    .mko-basic-cell:not(:last-child) .cell {
-        .border-btm(@baseBorder);
+    .mko-basic-cell {
+        &:first-child {
+            .border-top(@baseBorder);
+        }
+        &:last-child {
+            .border-btm(@baseBorder);
+        }
+        &:not(:last-child) .cell {
+            .border-btm(@baseBorder);
+        }
     }
 
     .mko-basic-cell {
@@ -139,4 +147,6 @@
             }
         }
     }
+
+
 </style>

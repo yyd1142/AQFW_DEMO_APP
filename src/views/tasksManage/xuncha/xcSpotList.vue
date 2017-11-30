@@ -19,8 +19,9 @@
                     <div class="value fr">共{{b.posCount}}个设备</div>
                 </div>
                 <div v-for="level in b.level">
+                    <span></span>
                     <mko-menu-header :title="`${level.level}层`" :val="level.position.length" v-model="level.show"
-                                     drop-up-sign="icon-link-arrow-up" drop-down-sign="icon-link-arrow-down"></mko-menu-header>
+                                     drop-up-sign="icon-link-arrow-down" drop-down-sign="icon-link-arrow-up"></mko-menu-header>
                     <div class="pos-wrap" v-show="level.show">
                         <mko-cell :title="pos.name" :val="`${pos.deviceCount}个设备`" is-link
                                   :icon="pos.needCheckDeviceCount?'icon-police-uncle':'icon-location-gray'"
@@ -185,15 +186,16 @@
 
         .title-card {
             margin: 14px;
-            padding: 8px 14px;
+            padding: 10px 14px;
             border-radius: 4px;
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.10);
             letter-spacing: 0;
             background-color: #FFFFFF;
             .cell {
-                padding: 6px 0;
+                padding: 4px 0;
                 line-height: 14px;
                 .title {
+                    width: 70px;
                     margin-right: 14px;
                     font-size: 14px;
                     color: @baseText03;
@@ -229,7 +231,7 @@
         }
         .mko-menu-header {
             .arrow {
-                top: 15px;
+                /*top: 15px;*/
             }
         }
     }

@@ -11,7 +11,7 @@
                 {{val}}
             </slot>
         </div>
-        <span class="arrow" :class="show?(dropDownSign||'icon-arrow-up'):(dropUpSign||'icon-arrow-down')"></span>
+        <span class="arrow" :class="show?(dropDownSign||'icon-link-arrow-up'):(dropUpSign||'icon-link-arrow-down')"></span>
     </div>
 </template>
 
@@ -65,9 +65,9 @@
         line-height: @cellHeight - 1px;
         font-size: 14px;
         letter-spacing: 0;
-        box-shadow: 0 0 0 1px @baseBorder;
         background: #fff;
         color: @baseText02;
+        .border-top(@baseBorder);
         .label {
             float: left;
             font-size: 16px;
@@ -97,9 +97,12 @@
         .arrow {
             position: absolute;
             right: 14px;
-            top: 16px;
-            transition: transform 0.3s;
-            -webkit-transition: transform 0.3s;
+            /*top: 16px;*/
+            top: 50%;
+            transform: translate(0, -50%);
+            -webkit-transform: translate(0, -50%);
+            /*transition: transform 0.3s;*/
+            /*-webkit-transition: transform 0.3s;*/
 
         }
     }

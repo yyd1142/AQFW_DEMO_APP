@@ -97,14 +97,21 @@
             .form-btn {
                 line-height: 44px;
                 color: @mainBlue;
-                .icon-circle-plus {
-                    margin-left: 8px;
+                .icon {
+                    position: absolute;
+                    right: 14px;
+                    top: 50%;
+                    transform: translate(0, -50%);
+                    -webkit-transform: translate(0, -50%);
+                    &.icon-circle-minus {
+                        right: 50px;
+                    }
                 }
             }
         }
     }
     .mko-double-cell {
-        &.cell{
+        &.cell {
             background-color: @baseBG02;
         }
         .mko-number-button {

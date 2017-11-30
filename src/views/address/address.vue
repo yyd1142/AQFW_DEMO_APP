@@ -22,13 +22,8 @@
             <div class="address-list" ref="wrapper" :style="{ height: wrapperHeight - 50 + 'px'}" :class="isSearchBar ? 'has-searchbar-addresslist' : ''">
                 <mt-tab-container v-model="addressClass">
                     <mt-tab-container-item id="1">
-                        <div @click="goInfo('/address_detail/'+cell.id)" v-for="cell in addressShowList">
-                            <!-- <mt-cell :title="cell.employeeName" :value="cell.phone"></mt-cell> -->
-                            <div class="address-cell">
-                                <div class="address-name">{{cell.employeeName}}</div>
-                                <span class="address-phone">{{cell.phone}}</span>
-                            </div>
-                        </div>
+                        <mko-cell :title="cell.employeeName" :val="cell.phone"
+                                  @click="goInfo('/address_detail/'+cell.id)" v-for="cell in addressShowList"></mko-cell>
                         <no-data v-if="addressShowList.length <= 0"></no-data>
                     </mt-tab-container-item>
                     <mt-tab-container-item id="2">
@@ -215,10 +210,23 @@
         }
 
         .navbar-wrap {
-            top: 40px + @headerTop;
+            top: @headerHeight + @headerTop;
             z-index: 10;
             background: #FFFFFF;
-            box-shadow: 0px 2px 6px 0px rgba(213, 213, 213, 0.50);
+            &:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: -1px;
+                width: 100%;
+                height: 1px;
+                box-sizing: border-box;
+                transform: scale(1, .5);
+                -webkit-transform: scale(1, .5);
+                transform-origin: 0 0;
+                -webkit-transform-origin: 0 0;
+                border-bottom: 1px solid @baseBorder;
+            }
             .mint-tab-item {
                 padding: 10px 0;
                 height: 20px;

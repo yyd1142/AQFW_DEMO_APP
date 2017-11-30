@@ -76,6 +76,7 @@
                 font-size: 14px;
                 color: @baseText01;
                 background-color: #fff;
+                resize: none;
                 &::-webkit-input-placeholder {
                     color: @baseText03;
                 }

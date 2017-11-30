@@ -16,7 +16,7 @@
                     {{val}}
                 </slot>
             </div>
-            <span class="link-arrow icon-link-arrow" v-if="fr(isLink)"></span>
+            <span class="link-arrow icon-small-right-arrow" v-if="fr(isLink)"></span>
         </div>
     </div>
 </template>
@@ -78,10 +78,9 @@
             .link-arrow {
                 position: absolute;
                 right: 12px;
-                top: 10px;
-                &.icon-link-arrow {
-                    transform: scale(0.44, 0.57);
-                }
+                top: 50%;
+                transform: translate(0, -50%);
+                -webkit-transform: translate(0, -50%);
             }
             .msg {
                 line-height: @cellHeight;

@@ -52,10 +52,10 @@
 
 //小号-灰色右箭头
 .icon-small-right-arrow {
-    background: url('/static/icons/5_1/transparent_icons.png') -1315px/2 -864px/2 no-repeat;
-    width: 9px / 2;
+    background: url('/static/icons/5_1/transparent_icons.png') -657px -432px no-repeat;
+    width: 5px;
     height: 8px;
-    background-size: cover;
+    background-size: @bgSize;
 }
 
 //蓝色向下箭头
@@ -97,10 +97,11 @@
 }
 
 .icon-search {
+    display: inline-block;
     width: 14px;
     height: 14px;
     font-size: 0;
-    background: url('/static/icons/5_1/transparent_icons.png') -688px/2 -960px/2 no-repeat;
+    background: url('/static/icons/5_1/transparent_icons.png') -344px -480px no-repeat;
     background-size: @bgSize;
 }
 
@@ -290,8 +291,8 @@
 //定位图标-实心
 .icon-location-gray {
     display: inline-block;
-    background: url('/static/icons/5_1/transparent_icons.png') -648.5px -516px no-repeat;
-    width: 14px;
+    background: url('/static/icons/5_1/transparent_icons.png') -648px -516px no-repeat;
+    width: 12px;
     height: 16px;
     background-size: @bgSize;
 }
@@ -608,5 +609,23 @@
     background: url('/static/icons/5_1/transparent_icons.png') -1356px/2 -840px/2 no-repeat;
     width: 10px;
     height: 20px;
+    background-size: @bgSize;
+}
+
+//绑定
+.icon-bind {
+    display: inline-block;
+    background: url('/static/icons/5_1/transparent_icons.png') -462px -524px no-repeat;
+    width: 22px;
+    height: 22px;
+    background-size: @bgSize;
+}
+
+//未绑定-解绑
+.icon-unbind {
+    display: inline-block;
+    background: url('/static/icons/5_1/transparent_icons.png') -484px -524px no-repeat;
+    width: 22px;
+    height: 22px;
     background-size: @bgSize;
 }

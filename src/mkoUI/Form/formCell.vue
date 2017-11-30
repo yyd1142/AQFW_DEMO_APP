@@ -88,13 +88,22 @@
     @cellHeight: 44px;
 
     .mko-form-cell:not(:last-child) .cell {
-        .border-btm(@baseBorder);
+//        .border-btm(@baseBorder);
     }
 
     .mko-form-cell {
         height: @cellHeight;
         background: #fff;
         padding-left: 14px;
+        &:first-child {
+            .border-top(@baseBorder);
+        }
+        &:last-child {
+            .border-btm(@baseBorder);
+        }
+        &:not(:last-child) .cell {
+            .border-btm(@baseBorder);
+        }
         &:active {
             opacity: 0.8;
         }
@@ -104,6 +113,7 @@
             position: relative;
             padding-right: 14px;
             height: @cellHeight;
+            .border-btm(@baseBorder);
             font-size: 14px;
             &.is-link {
                 .value {
@@ -167,7 +177,7 @@
                 padding: 0;
                 padding-right: 14px;
                 height: 36px;
-                top: 3px;
+                top: 4px;
                 border: none;
                 font-size: 14px;
                 color: @baseText02;

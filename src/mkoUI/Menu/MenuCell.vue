@@ -45,12 +45,20 @@
         font-size: 14px;
         background: #F5F6F7;
         color: #72787D;
+        &:first-child {
+            .border-top(@baseBorder);
+        }
+        &:last-child {
+            .border-btm(@baseBorder);
+        }
+        &:not(:last-child) .cell {
+            .border-btm(@baseBorder);
+        }
         .cell {
             padding-right: 36px;
             margin-left: 36px;
             height: @cellHeight;
             line-height: @cellHeight - 1px;
-            box-shadow: 0 0.5px 0 @baseBorder;
             &:last-child {
                 margin: 0;
                 padding-left: 36px;

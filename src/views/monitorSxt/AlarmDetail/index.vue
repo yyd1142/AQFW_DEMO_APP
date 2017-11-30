@@ -132,18 +132,21 @@
             letter-spacing: 0;
             background-color: #FFFFFF;
             .cell {
-                padding: 6px 0;
-                line-height: 14px;
+                display: flex;
+                display: -webkit-flex;
+                line-height: 22px;
                 .title {
-                    float: left;
+                    flex: 0 0 56px;
+                    -webkit-flex: 0 0 56px;
+                    width: 56px;
                     margin-right: 14px;
-                    width: 24%;
                     font-size: 14px;
                     color: @baseText03;
                 }
                 .value {
-                    float: left;
-                    width: 70%;
+                    -webkit-flex: auto;
+                    flex: auto;
+                    width: 73%;
                     font-size: 14px;
                     color: @baseText02;
                 }
@@ -168,7 +171,7 @@
                     position: absolute;
                     left: 23px;
                     top: -19px;
-                    height: 38px;
+                    height: 76px;
                     width: 3px;
                     background-color: @baseBorder;
                 }

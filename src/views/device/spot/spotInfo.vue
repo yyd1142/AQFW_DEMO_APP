@@ -19,8 +19,10 @@
                 <mko-form-cell :title="`${title}位置`" :val="jzInfo" type="sel"></mko-form-cell>
                 <mko-form-cell title="需要巡查" :val="(isEdit?formData.isC:info.isC)?'是':'否'" type="sel" :edit="isEdit"
                                @click="goSelIsC"></mko-form-cell>
-                <mko-form-cell title="绑定二维码" :val="isBindDevice ? (isEdit ? qrcode : `已绑定（${qrcode}）`) : '绑定'" type="sel" :edit="isEdit"
-                               @click="bindQRCode"></mko-form-cell>
+                <mko-form-cell title="绑定二维码" :val="isBindDevice ? (isEdit ? qrcode : `已绑定（${qrcode}）`) : '未绑定'" type="sel" :edit="isEdit"
+                               @click="bindQRCode">
+                                <div slot="button" class="code-sign" :class="isBindDevice?'icon-unbind':'icon-bind'"></div>
+                </mko-form-cell>
             </div>
 
 
@@ -36,7 +38,7 @@
                 <div class="title fl" :class="isEdit?'is-edit':''" @click="goDvcAdd">
                     <div class="icon text-middle-1 icon-plus-blue" v-show="isEdit"></div>
                     {{isEdit ? '添加设备' : listTitle}}
-                    <div class="sign" :class="isSel?'icon-link-arrow-down':'icon-link-arrow-up'" v-show="!isEdit"></div>
+                    <div class="sign" :class="isSel?'icon-link-arrow-up':'icon-link-arrow-down'" v-show="!isEdit"></div>
                 </div>
                 <div class="fr" v-show="tabI==0">共{{dvcXfList.length}}个</div>
                 <div class="fr" v-show="tabI==1">共{{dvcAjList.length}}个</div>
@@ -48,12 +50,12 @@
                     <div class="icon-tick-blue-1 fr" v-show="isSelAll"></div>
                 </mko-cell>
                 <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`"
-                          @click="selDvcList(i)" main="left"
+                          @click="selDvcList(i,t.unitName)" main="left"
                           v-show="tabI==0" v-for="(t,i) in dvcXfTypeList">
                     <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
                 </mko-cell>
                 <mko-cell class="sel-item" :class="t.isSel?'active':''" :title="`只看${t.unitName}`"
-                          @click="selDvcList(i)" main="left"
+                          @click="selDvcList(i,t.unitName)" main="left"
                           v-show="tabI==1" v-for="(t,i) in dvcAjTypeList">
                     <div class="icon-tick-blue-1 fr" v-show="t.isSel"></div>
                 </mko-cell>
@@ -347,8 +349,10 @@
             },
             getDvcList(unit_id) {
                 Indicator.open({spinnerType: 'fading-circle'});
-                if (!unit_id)
+                if (!unit_id){
                     this.isSelAll = true;
+                    this.listTitle = `全部`;
+                }
 
                 let params = {
                     groupId: this.$store.getters.groupId,
@@ -374,13 +378,14 @@
                     }
                 })
             },
-            selDvcList(index) {
+            selDvcList(index, title) {
                 this.isSelAll = false;
                 let t_list = this[_typeKey[this.tabI]];
                 for (let i in t_list) {
                     t_list[i].isSel = false;
                 }
                 t_list[index].isSel = true;
+                this.listTitle = `只看${title}`;
                 this.getDvcList(t_list[index].SSSB_UnitID);
             },
             goDvcAdd() {
@@ -495,6 +500,13 @@
                 right: 14px;
                 top: 15px;
             }
+            .code-sign{
+                position: absolute;
+                right:14px;
+                top: 50%;
+                transform: translate(0, -50%);
+                -webkit-transform: translate(0, -50%);
+            }
         }
 
         .tab-wrap {
@@ -547,6 +559,7 @@
             height: 44px;
             line-height: 44px;
             font-size: 16px;
+            .border-top(@baseBorder);
             letter-spacing: 0;
             background-color: #fff;
             color: @baseText01;

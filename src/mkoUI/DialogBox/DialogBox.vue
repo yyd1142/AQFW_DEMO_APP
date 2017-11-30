@@ -125,7 +125,7 @@
                         padding-bottom: 14px;
                     }
                     max-height: 376px;
-                    overflow: scroll;
+                    overflow-y: scroll;
                 }
                 .mask {
                     position: absolute;

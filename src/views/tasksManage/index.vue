@@ -3,10 +3,13 @@
         <div class="placeholder-item"></div>
         <mt-header class="header-wrap" fixed :title="title"></mt-header>
         <div class="page-wrap tasks-manage-wrap" v-if="!resError">
-            <mko-double-cell title="任务执行报告" :label="`共完成${repoCount}个任务，${repoCount}个未审核`" is-link
-                             @click="$MKOPush('/tasks_repo')">
-                <span class="warning">{{repoCount}}</span>
-            </mko-double-cell>
+            <div>
+                <mko-double-cell title="任务执行报告" :label="`共完成${repoCount}个任务，${repoCount}个未审核`" is-link
+                                 @click="$MKOPush('/tasks_repo')">
+                    <span class="warning">{{repoCount}}</span>
+                </mko-double-cell>
+            </div>
+
             <div class="tasks-wrap">
                 <mko-nav-bar border-bottom>
                     <mko-tab-item :label="item" :activied="tabI==i" @handleTabClick="tab"
@@ -28,8 +31,8 @@
 <script>
     import api from 'api'
     import moment from 'moment'
-    import {Indicator} from 'mint-ui'
-    import {DateNavbar, NoData, Tabs, ResError} from 'components'
+    import { Indicator } from 'mint-ui'
+    import { DateNavbar, NoData, Tabs, ResError } from 'components'
     import MyTask from '../tasks/MyTask'
     import TaskSurvey from '../tasks/TaskSurvey'
     import * as types from 'store/mutation-types'
@@ -51,11 +54,11 @@
                     name: '检查',
                     count: 0,
                     doing: 0,
-                },{
+                }, {
                     name: '维修',
                     count: 0,
                     doing: 0,
-                },{
+                }, {
                     name: '保养',
                     count: 0,
                     doing: 0,
@@ -215,7 +218,7 @@
 
     .tasks-manage-wrap {
         margin: 40px + @headerTop 0 0 0;
-        padding: 14px 0 50px 0;
+        padding: 10px 0 50px 0;
         .tasks-wrap {
             margin-top: 10px;
         }

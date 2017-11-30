@@ -8,7 +8,7 @@
             <!--<div class="timer-bar">-->
             <!--<div class="timer">倒计时：{{time || '0'}}</div>-->
             <!--</div>-->
-            <timer :status="2" :text="`${time||'0'}秒自动刷新`"></timer>
+            <timer :status="2" :text="`${time||'0'}秒后自动刷新`"></timer>
             <div class="chart-wrap clear">
                 <div class="dashboard-wrap">
                     <div class="dashboard" ref="dashboard-mid"></div>

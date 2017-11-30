@@ -3,7 +3,7 @@
         <div class="placeholder-item"></div>
         <mko-header title="报警详情" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap monitor-dq-alarm-wrap">
-            <mko-info-bar  v-if="data.status==0">已于2017-11-08 15:12排除该风险</mko-info-bar>
+            <mko-info-bar v-if="data.status==0">已于2017-11-08 15:12排除该风险</mko-info-bar>
             <div class="title-card">
                 <div class="cell clear">
                     <div class="title">报警部件</div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="cell clear">
                     <div class="title">警告值</div>
-                    <div class="value">{{data.desc?data.desc.split('：')[1]:''}}</div>
+                    <div class="value">{{data.desc ? data.desc.split('：')[1] : ''}}</div>
                 </div>
             </div>
 
@@ -134,18 +134,21 @@
             letter-spacing: 0;
             background-color: #FFFFFF;
             .cell {
-                padding: 6px 0;
-                line-height: 14px;
+                display: flex;
+                display: -webkit-flex;
+                line-height: 22px;
                 .title {
-                    float: left;
-                    width: 24%;
+                    flex: 0 0 56px;
+                    -webkit-flex: 0 0 56px;
+                    width: 56px;
                     margin-right: 14px;
                     font-size: 14px;
                     color: @baseText03;
                 }
                 .value {
-                    float: left;
-                    width: 70%;
+                    -webkit-flex: auto;
+                    flex: auto;
+                    width: 73%;
                     font-size: 14px;
                     color: @baseText02;
                 }
@@ -170,7 +173,7 @@
                     position: absolute;
                     left: 23px;
                     top: -19px;
-                    height: 38px;
+                    height: 76px;
                     width: 3px;
                     background-color: @baseBorder;
                 }

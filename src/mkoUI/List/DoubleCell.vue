@@ -66,9 +66,16 @@
 
     @cellHeight: 60px;
 
-    .mko-double-cell:not(:last-child) .cell {
-        .border-btm(@baseBorder);
-
+    .mko-double-cell {
+        &:first-child {
+            .border-top(@baseBorder);
+        }
+        &:last-child {
+            .border-btm(@baseBorder);
+        }
+        &:not(:last-child) .cell {
+            .border-btm(@baseBorder);
+        }
     }
 
     .mko-double-cell {

@@ -12,7 +12,7 @@
                 <!--建筑-->
                 <mko-form-cell title="建筑" v-model="formData.jzName" holder-text="输入建筑名称" type="text" edit @focus="goSelJz(true)">
                     <div slot="button" class="form-btn" @click="goSelJz(!onSelJz)">
-                        <div class="icon-circle-drop fr text-middle"></div>
+                        <div class="icon icon-circle-drop fr"></div>
                     </div>
                 </mko-form-cell>
                 <div class="sel-list" v-show="onSelJz">
@@ -22,8 +22,8 @@
                 <!--楼层-->
                 <mko-form-cell title="楼层" v-model="formData.jzLevel" holder-text="输入楼层" type="number" edit v-show="!onSelJz">
                     <div slot="button" class="form-btn">
-                        <div class="icon-circle-minus fl text-middle" @click="handleJzLevel(0)"></div>
-                        <div class="icon-circle-plus fl text-middle" @click="handleJzLevel(1)"></div>
+                        <div class="icon icon-circle-minus fl" @click="handleJzLevel(0)"></div>
+                        <div class="icon icon-circle-plus fl" @click="handleJzLevel(1)"></div>
                     </div>
                 </mko-form-cell>
                 <!--巡查点名称-->
