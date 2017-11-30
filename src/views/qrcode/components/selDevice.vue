@@ -1,63 +1,49 @@
 <template>
     <div>
         <div class="placeholder-item"></div>
-        <mko-header background-color="#ffffff" title-color="#333333" border-color="#eee" :title="title" left-icon="icon-back-black" @handleLeftClick="back" :right-icon-text="(show[0]&&formData.device.length!=0)?'确定':''" right-font-color="black-font" @handleRightClick="confirm"></mko-header>
+        <mko-header background-color="#ffffff" title-color="#333333" border-color="#eee" :title="title" left-icon="icon-back-black" @handleLeftClick="back"></mko-header>
         <div class="sel-spot-wrap">
-            <mko-cell :title="type.name" @click="selType(type)" v-for="type in deviceTypes">
-                <div class="active" slot="icon" v-show="formData.dep == type.dep"></div>
+            <!--<mko-cell :title="type.name" @click="selType(type)" v-for="type in deviceTypes">-->
+            <!--<div class="active" slot="icon" v-show="formData.dep == type.dep"></div>-->
+            <!--</mko-cell>-->
+            <div class="no-data-hint abs-all-middle" v-if="deviceDatas.length == 0">
+                <div class="no-data-sign"></div>
+                暂无设备
+            </div>
+            <mko-cell :title="`${item.unitName}`" v-for="item in deviceDatas" @click="selDevice(item)">
+                <!--<mko-check-box slot="icon" :active="formData.device.sssbId == item.sssbId ? true : false" @click="selDevice(item)"></mko-check-box>-->
             </mko-cell>
-            <mko-popup-right v-model="show[0]" inset no-btn>
-                <div class="no-data-hint abs-all-middle" v-if="deviceDatas.length == 0">
-                    <div class="no-data-sign"></div>
-                    暂无设备
-                </div>
-                <mko-cell :title="`${item.unitName}`" v-for="item in deviceDatas" @click="selDevice(item)">
-                    <mko-check-box slot="icon" :active="formData.device.sssbId == item.sssbId ? true : false" @click="selDevice(item)"></mko-check-box>
-                </mko-cell>
-            </mko-popup-right>
         </div>
     </div>
 </template>
 
 <script>
     import api from 'api'
-    import { Indicator } from 'mint-ui'
+    import {Indicator} from 'mint-ui'
     var Promise = require("bluebird");
     export default {
         props: ['selected-form', 'position-id'],
         data () {
             return {
-                show: [false, false],
+                show: [true],
                 test: false,
-                deviceTypes: [{
-                    name: '消防设备', dep: 1
-                },{
-                    name: '安监设备', dep: 2
-                }],
                 deviceDatas: [],
                 options_spot: [],
                 formData: {
                     jz: {},
                     device: {}
                 },
-                title: '设备类型',
+                title: '设备',
                 noDevice: false
-            }
-        },
-        watch: {
-            show(arr){
-                if (arr[0]) {
-                    this.title = '设备';
-                } else {
-                    this.title = '设备类型';
-                }
             }
         },
         computed: {},
         mounted() {
             this.setBackButton();
+            this.getDeviceByDep();
         },
         activated(){
+
         },
         deactivated() {
         },
@@ -72,18 +58,18 @@
                 this.getDeviceByDep(item.dep);
                 this.show[0] = true;
             },
-            getDeviceByDep(dep){
+            getDeviceByDep(){
                 Indicator.open({spinnerType: 'fading-circle'});
                 let params = {
                     groupId: this.$store.getters.groupId,
                     isCheck: 1,
-                    id: '20811',
-                    dep: dep
+                    id: this.positionId,
+                    dep: 1
                 };
                 api.getDvcPositionInfo(params).then(result => {
                     Indicator.close();
                     if (result && result.code == 0) {
-                        if(result.response.length <= 0) {
+                        if (result.response.length <= 0) {
                             this.noDevice = true;
                             this.deviceDatas = [];
                         } else {
@@ -95,6 +81,8 @@
             },
             selDevice(item){
                 this.formData.device = item;
+                this.$emit('sel', this.formData);
+                this.back();
             },
             confirm(){
                 if (!this.show[0]) return;
@@ -132,7 +120,7 @@
             &:last-child .cell {
                 box-shadow: 0 1px 0 0 @baseBorder;
             }
-            &.disabled .cell .title{
+            &.disabled .cell .title {
                 color: @baseText03;
             }
             .title-icon {

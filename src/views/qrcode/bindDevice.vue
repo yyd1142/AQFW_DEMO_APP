@@ -7,9 +7,8 @@
             <div class="page-wrap">
                 <img class="qr-code" :src="isBindDevice ? '/static/bindDevice_banner.png' : '/static/bindPosition_banner.png'"/>
                 <mko-cell title="二维码类型" :val="isBindDevice ? '设施设备' : '巡查点'"></mko-cell>
-                <mko-form-cell title="巡查点位置" :val="selSpot ? selSpot : '请选择'" :edit="true" type="sel" @click="goSelSpot(true)" v-if="!isBindDevice"></mko-form-cell>
-                <mko-cell title="巡查点位置" val="无锡万象城,负一楼,发电机房" v-else></mko-cell>
-                <mko-form-cell title="设备名称" :val="selDevice ? selDevice : '请选择'" :edit="true" type="sel" @click="goSelDevice(true)" v-if="isBindDevice"></mko-form-cell>
+                <mko-form-cell title="巡查点位置" :val="selSpot ? selSpot : '请选择'" :edit="true" type="sel" @click="goSelSpot(true)"></mko-form-cell>
+                <mko-form-cell title="设备名称" :val="selDevice ? selDevice : '请选择'" :edit="true" type="sel" @click="goSelDevice(true)" v-if="isBindDevice && selSpot"></mko-form-cell>
                 <div class="center-text">{{isBindDevice ? '绑定后，扫描该二维码可快速查看设备详情' : '绑定后，扫描该二维码可快速查看巡查点详情'}}</div>
                 <mko-button size="large" @click="confirm">完成</mko-button>
             </div>
