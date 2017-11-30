@@ -3,7 +3,7 @@
         <div class="placeholder-item"></div>
         <mko-search-bar v-model="val" hint-text="请输入设备名称" is-header autofocus @onCancel="back"></mko-search-bar>
         <div class="dvc-search-wrap">
-            <mko-cell class="hint" :title="`搜索「${val}」`" v-show="hasVal"></mko-cell>
+            <mko-cell class="hint" :title="`搜索「${val}」`" main="left" v-show="hasVal"></mko-cell>
             <mko-cell :title="item.unitName" icon="icon-search-gray" @click="selDvc(item)" v-for="item in hintList"></mko-cell>
         </div>
     </div>

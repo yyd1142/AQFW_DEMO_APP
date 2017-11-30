@@ -68,8 +68,8 @@
 
     @cellHeight: 44px;
 
-    .mko-basic-cell:last-child .cell {
-        box-shadow: none;
+    .mko-basic-cell:not(:last-child) .cell {
+        .border-btm(@baseBorder);
     }
 
     .mko-basic-cell {
@@ -87,7 +87,6 @@
             position: relative;
             padding-right: 14px;
             height: @cellHeight;
-            box-shadow: 0 1px 0 0 @baseBorder;
             font-size: 14px;
             .link-arrow {
                 position: absolute;

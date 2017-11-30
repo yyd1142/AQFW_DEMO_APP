@@ -11,7 +11,7 @@
                 {{val}}
             </slot>
         </div>
-        <span class="arrow" :class="show?(dropDownSign||'icon-arrow-down'):(dropUpSign||'icon-arrow-up')"></span>
+        <span class="arrow" :class="show?(dropDownSign||'icon-arrow-up'):(dropUpSign||'icon-arrow-down')"></span>
     </div>
 </template>
 

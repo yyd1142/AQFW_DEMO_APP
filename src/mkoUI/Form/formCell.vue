@@ -87,8 +87,8 @@
 
     @cellHeight: 44px;
 
-    .mko-form-cell:last-child .cell {
-        box-shadow: none;
+    .mko-form-cell:not(:last-child) .cell {
+        .border-btm(@baseBorder);
     }
 
     .mko-form-cell {
@@ -104,7 +104,6 @@
             position: relative;
             padding-right: 14px;
             height: @cellHeight;
-            box-shadow: 0 1px 0 0 @baseBorder;
             font-size: 14px;
             &.is-link {
                 .value {

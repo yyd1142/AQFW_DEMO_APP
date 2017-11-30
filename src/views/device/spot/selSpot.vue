@@ -3,11 +3,11 @@
         <div class="placeholder-item"></div>
         <mko-header :title="title" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="(show[1]&&formData.spot.length!=0)?'确定':''" @handleRightClick="confirm"></mko-header>
         <div class="sel-spot-wrap">
-            <mko-cell :title="jz.jzName" @click="selJz(jz)" v-for="jz in options_build">
+            <mko-cell :title="jz.jzName" main="left" @click="selJz(jz)" v-for="jz in options_build">
                 <div class="active" slot="icon" v-show="formData.jzId==jz.jzID"></div>
             </mko-cell>
             <mko-popup-right v-model="show" inset no-btn>
-                <mko-cell :title="l.label" @click="selLevel(l)" v-for="l in options_level">
+                <mko-cell :title="l.label" main="left" @click="selLevel(l)" v-for="l in options_level">
                     <div class="active" slot="icon" v-show="formData.jzLevel==l.value"></div>
                 </mko-cell>
             </mko-popup-right>

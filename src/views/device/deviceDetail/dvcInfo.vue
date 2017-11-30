@@ -43,7 +43,8 @@
             <!--当前故障详情-->
             <div class="logs-wrap" v-show="(info.status==2||info.status==3)&&!isEdit">
                 <div class="attribute-card" v-show="!item.value" v-for="item in attribute">
-                    <mko-cell :title="item.content" :icon="!item.value ? 'icon-device-warn' : 'icon-device-succ'">
+                    <mko-cell :title="item.content" main="left"
+                              :icon="!item.value ? 'icon-device-warn' : 'icon-device-succ'">
                         <span :class="!item.value ? 'yellow-font' : null">{{item.needInputData == 1 ? item.dataValue : (item.value ? '正常' : '风险')}}</span>
                     </mko-cell>
                     <div class="desc">{{item.description || '无描述信息'}}</div>

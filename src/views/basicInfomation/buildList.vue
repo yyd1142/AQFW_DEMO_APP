@@ -3,7 +3,8 @@
         <div class="placeholder-item"></div>
         <mko-header title="建筑信息" left-icon="icon-back" right-icon="icon-add" @handleLeftClick="back" @handleRightClick="$MKOPush('/add_jz')"></mko-header>
         <div class="page-wrap dw-data-wrap"  v-if="!notData">
-            <mko-cell :title="item.jzName" @click="linkPath(item.jzID)" v-for="(item, index) in datas" is-link></mko-cell>
+            <mko-cell :title="item.jzName" main="left"
+                      @click="linkPath(item.jzID)" v-for="(item, index) in datas" is-link></mko-cell>
         </div>
         <no-data  v-if="notData"></no-data>
     </div>
