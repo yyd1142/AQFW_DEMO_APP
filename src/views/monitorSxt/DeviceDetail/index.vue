@@ -95,8 +95,10 @@
             },
             DrawChart2(ec){
                 let names = ['', ''];
-                let maxs = [1000, 3];
+                let maxs = [666, 2];
+                let mins = [20, 0.5];
                 let max = maxs[this.$route.params.id - 1];
+                let min = mins[this.$route.params.id - 1];
                 let datas = [
                     [200, 250, 300, 350],
                     [1.5, 1.7, 1.4, 1.45],
@@ -121,12 +123,13 @@
                     series: [
                         {
                             max: max,
+                            min:min,
                             name: '',
                             type: 'gauge',
                             splitNumber: 10,       // 分割段数，默认为5
                             axisLine: {            // 坐标轴线
                                 lineStyle: {       // 属性lineStyle控制线条样式
-                                    color: [[0.1, '#FF6666'], [0.8, '#3399ff'], [1, '#FF6666']],
+                                    color: [[0.001, '#FF6666'], [0.999, '#3399ff'], [1, '#FF6666']],
                                     width: 3,
                                 }
                             },
