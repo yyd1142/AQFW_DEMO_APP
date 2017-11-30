@@ -10,7 +10,7 @@
                 <div class="no-data-sign"></div>
                 暂无设备
             </div>
-            <mko-cell :title="`${item.unitName}`" v-for="item in deviceDatas" @click="selDevice(item)">
+            <mko-cell :title="`${item.unitName}`"  main="left" v-for="item in deviceDatas" @click="selDevice(item)">
                 <!--<mko-check-box slot="icon" :active="formData.device.sssbId == item.sssbId ? true : false" @click="selDevice(item)"></mko-check-box>-->
             </mko-cell>
         </div>

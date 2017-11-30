@@ -4,7 +4,7 @@
             <div slot="right-button" class="back-button fr text-middle" @click="back">取消</div>
         </mko-search-bar>
         <div class="page-wrap">
-            <mko-cell :title="p.name" val="安全员" @click="selPerson(p)" v-for="p in list">
+            <mko-cell :title="p.name" val="安全员" main="left" @click="selPerson(p)" v-for="p in list">
                 <mko-check-box slot="icon" :active="p.sel" @click="selPerson(p)"></mko-check-box>
             </mko-cell>
         </div>

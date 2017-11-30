@@ -23,7 +23,7 @@
                     <mko-menu-header :title="`${level.level}层`" :val="level.position.length" v-model="level.show"
                                      drop-up-sign="icon-link-arrow-down" drop-down-sign="icon-link-arrow-up"></mko-menu-header>
                     <div class="pos-wrap" v-show="level.show">
-                        <mko-cell :title="pos.name" :val="`${pos.deviceCount}个设备`" is-link
+                        <mko-cell :title="pos.name" :val="`${pos.deviceCount}个设备`" main="left" is-link
                                   :icon="pos.needCheckDeviceCount?'icon-police-uncle':'icon-location-gray'"
                                   @click="goInfo(pos.positionId,pos.name,level.level,i)" v-for="pos in level.position"></mko-cell>
                     </div>

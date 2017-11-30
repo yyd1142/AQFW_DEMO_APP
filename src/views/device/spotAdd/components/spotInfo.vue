@@ -16,8 +16,8 @@
                     </div>
                 </mko-form-cell>
                 <div class="sel-list" v-show="onSelJz">
-                    <mko-cell class="hint" :title="`输入「${formData.jzName}」`" @click="goSelJz(false)" v-show="formData.jzName"></mko-cell>
-                    <mko-cell :title="jz.jzName" icon="icon-location" @click="selJz(jz)" v-for="jz in options"></mko-cell>
+                    <mko-cell class="hint" :title="`输入「${formData.jzName}」`" main="left" @click="goSelJz(false)" v-show="formData.jzName"></mko-cell>
+                    <mko-cell :title="jz.jzName" icon="icon-location"  main="left" @click="selJz(jz)" v-for="jz in options"></mko-cell>
                 </div>
                 <!--楼层-->
                 <mko-form-cell title="楼层" v-model="formData.jzLevel" holder-text="输入楼层" type="number" edit v-show="!onSelJz">
@@ -179,6 +179,10 @@
                 background-color: @baseBG02;
                 .title {
                     font-size: 14px;
+                }
+                .value {
+                    flex: 0 0 0;
+                    -webkit-flex: 0 0 0;
                 }
                 &.hint {
                     .title {
