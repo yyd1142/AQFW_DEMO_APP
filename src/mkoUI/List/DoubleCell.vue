@@ -109,7 +109,7 @@
             .title-icon {
                 position: relative;
                 margin-right: 14px;
-                min-width: 10px;
+                /*min-width: 10px;*/
                 .icon {
                     display: block;
                 }
