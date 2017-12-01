@@ -121,6 +121,7 @@
             background-color: #ffffff;
         }
         .page-wrap {
+            margin-top: 0;
             .qr-code {
                 width: 100%;
                 height: auto;
