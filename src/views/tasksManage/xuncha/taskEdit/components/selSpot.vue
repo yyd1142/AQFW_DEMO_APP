@@ -340,6 +340,10 @@
             &.disabled .cell .title {
                 color: @baseText03;
             }
+            .value {
+                flex: 0 0 0;
+                -webkit-flex: 0 0 0;
+            }
             .title-icon {
                 min-width: 0;
                 margin: 0;

@@ -5,11 +5,8 @@
         <div class="page-wrap dw-data-wrap" v-if="!notData">
             <div class="com-data-wrap">
                 <div v-for="(item, index) in unitItem.dwTypes" v-if="index != 0">
-                    <div @click="goDwInfo(item, index)">
-                        <mt-cell :title="item.name" is-link>
-                            <div class="unit-btn">{{item.datas.length <= 0 ? '' : item.datas.length}}</div>
-                        </mt-cell>
-                    </div>
+                    <mko-cell :title="item.name" :val="item.datas.length <= 0 ? '' : item.datas.length"
+                              main="left" is-link @click="goDwInfo(item, index)"></mko-cell>
                 </div>
             </div>
         </div>

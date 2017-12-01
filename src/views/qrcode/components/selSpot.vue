@@ -203,7 +203,7 @@
     .black-font {
         color: #333333;
     }
-    .xc-task-add-wrap, .sel-spot-wrap {
+    .bind-device, .sel-spot-wrap {
         position: fixed;
         top: @headerHeight+@headerTop;
         bottom: 0;
@@ -218,6 +218,10 @@
             }
             &.disabled .cell .title{
                 color: @baseText03;
+            }
+            .value {
+                flex: 0 0 0;
+                -webkit-flex: 0 0 0;
             }
             .title-icon {
                 min-width: 0;

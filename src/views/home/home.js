@@ -487,7 +487,7 @@ export default {
             })
         },
         QRCode() {
-            // this.readerQRCode('QRCODE/SPOTINFO/20811');
+            this.readerQRCode('QRCODE/BDP/20811');
             this.$ScanQRCode(result => {
                 let data = result.response;
                 if (data.indexOf('QRCODE/') === 0) {

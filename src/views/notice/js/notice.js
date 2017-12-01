@@ -18,7 +18,8 @@ export default {
             notData: false,
             bottomStatus: '',
             page: 1,
-            pageItem: {}
+            pageItem: {},
+            notReadIcon:`<i class="not-read-item"></i>`,
         }
     },
     activated() {

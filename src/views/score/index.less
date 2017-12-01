@@ -3,150 +3,150 @@
 @cellHeight: 44px;
 @borderColor: @baseBorder;
 .score-page-wrap {
-  .bar-wrap {
-    width: 100%;
-    height: 36px;
-    font-size: 0;
-    & + .bar-wrap {
-      margin-bottom: 10px;
-    }
-    .item {
-      position: relative;
-      float: left;
-      width: 20%;
-      height: 36px;
-      line-height: 36px;
-      letter-spacing: 0.5px;
-      font-size: 12px;
-      text-align: center;
-      background: #fff;
-      color: #72787D;
-      &.des {
-        color: #fff;
-        background: 0 0 no-repeat;
-        background-size: cover;
-        &.color-90 {
-          background-image: url('/static/colorBar/color_bar_5.png');
+    .bar-wrap {
+        width: 100%;
+        height: 36px;
+        font-size: 0;
+        & + .bar-wrap {
+            margin-bottom: 10px;
         }
-        &.color-80 {
-          background-image: url('/static/colorBar/color_bar_4.png');
+        .item {
+            position: relative;
+            float: left;
+            width: 20%;
+            height: 36px;
+            line-height: 36px;
+            letter-spacing: 0.5px;
+            font-size: 12px;
+            text-align: center;
+            background: #fff;
+            color: #72787D;
+            &.des {
+                color: #fff;
+                background: 0 0 no-repeat;
+                background-size: cover;
+                &.color-90 {
+                    background-image: url('/static/colorBar/color_bar_5.png');
+                }
+                &.color-80 {
+                    background-image: url('/static/colorBar/color_bar_4.png');
+                }
+                &.color-70 {
+                    background-image: url('/static/colorBar/color_bar_3@.png');
+                }
+                &.color-60 {
+                    background-image: url('/static/colorBar/color_bar_2@.png');
+                }
+                &.color-1 {
+                    background-image: url('/static/colorBar/color_bar_1@.png');
+                }
+            }
+            .sign {
+                z-index: 2;
+                bottom: -4px;
+                width: 6px;
+                height: 4px;
+                background: 0 0 no-repeat;
+                background-size: cover;
+                &.color-90 {
+                    background-image: url(/static/colorBar/triangle_5.png);
+                }
+                &.color-80 {
+                    background-image: url(/static/colorBar/triangle_4.png);
+                }
+                &.color-70 {
+                    background-image: url(/static/colorBar/triangle_3@.png);
+                }
+                &.color-60 {
+                    background-image: url(/static/colorBar/triangle_2@.png);
+                }
+                &.color-1 {
+                    background-image: url(/static/colorBar/triangle_1@.png);
+                }
+            }
         }
-        &.color-70 {
-          background-image: url('/static/colorBar/color_bar_3@.png');
+    }
+    .total {
+        padding: @cellPadding;
+        height: @cellHeight;
+        line-height: @cellHeight;
+        font-size: 14px;
+        letter-spacing: 0;
+        background: #fff;
+        color: #232323;
+        box-shadow: 0 0 0 1px @borderColor;
+        .label {
+            float: left;
         }
-        &.color-60 {
-          background-image: url('/static/colorBar/color_bar_2@.png');
+        .val {
+            float: right;
         }
-        &.color-1 {
-          background-image: url('/static/colorBar/color_bar_1@.png');
+    }
+    .data-count-wrap {
+        margin-top: 10px;
+        background: #fff;
+        p,
+        div,
+        ul {
+            margin: 0;
+            padding: 0;
         }
-      }
-      .sign {
-        z-index: 2;
-        bottom: -4px;
-        width: 6px;
-        height: 4px;
-        background: 0 0 no-repeat;
-        background-size: cover;
-        &.color-90 {
-          background-image: url(/static/colorBar/triangle_5.png);
+        .section {
+            .border-btm(@baseBorder);
         }
-        &.color-80 {
-          background-image: url(/static/colorBar/triangle_4.png);
+        .folder {
+            display: block;
+            width: 100%;
+            height: 48px;
+            text-align: center;
+            line-height: 48px;
         }
-        &.color-70 {
-          background-image: url(/static/colorBar/triangle_3@.png);
+        .folder p {
+            line-height: 48px;
+            padding: 0;
+            display: block;
         }
-        &.color-60 {
-          background-image: url(/static/colorBar/triangle_2@.png);
+        .item {
+            padding: 20px 0;
         }
-        &.color-1 {
-          background-image: url(/static/colorBar/triangle_1@.png);
+        .item .lab {
+            text-align: left;
+            float: left;
+            width: 60%;
+            margin-left: 12px;
         }
-      }
+        .item .val {
+            text-align: right;
+            float: right;
+            width: 20%;
+            margin-right: 12px;
+        }
+        .sub-folder {
+            position: relative;
+            /*margin-top: 30px;*/
+            /*display: none;*/
+        }
+        .sub-folder table {
+            padding-bottom: 50px;
+            margin: 0 auto;
+        }
+        .sub-folder table tr,
+        .sub-folder table td {
+            text-align: center;
+            line-height: 38px;
+        }
     }
-  }
-  .total {
-    padding: @cellPadding;
-    height: @cellHeight;
-    line-height: @cellHeight;
-    font-size: 14px;
-    letter-spacing: 0;
-    background: #fff;
-    color: #232323;
-    box-shadow: 0 0 0 1px @borderColor;
-    .label {
-      float: left;
+    .btn-wrap {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0 10px 13px;
+        .btn {
+            font-size: 18px;
+            letter-spacing: 0.75px;
+            background: @blueColor;
+            color: #fff;
+        }
     }
-    .val {
-      float: right;
-    }
-  }
-  .data-count-wrap {
-    margin-top: 10px;
-    background: #fff;
-    p,
-    div,
-    ul {
-      margin: 0;
-      padding: 0;
-    }
-    .section {
-      border-bottom: #ccc 1px solid;
-    }
-    .folder {
-      display: block;
-      width: 100%;
-      height: 48px;
-      text-align: center;
-      line-height: 48px;
-    }
-    .folder p {
-      line-height: 48px;
-      padding: 0;
-      display: block;
-    }
-    .item {
-      padding: 20px 0;
-    }
-    .item .lab {
-      text-align: left;
-      float: left;
-      width: 60%;
-      margin-left: 12px;
-    }
-    .item .val {
-      text-align: right;
-      float: right;
-      width: 20%;
-      margin-right: 12px;
-    }
-    .sub-folder {
-      position: relative;
-      /*margin-top: 30px;*/
-      /*display: none;*/
-    }
-    .sub-folder table {
-      padding-bottom: 50px;
-      margin: 0 auto;
-    }
-    .sub-folder table tr,
-    .sub-folder table td {
-      text-align: center;
-      line-height: 38px;
-    }
-  }
-  .btn-wrap {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0 10px 13px;
-    .btn {
-      font-size: 18px;
-      letter-spacing: 0.75px;
-      background: @blueColor;
-      color: #fff;
-    }
-  }
 }

@@ -107,7 +107,7 @@
 <style lang="less" rel="stylesheet/less">
     @import "../../../config.less";
 
-    .xc-task-add-wrap, .sel-spot-wrap {
+    .bind-device, .sel-spot-wrap {
         position: fixed;
         top: @headerHeight+@headerTop;
         bottom: 0;
