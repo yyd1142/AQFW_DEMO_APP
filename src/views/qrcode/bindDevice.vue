@@ -142,5 +142,8 @@
                 bottom: 0;
             }
         }
+        .mko-basic-cell >.cell >.value {
+            flex: auto;
+        }
     }
 </style>
