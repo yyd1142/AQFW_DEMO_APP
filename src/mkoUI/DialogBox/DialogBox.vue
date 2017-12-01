@@ -53,7 +53,7 @@
             this.pageClass = this.page.className;
             this.page.className += ' hidden';
             document.body.style.overflow = 'hidden';
-            if (this.$refs.content.clientHeight >= 376)
+            if (this.$refs.content && this.$refs.content.clientHeight >= 376)
                 this.overflow = true;
         },
         activated(){
