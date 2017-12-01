@@ -60,7 +60,7 @@
 
     .mko-info-bar {
         height: 60px;
-        padding: 12px 8px;
+        padding: 12px 14px;
         background-color: #fff;
         &.expand {
             background-color: @baseBG01;
@@ -71,7 +71,7 @@
             height: @cellHeight;
             border-radius: @cellHeight;
             border: 0.5px solid @baseBorder;
-            box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
             letter-spacing: 0;
             background-color: #FFFFFF;
 

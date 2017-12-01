@@ -50,6 +50,9 @@
         }
         &:last-child {
             .border-btm(@baseBorder);
+            &:after {
+                bottom: -1px;
+            }
         }
         &:not(:last-child) .cell {
             .border-btm(@baseBorder);

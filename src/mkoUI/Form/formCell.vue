@@ -96,10 +96,13 @@
         background: #fff;
         padding-left: 14px;
         &:first-child {
-            .border-top(@baseBorder);
+//            .border-top(@baseBorder);
         }
         &:last-child {
             .border-btm(@baseBorder);
+            &:after {
+                bottom: -1px;
+            }
         }
         &:not(:last-child) .cell {
             .border-btm(@baseBorder);

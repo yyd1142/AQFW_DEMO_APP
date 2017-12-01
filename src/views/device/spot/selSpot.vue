@@ -143,6 +143,10 @@
                 &:last-child .cell {
                     box-shadow: 0 1px 0 0 @baseBorder;
                 }
+                .value {
+                    flex: 0 0 0;
+                    -webkit-flex: 0 0 0;
+                }
                 .title-icon {
                     min-width: 0;
                     margin: 0;

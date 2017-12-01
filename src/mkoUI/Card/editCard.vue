@@ -93,9 +93,10 @@
             padding: 0 10px;
             background-color: #fff;
             color: @mainBlue;
-            .border-btm(@borderColor);
+            .border-btm(@baseBorder);
             .title {
                 line-height: 44px;
+                font-weight: 900;
                 font-size: 16px;
                 color: @baseText01;
             }

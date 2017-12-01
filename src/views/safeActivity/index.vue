@@ -166,6 +166,8 @@ export default {
         box-sizing: border-box;
         .border-btm(@borderColor);
         .title {
+            margin-top: 8px;
+            margin-bottom: 8px;
             font-size: 14px;
             color: #232323;
         }

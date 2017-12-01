@@ -15,7 +15,7 @@
                     <mko-tab-item :label="item" :activied="tabI==i" @handleTabClick="tab"
                                   v-for="(item,i) in tabItems"></mko-tab-item>
                 </mko-nav-bar>
-                <mko-cell :title="s.name" main="left" is-link @click="go(i)" v-for="(s,i) in taskSurvey" v-if="tabI == 0">
+                <mko-cell :title="s.name" main="left" :is-link="i<2" @click="go(i)" v-for="(s,i) in taskSurvey" v-if="tabI == 0">
                     <span class="text-blue" v-if="i<2">{{s.count}}</span>
                 </mko-cell>
                 <mko-cell :title="s.name" main="left" is-link v-for="(s,i) in ajTaskSurvey" v-if="tabI == 1">
