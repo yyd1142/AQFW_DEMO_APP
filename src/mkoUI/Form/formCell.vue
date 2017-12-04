@@ -116,7 +116,6 @@
             position: relative;
             padding-right: 14px;
             height: @cellHeight;
-            .border-btm(@baseBorder);
             font-size: 14px;
             &.is-link {
                 .value {
