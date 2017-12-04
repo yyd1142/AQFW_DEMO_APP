@@ -3,13 +3,7 @@
         <div class="placeholder-item"></div>
         <mko-header :title="$route.query.title" left-icon="icon-back" @handleLeftClick="back" right-icon="icon-add" @handleRightClick="add"></mko-header>
         <div class="page-wrap dw-data-wrap" v-if="!notData">
-            <div class="com-data-wrap">
-                <div v-for="(item, index) in unitItem">
-                    <div @click="goDwInfo(item)">
-                        <mt-cell :title="item.dwName" is-link></mt-cell>
-                    </div>
-                </div>
-            </div>
+            <mko-cell :title="item.dwName" is-link @click="goDwInfo(item)" v-for="(item, index) in unitItem"></mko-cell>
         </div>
         <no-data text="暂无数据"  v-if="notData"></no-data>
     </div>

@@ -2,12 +2,14 @@
     <div class="com-spot-info-wrap" :class="{'masking-wrap':onSelJz}">
         <div class="masking" @click.self="goSelJz(false)"></div>
         <div class="body">
-            <mko-double-cell title="位置信息" :label="`完善${title}所在建筑与楼层`" @click="fold">
-                <div class="header-sign" slot="icon" v-show="!isConfirm">1</div>
-                <div class="header-sign succ" slot="icon" v-show="isConfirm">
-                    <span class="icon-tick-white-2"></span>
-                </div>
-            </mko-double-cell>
+            <div>
+                <mko-double-cell title="位置信息" :label="`完善${title}所在建筑与楼层`" @click="fold">
+                    <div class="header-sign" slot="icon" v-show="!isConfirm">1</div>
+                    <div class="header-sign succ" slot="icon" v-show="isConfirm">
+                        <span class="icon-tick-white-2"></span>
+                    </div>
+                </mko-double-cell>
+            </div>
             <div class="fold-wrap" v-show="!isFold">
                 <!--建筑-->
                 <mko-form-cell title="建筑" v-model="formData.jzName" holder-text="输入建筑名称" type="text" edit @focus="goSelJz(true)">

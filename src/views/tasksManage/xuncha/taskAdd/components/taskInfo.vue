@@ -14,7 +14,7 @@
                 <mko-form-cell title="任务名称" v-model="formData.name" holder-text="输入任务名称" type="text" edit></mko-form-cell>
                 <mko-textarea placeholder="请输入任务要求" v-model="formData.desc"></mko-textarea>
                 <mko-form-cell title="截止日期" type="sel" edit @click="datePickerShow" v-if="$route.params.type != 'routine'">
-                    <div class="icon-circle-drop fr text-middle" slot="button"></div>
+                    <div class="icon icon-circle-drop fr" slot="button"></div>
                     {{formatDate(formData.limitDate, 'YYYY-MM-DD') || '选择'}}
                 </mko-form-cell>
                 <mko-button size="large" plain :disabled="!valid" @click="confirm">确认</mko-button>

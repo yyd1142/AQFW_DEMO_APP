@@ -1,11 +1,13 @@
 <template>
     <div>
-        <mko-double-cell title="设备数量" :label="`设置${title}设备数量`" @click="fold">
-            <div class="header-sign" slot="icon" v-show="!isConfirm">{{num}}</div>
-            <div class="header-sign succ" slot="icon" v-show="isConfirm">
-                <span class="icon-tick-white-2"></span>
-            </div>
-        </mko-double-cell>
+        <div>
+            <mko-double-cell title="设备数量" :label="`设置${title}设备数量`" @click="fold">
+                <div class="header-sign" slot="icon" v-show="!isConfirm">{{num}}</div>
+                <div class="header-sign succ" slot="icon" v-show="isConfirm">
+                    <span class="icon-tick-white-2"></span>
+                </div>
+            </mko-double-cell>
+        </div>
         <div class="fold-wrap" v-show="!isFold">
             <div class="no-data-hint text-center" v-show="formData.length==0">暂未添加设备</div>
             <mko-double-cell class="cell" :title="item.unitName" :label="dvcRate.label" v-for="(item,i) in formData">
