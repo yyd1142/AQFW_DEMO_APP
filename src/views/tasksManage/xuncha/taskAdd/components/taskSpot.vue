@@ -1,12 +1,15 @@
 <template>
     <div class="task-spot-wrap">
         <div v-show="!$route.query.sel">
-            <mko-double-cell title="巡查点" label="选择该任务需巡查的巡查点" @click="fold">
-                <div class="header-sign" slot="icon" v-show="!isConfirm">2</div>
-                <div class="header-sign succ" slot="icon" v-show="isConfirm">
-                    <span class="icon-tick-white-2"></span>
-                </div>
-            </mko-double-cell>
+            <div>
+                <mko-double-cell title="巡查点" label="选择该任务需巡查的巡查点" @click="fold">
+                    <div class="header-sign" slot="icon" v-show="!isConfirm">2</div>
+                    <div class="header-sign succ" slot="icon" v-show="isConfirm">
+                        <span class="icon-tick-white-2"></span>
+                    </div>
+                </mko-double-cell>
+            </div>
+
             <div class="fold-wrap" v-show="!isFold">
                 <div class="spot-sel-btn" @click="goSelSpot(true)" v-show="!formData.length">
                     <span class="icon-plus-blue-0 abs-all-middle"></span>

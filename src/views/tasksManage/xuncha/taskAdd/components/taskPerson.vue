@@ -1,12 +1,14 @@
 <template>
     <div>
         <div v-show="!$route.query.sel">
-            <mko-double-cell title="人员" label="选择执行人员" @click="fold">
-                <div class="header-sign" slot="icon" v-show="!isConfirm">3</div>
-                <div class="header-sign succ" slot="icon" v-show="isConfirm">
-                    <span class="icon-tick-white-2"></span>
-                </div>
-            </mko-double-cell>
+            <div>
+                <mko-double-cell title="人员" label="选择执行人员" @click="fold">
+                    <div class="header-sign" slot="icon" v-show="!isConfirm">3</div>
+                    <div class="header-sign succ" slot="icon" v-show="isConfirm">
+                        <span class="icon-tick-white-2"></span>
+                    </div>
+                </mko-double-cell>
+            </div>
             <div class="fold-wrap" v-show="!isFold">
                 <mko-select-box title="执行人员(可多选)" :options="options" :selected="formData"
                                 :column="4" name-key="employeeName" value-key="userName" @select="selPerson">

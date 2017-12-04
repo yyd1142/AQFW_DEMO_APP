@@ -166,12 +166,12 @@
         .alarm-record-wrap {
             .mko-double-cell + .mko-double-cell {
                 position: relative;
-                &:after {
+                &:before {
                     content: '';
                     position: absolute;
                     left: 23px;
                     top: -19px;
-                    height: 76px;
+                    height: 39px;
                     width: 3px;
                     background-color: @baseBorder;
                 }
