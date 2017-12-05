@@ -5,7 +5,7 @@
             <div class="header line-middle">
                 <div class="title line-middle-text">{{title || '提示'}}</div>
             </div>
-            <div class="body">
+            <div class="body" v-if="msg">
                 <div class="content text-center" :class="overflow?'flow':null" ref="content" v-html="msg"></div>
                 <div class="mask" v-if="overflow"></div>
             </div>
