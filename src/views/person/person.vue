@@ -8,34 +8,18 @@
                              :auto-fill="autoFill">
                     <div :style="{ height: wrapperHeight - 50 + 'px'}">
                         <div class="data" @click="go('/person_data')">
-                            <mt-cell is-link>
-                                <div class="avatar-wrap">
+                            <mko-double-cell :title="`${personData.employeeName}（${roleFilter(personData.role)}）`"
+                                             :label="personData.dwName" is-link>
+                                <div class="avatar-wrap" slot="icon">
                                     <div class="default"></div>
                                     <!--<img class="avatar" slot="icon" src="./logo.png">-->
                                 </div>
-                                <div class="content">
-                                    <div class="main">{{personData.employeeName}}（{{personData.role | roleFilter}}）
-                                    </div>
-                                    <div class="desc">{{personData.dwName}}</div>
-                                </div>
-                            </mt-cell>
+                            </mko-double-cell>
                         </div>
                         <div class="cell-wrap">
-                            <div class="cell" @click="go('/basic_info')" v-if="isAdmin">
-                                <mt-cell title="基本信息" is-link>
-                                    <span slot="icon" class="sign jibenxinxi-icon"></span>
-                                </mt-cell>
-                            </div>
-                            <div class="cell" @click="go('/message?from=my')">
-                                <mt-cell title="消息" is-link>
-                                    <span slot="icon" class="sign sign-msg"></span>
-                                </mt-cell>
-                            </div>
-                            <div class="cell" @click="go('/config')">
-                                <mt-cell title="设置" is-link>
-                                    <span slot="icon" class="sign sign-conf"></span>
-                                </mt-cell>
-                            </div>
+                            <mko-cell title="基本信息" icon="sign jibenxinxi-icon" is-link @click="go('/basic_info')" v-if="isAdmin"></mko-cell>
+                            <mko-cell title="消息" icon="sign sign-msg" is-link @click="go('/message?from=my')"></mko-cell>
+                            <mko-cell title="设置" icon="sign sign-conf" is-link @click="go('/config')"></mko-cell>
                         </div>
                     </div>
                     <!--<div slot="top" class="mint-loadmore-top">
@@ -52,103 +36,12 @@
     </div>
 </template>
 
-<style lang="less" rel="stylesheet/less">
-    @import "../../config.less";
-
-    .person-page-wrap {
-        padding-bottom: 0;
-        .data {
-            .mint-cell-wrapper {
-                display: -webkit-box;
-                display: -moz-box;
-                display: -ms-flexbox;
-                display: -webkit-flex;
-                display: flex;
-                padding: @cellPadding;
-                height: 80px;
-                .mint-cell-title {
-                    -webkit-box-flex: 0.0;
-                    -moz-box-flex: 0.0;
-                    width: 0;
-                    -webkit-flex: none;
-                    -ms-flex: none;
-                    flex: none;
-                }
-                .mint-cell-value {
-                    .avatar-wrap {
-                        width: 60px;
-                        height: 60px;
-                        margin-right: 12px;
-                        .default {
-                            height: 100%;
-                            background: url(/static/icons/resource.png) -654px 0 no-repeat;
-                            background-size: 892px auto;
-                        }
-                        .avatar {
-                            width: 100%;
-                        }
-                    }
-                    .content {
-                        .main {
-                            margin-bottom: 5px;
-                            font-size: 14px;
-                            font-weight: 600;
-                            color: @textBase;
-                        }
-                        .desc {
-                            font-size: 12px;
-                            color: @textLB;
-                        }
-                    }
-                }
-            }
-        }
-        .cell-wrap {
-            margin-top: 14px;
-            .cell {
-                background-color: @bgWhite;
-                .mint-cell-wrapper {
-                    padding: @cellPadding;
-                    display: table;
-                    .mint-cell-title {
-                        display: table-cell;
-                        vertical-align: middle;
-                        line-height: 22px;
-                        font-size: 16px;
-                        letter-spacing: 1px;
-                        .sign {
-                            position: relative;
-                            bottom: 4px;
-                            padding: 11px;
-                            margin-right: 9px;
-                            font-size: 0;
-                            &.sign-msg {
-                                background: url(/static/icons/resource.png) -654px -60px no-repeat;
-                                background-size: @bg-size;
-                            }
-                            &.sign-conf {
-                                background: url(/static/icons/resource.png) -676px -60px no-repeat;
-                                background-size: @bg-size;
-                            }
-                            &.jibenxinxi-icon {
-                                background: url(/static/icons/jbxx.png) 0 0 no-repeat;
-                                background-size: cover;
-                                width: 22px;
-                                height: 22px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-</style>
 
 <script>
     import api from 'api';
-    import {roleFilter} from 'filters';
-    import {Indicator} from 'mint-ui';
-    import {Tabs, ResError} from 'components';
+    import { roleFilter } from 'filters';
+    import { Indicator } from 'mint-ui';
+    import { Tabs, ResError } from 'components';
     export default {
         data() {
             return {
@@ -173,6 +66,7 @@
             });
         },
         methods: {
+            roleFilter,
             getLocalData() {
                 let local = localStorage['USER_DATA'];
                 if (local && local.length > 0) {
@@ -225,3 +119,53 @@
         }
     }
 </script>
+
+<style lang="less" rel="stylesheet/less">
+    @import "../../config.less";
+
+    .person-page-wrap {
+        padding-bottom: 0;
+        .data {
+            .mko-double-cell {
+                .avatar-wrap {
+                    width: 46px;
+                    height: 46px;
+                    /*margin-right: 12px;*/
+                    .default {
+                        height: 100%;
+                        background: url(/static/icons/resource.png) -654px*0.7666 0 no-repeat;
+                        background-size: 892px*0.766 auto;
+                    }
+                    .avatar {
+                        width: 100%;
+                    }
+                }
+                .value {
+                    min-width: 0;
+                }
+            }
+        }
+        .cell-wrap {
+            margin-top: 10px;
+            .sign {
+                position: relative;
+                padding: 11px;
+                font-size: 0;
+                &.sign-msg {
+                    background: url(/static/icons/resource.png) -654px -60px no-repeat;
+                    background-size: @bg-size;
+                }
+                &.sign-conf {
+                    background: url(/static/icons/resource.png) -676px -60px no-repeat;
+                    background-size: @bg-size;
+                }
+                &.jibenxinxi-icon {
+                    background: url(/static/icons/jbxx.png) 0 0 no-repeat;
+                    background-size: cover;
+                    /*width: 22px;*/
+                    /*height: 22px;*/
+                }
+            }
+        }
+    }
+</style>

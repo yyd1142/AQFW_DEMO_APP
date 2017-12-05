@@ -11,13 +11,17 @@
                 <ul class="tasks-table-view" v-if="tabName == '日常值班'">
                     <li class="tasks-table-cell" v-for="(item, index) in tasks" @click="viewTask(item)">
                         <div class="tasks-type">长期有效</div>
-                        <mko-double-cell :title="item.description || '暂无名称'" :label="item.executorGroupName" :val="'共'+ item.banciCount +'个班次'" is-link></mko-double-cell>
+                        <div>
+                            <mko-double-cell :title="item.description || '暂无名称'" :label="item.executorGroupName" :val="'共'+ item.banciCount +'个班次'" is-link></mko-double-cell>
+                        </div>
                     </li>
                 </ul>
                 <ul class="tasks-table-view" v-if="tabName == '临时值班'">
                     <li class="tasks-table-cell" v-for="(item, index) in tmpTasks" @click="vieTmpTask(item)">
                         <div class="tasks-type">{{item.createTime | formatDate}}</div>
-                        <mko-double-cell :title="item.description || '暂无名称'" :label="zhibanUserFilter(item)" :val="'共'+ item.taskCount +'个班次'" is-link></mko-double-cell>
+                        <div>
+                            <mko-double-cell :title="item.description || '暂无名称'" :label="zhibanUserFilter(item)" :val="'共'+ item.taskCount +'个班次'" is-link></mko-double-cell>
+                        </div>
                     </li>
                 </ul>
             </mt-loadmore>
@@ -279,7 +283,6 @@ export default {
         width: 100%;
         .tasks-table-cell {
             width: 100%;
-            .border-btm(@borderGray);
             .tasks-type {
                 font-size: 12px;
                 color: #666666;

@@ -5,8 +5,8 @@
         <div class="page-wrap notice-list-wrap" id="pageWrapper">
             <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="bottomAllLoaded" ref="loadmore" :auto-fill="autoFill">
                 <ul class="notice-table-view">
-                    <mko-double-cell :title="`${item.status == 0?notReadIcon:''}${item.title || '标题为空'}`" :label="`来源：${item.releaseDw || '未知'}`"
-                                     :val="item.createTime | formatDate" is-link
+                    <mko-double-cell :title="`${item.status == 0?notReadIcon:''}${item.title || '标题为空'}`"
+                                     :label="item.createTime | formatDate" is-link
                                      @click="linkPath(item)" v-for="item in notices">
                     </mko-double-cell>
                 </ul>

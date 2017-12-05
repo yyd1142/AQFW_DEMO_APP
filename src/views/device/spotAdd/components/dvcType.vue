@@ -1,12 +1,14 @@
 <template>
     <div class="dvc-type-wrap">
         <div v-show="!onSelDvc">
-            <mko-double-cell title="设备类型" :label="`选择该${title}包含的设备`" @click="fold">
-                <div class="header-sign" slot="icon" v-show="!isConfirm">{{num}}</div>
-                <div class="header-sign succ" slot="icon" v-show="isConfirm">
-                    <span class="icon-tick-white-2"></span>
-                </div>
-            </mko-double-cell>
+            <div>
+                <mko-double-cell title="设备类型" :label="`选择该${title}包含的设备`" @click="fold">
+                    <div class="header-sign" slot="icon" v-show="!isConfirm">{{num}}</div>
+                    <div class="header-sign succ" slot="icon" v-show="isConfirm">
+                        <span class="icon-tick-white-2"></span>
+                    </div>
+                </mko-double-cell>
+            </div>
             <div class="fold-wrap" v-show="!isFold">
                 <mko-select-box title="设备类型" :options="options.dvcType" :selected="[formData.dvcType]" @select="selDvcType" :column="2"></mko-select-box>
 

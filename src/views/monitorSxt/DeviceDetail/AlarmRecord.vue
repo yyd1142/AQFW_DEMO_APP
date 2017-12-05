@@ -2,7 +2,7 @@
     <div class="alarm-record-wrap">
         <mko-double-cell :title="(item.status==2?badge(2):'')+item.name"
                          :label="item.desc" :active="item.status==2"
-                         v-if="item.status!==0" v-for="item in list">
+                         v-if="item.status!==0&&(i==id-1)" v-for="(item,i) in list">
             {{item.status == 2 ? '待处理' : '已通知'}}
         </mko-double-cell>
     </div>
@@ -12,7 +12,8 @@
     export default {
         data () {
             return {
-              list:[]
+                list: [],
+                id: 0,
             }
         },
         watch: {},
@@ -20,6 +21,7 @@
         mounted() {
         },
         activated(){
+            this.id = this.$route.params.id;
             this.getData();
         },
         deactivated() {

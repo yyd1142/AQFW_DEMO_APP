@@ -205,7 +205,7 @@
                 z-index: 22;
                 width: 100%;
                 top: 80px + @headerTop;
-                box-shadow: 0px 2px 6px 0px rgba(213, 213, 213, 0.50);
+                /*box-shadow: 0px 2px 6px 0px rgba(213, 213, 213, 0.50);*/
             }
         }
 
