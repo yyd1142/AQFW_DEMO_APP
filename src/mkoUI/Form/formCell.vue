@@ -45,10 +45,10 @@
             iptData: function (val) {
                 this.$emit('input', this.iptData)
             },
-            isEdit: function (val) {
-                if (val && this.val)
-                    this.iptData = this.val;
-            }
+//            isEdit: function (val) {
+//                if (val && this.val)
+//                    this.iptData = this.val;
+//            }
         },
         computed: {
             isEdit(){
