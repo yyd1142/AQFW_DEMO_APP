@@ -26,7 +26,7 @@
         {{score.jzhzScore | scoreFilter}}分
       </mko-menu-header>
       <div v-show="showDetail.jzhz">
-        <mko-menu-cell title="建筑属性 (共20分)">{{score.jzhzScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="建筑属性">{{score.jzhzScore | scoreFilter}}分</mko-menu-cell>
       </div>
 
       <!--消防设施管理得分-->
@@ -35,7 +35,7 @@
         {{score.xfsssbScore | scoreFilter}}分
       </mko-menu-header>
       <div v-show="showDetail.xfsssb">
-        <mko-menu-cell title="消防设施完好率 (共20分)">{{score.xfsssbScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="消防设施完好率">{{score.xfsssbScore | scoreFilter}}分</mko-menu-cell>
       </div>
 
       <!--消防安全管理得分-->
@@ -44,14 +44,14 @@
         {{score.xfaqglScore | scoreFilter}}分
       </mko-menu-header>
       <div v-show="showDetail.xfaqgl">
-        <mko-menu-cell title="基本信息完善率 (共20分)">{{basicInfoScore | scoreFilter}}分</mko-menu-cell>
-        <mko-menu-cell title="消控中心在岗率 (共2分)">{{score.ryzbScore | scoreFilter}}分</mko-menu-cell>
-        <mko-menu-cell title="人员履职率 (共10分)">{{score.ryxcScore | scoreFilter}}分</mko-menu-cell>
-        <mko-menu-cell title="检查项目达标率 (共5分)">{{score.sssbCheckScore | scoreFilter}}分</mko-menu-cell>
-        <mko-menu-cell title="安全管理执行率 (共10分)">{{aqglScore | scoreFilter}}分</mko-menu-cell>
-        <mko-menu-cell title="学习培训覆盖率 (共8分)">{{xuexipeixunScore | scoreFilter}}分</mko-menu-cell>
-        <mko-menu-cell title="第三方服务签约率 (共3分)">{{disanfangScore | scoreFilter}}分</mko-menu-cell>
-        <mko-menu-cell title="物联网设备接入率 (共2分)">{{wuliuScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="基本信息完善率">{{basicInfoScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="消控中心在岗率">{{score.ryzbScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="人员履职率">{{score.ryxcScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="检查项目达标率">{{score.sssbCheckScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="安全管理执行率">{{aqglScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="学习培训覆盖率">{{xuexipeixunScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="第三方服务签约率">{{disanfangScore | scoreFilter}}分</mko-menu-cell>
+        <mko-menu-cell title="物联网设备接入率">{{wuliuScore | scoreFilter}}分</mko-menu-cell>
       </div>
 
       <div class="data-count-wrap">

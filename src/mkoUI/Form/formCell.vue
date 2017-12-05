@@ -21,7 +21,7 @@
             </div>
             <slot v-if="isEdit&&type!='sel'">
                 <input class="ipt fr" type="text" :placeholder="holderText||'请完善信息'" v-model="iptData" @focus="focus" @blur="blur" v-if="isEdit&&type=='text'">
-                <input class="ipt fr" type="number" :placeholder="holderText||'请完善信息'" v-model="iptData" @focus="focus" @blur="blur" v-if="isEdit&&type=='number'">
+                <input class="ipt fr" type="number" :placeholder="holderText||'请完善信息'" v-model.number="iptData" @focus="focus" @blur="blur" v-if="isEdit&&type=='number'">
             </slot>
 
             <!--自定义按钮-->
