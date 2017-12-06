@@ -119,7 +119,7 @@
                     sessionStorage.setItem('videoDeviceDatas', JSON.stringify(json));
                     Toast({message: "已通知相应负责人", duration: 2000});
                     setTimeout(() => {
-                        this.$MKOPop(2);
+                        this.$MKOPop();
                     }, 1500);
                 } else {
                     let f = this.$route.query.from;

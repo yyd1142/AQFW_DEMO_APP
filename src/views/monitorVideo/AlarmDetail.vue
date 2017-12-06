@@ -30,7 +30,7 @@
                 <div class="label">警情处理状态跟踪</div>
             </div>
             <div class="alarm-record-wrap">
-                <!--<mko-double-cell icon="icon-device-succ" title="已确认正常" label="2017-11-08 14:30"></mko-double-cell>-->
+                <mko-double-cell icon="icon-device-succ" title="已确认正常" :label="timeFomat(checkTime)" v-if="isChecked"></mko-double-cell>
                 <mko-double-cell icon="icon-device-warn" :title="'已通知负责人：' + personFilter(choosePersonResults.datas)"
                                  :label="timeFomat(choosePersonResults.time)"
                                  v-if="choosePersonResults.datas.length > 0"></mko-double-cell>
@@ -62,7 +62,9 @@
                     datas: [],
                     time: ''
                 },
-                popupShow: false
+                popupShow: false,
+                checkTime: new Date().getTime(),
+                isChecked: false
             }
         },
         watch: {
@@ -126,7 +128,8 @@
                         }
                         sessionStorage.setItem('videoDeviceDatas', JSON.stringify(json));
                         Toast({message: "已排除风险", duration: 2000});
-                        this.back();
+                        this.checkTime = new Date().getTime();
+                        this.isChecked = true;
                     }
                 });
             },
