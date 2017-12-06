@@ -40,7 +40,7 @@
             </div>
             <div class="btn" v-if="$route.query.status == 2">
                 <mko-button size="large" @click="choosePerson">通知责任人</mko-button>
-                <mko-button class="paichu" size="large" plain @click="submit">排除风险</mko-button>
+                <mko-button class="paichu" size="large" plain @click="submit">确认正常</mko-button>
             </div>
         </div>
         <div class="photo-preview">
@@ -112,8 +112,8 @@
             },
             submit() {
                 this.$MKODialog({
-                    title: "提示",
-                    msg: '确定排除风险吗？',
+                    title: "排除风险吗",
+                    msg: '排除风险后，该设备状态将恢复为正常',
                     cancelBtn: true,
                     cancelText: "取消"
                 }).then(msg => {

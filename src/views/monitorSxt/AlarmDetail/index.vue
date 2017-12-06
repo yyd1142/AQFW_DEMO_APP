@@ -91,7 +91,7 @@
             },
             removeDanger(){
                 this.$MKODialog({
-                    title: '排除风险吗',
+                    title: '排除风险吗？',
                     msg: '排除风险后，该设备状态将恢复为正常',
                     cancelBtn: true
                 }).then(res => {
