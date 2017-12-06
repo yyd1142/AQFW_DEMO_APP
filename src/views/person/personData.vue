@@ -2,44 +2,32 @@
     <div>
         <div class="placeholder-item"></div>
         <mko-header title="个人资料" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="isEdit ? '取消' : '编辑'" @handleRightClick="editInfo">
-            <div class="header-person-edit-btn" slot="custom" @click="saveInfo" v-if="isEdit">保存</div>
+            <div class="header-person-edit-btn" :class="isValidate?'':'disabled'" slot="custom" @click="saveInfo" v-if="isEdit">保存</div>
         </mko-header>
         <res-error v-if="resError"></res-error>
         <div class="page-wrap person-data-wrap" v-show="!resError">
             <div ref="wrapper">
                 <mt-loadmore ref="loadmore" :top-method="loadTop" @top-status-change="handleTopChange" :auto-fill="autoFill">
                     <div :style="{ height: wrapperHeight + 'px'}">
-                        <div class="com-data-wrap" :class="{'is-edit':isEdit}">
-                            <div class="disabled">
-                                <mt-cell title="头像">
-                                    <div class="avatar-wrap">
-                                        <div class="default"></div>
-                                        <!--<img class="avatar" src="./logo.png">-->
-                                    </div>
-                                </mt-cell>
-                            </div>
-                            <mt-cell title="姓名" :value="personData.employeeName">
-                                <span class="sign" v-if="isEdit">*</span>
-                                <input class="ipt" type="text" :placeholder="holderText" v-model="formData.employeeName" v-if="isEdit">
-                            </mt-cell>
-                            <mt-cell title="电话" :value="personData.phone">
-                                <a class="phone" :href="'tel:' + personData.phone" v-if="!isEdit&&personData.phone">{{personData.phone}}</a>
-                                <span class="sign" v-if="isEdit">*</span>
-                                <input class="ipt" type="text" :placeholder="holderText" v-model="formData.phone" v-if="isEdit">
-                            </mt-cell>
-                            <div @click="popupPickerShow('gender')">
-                                <span></span>
-                                <mt-cell title="性别" :value="isEdit?genderFilter(formData.gender):genderFilter(personData.gender)" :is-link="isEdit"></mt-cell>
-                            </div>
-                            <div @click="datePickerShow">
-                                <span></span>
-                                <mt-cell title="生日" :value="isEdit?formatDate(bornDate,'YYYY-MM-DD'):formatDate(personData.bornDate,'YYYY-MM-DD') || '暂无'" :is-link="isEdit"></mt-cell>
+                        <div class="data-wrap">
 
-                            </div>
-                            <mt-cell title="身份证号" :value="personData.IDNumber||'暂无'">
-                                <span class="sign" v-if="isEdit">*</span>
-                                <input class="ipt" type="text" :placeholder="holderText" v-model="personData.IDNumber" v-if="isEdit">
-                            </mt-cell>
+                            <mko-double-cell title="头像">
+                                <div class="avatar-wrap fr">
+                                    <div class="default"></div>
+                                    <!--<img class="avatar" src="./logo.png">-->
+                                </div>
+                            </mko-double-cell>
+                            <mko-form-cell title="姓名" :val="personData.employeeName" v-model="formData.employeeName"
+                                           :edit="isEdit" type="text" required></mko-form-cell>
+                            <mko-form-cell title="电话" :val="personData.phone" v-model="formData.phone"
+                                           :edit="isEdit" type="text" required phone></mko-form-cell>
+                            <mko-form-cell title="性别" :val="isEdit?genderFilter(formData.gender):genderFilter(personData.gender)"
+                                           :edit="isEdit" type="sel" @click="popupPickerShow('gender')"></mko-form-cell>
+                            <mko-form-cell title="生日" :val="isEdit?formatDate(bornDate,'YYYY-MM-DD'):formatDate(personData.bornDate,'YYYY-MM-DD')" non-text="暂无"
+                                           :edit="isEdit" type="sel" @click="datePickerShow"></mko-form-cell>
+                            <mko-form-cell title="身份证号" :val="personData.IDNumber" v-model="formData.IDNumber" non-text="暂无"
+                                           :edit="isEdit" type="text" required></mko-form-cell>
+
                             <!--<div @click="popupPickerShow('job-title')">-->
                             <!--<span></span>-->
                             <!--<mt-cell title="个人资质" :value="isEdit?formData.jobTitle:personData.jobTitle"-->
@@ -51,10 +39,10 @@
                             <!--@removePhotoEvent="removePhoto()"></photo-box>-->
                             <!--</div>-->
                         </div>
-                        <div class="com-data-wrap" :class="{'is-edit':isEdit}">
-                            <mt-cell title="公司名称" :value="personData.dwName" class="disabled"></mt-cell>
-                            <mt-cell title="消防角色" :value="personData.role | roleFilter" class="disabled"></mt-cell>
-                            <mt-cell title="职责" :value="personData.roleRuls | roleRulsFilter" class="disabled"></mt-cell>
+                        <div class="data-wrap">
+                            <mko-cell title="公司名称" :val="personData.dwName"></mko-cell>
+                            <mko-cell title="消防角色" :val="personData.role | roleFilter"></mko-cell>
+                            <mko-cell title="职责" :val="personData.roleRuls | roleRulsFilter"></mko-cell>
                         </div>
                     </div>
                 </mt-loadmore>
@@ -108,7 +96,8 @@
                 bornDate: '', //与formData.bornDate同步
                 formData: {
                     employeeName: '',
-                    phone: ''
+                    phone: '',
+                    IDNumber:''
                 },
                 genderList: [{flex: 1, values: ['男', '女']}],
                 jobTitleList: conf.jobTitleList,
@@ -228,6 +217,7 @@
             },
             validForm() {
                 for (let key of valid_key) {
+                    console.log(this.formData[key])
                     if (!this.formData[key] && this.formData[key] !== 0) {
                         this.isValidate = false;
                         return false;
@@ -244,7 +234,7 @@
                     form[key] = this.formData[key]
                 }
                 form.bornDate = moment(form.bornDate).format("YYYY-MM-DD 00:00");
-                api.postPerson(form, {m: 'update'}).then(res => {
+                api.postPerson(form, {m: 'update'}, 'TEST').then(res => {
                     if (res && res.code == 0) {
                         for (let key in form) {
                             this.personData[key] = form[key];
@@ -386,6 +376,9 @@
         line-height: @headerHeight;
         font-size: 16px;
         z-index: 10;
+        &.disabled{
+            opacity: 0.5;
+        }
     }
 
     .header-item.edit {
@@ -394,19 +387,23 @@
 
     .person-data-wrap {
         padding-bottom: 0;
-        .avatar-wrap {
-            margin: 10px 0;
-            width: 60px;
-            height: 60px;
-            .default {
-                height: 100%;
-                background: url(/static/icons/resource.png) -654px 0 no-repeat;
-                background-size: 892px auto;
-            }
-            .avatar {
-                width: 100%;
+        .data-wrap{
+            margin-bottom:14px;
+            .avatar-wrap {
+                /*margin: 10px 0;*/
+                width: 44px;
+                height: 44px;
+                .default {
+                    height: 100%;
+                    background: url(/static/icons/resource.png) -654px*0.7666 0 no-repeat;
+                    background-size: 892px*0.7666 auto;
+                }
+                .avatar {
+                    width: 100%;
+                }
             }
         }
+
         .mint-popup-bottom .p-body {
             /*overflow: scroll;*/
             .checkbox .mint-button {

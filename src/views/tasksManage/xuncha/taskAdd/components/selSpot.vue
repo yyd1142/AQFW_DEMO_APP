@@ -320,9 +320,6 @@
         z-index: 1;
         .mko-basic-cell {
             padding-left: 12px;
-            &:last-child .cell {
-                box-shadow: 0 1px 0 0 @baseBorder;
-            }
             &.disabled .cell .title {
                 color: @baseText03;
             }

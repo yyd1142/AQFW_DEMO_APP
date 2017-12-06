@@ -125,6 +125,16 @@
         }
         .mko-form-cell {
             padding-left: 10px !important;
+            &:first-child {
+                &:before{
+                    display: none;
+                }
+            }
+            &:last-child {
+                &:after {
+                    display: none;
+                }
+            }
             .cell {
                 padding-right: 10px !important;
             }

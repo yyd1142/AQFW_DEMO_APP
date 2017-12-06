@@ -56,7 +56,7 @@
             }
         },
         mounted() {
-            if(this.value) this.iptData = this.value;
+            if (this.value) this.iptData = this.value;
         },
         activated(){
         },
@@ -88,7 +88,7 @@
     @cellHeight: 44px;
 
     .mko-form-cell:not(:last-child) .cell {
-//        .border-btm(@baseBorder);
+        //        .border-btm(@baseBorder);
     }
 
     .mko-form-cell {
@@ -96,7 +96,7 @@
         background: #fff;
         padding-left: 14px;
         &:first-child {
-//            .border-top(@baseBorder);
+            .border-top(@baseBorder);
         }
         &:last-child {
             .border-btm(@baseBorder);

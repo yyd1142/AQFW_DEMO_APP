@@ -581,9 +581,9 @@
             }
         }
         .sel-wrap {
-            position: fixed;
+            position: absolute;
             z-index: 1;
-            top: @headerHeight+@headerTop+262px;
+            top: 262px;
             bottom: 0;
             width: 100%;
             background-color: @baseMasking;

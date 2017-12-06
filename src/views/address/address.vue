@@ -4,7 +4,7 @@
         <mko-header title="人员" :left-icon="isSearchBar ? '' : 'icon-search-l'"
                     :left-icon-text="isSearchBar ? '取消' : null"
                     @handleLeftClick="openSearchBar"
-                    :right-icon-text="$store.state.user.isTopAdmin ? '创建账号': null"
+                    :right-icon="$store.state.user.isTopAdmin ? 'icon-add': null"
                     @handleRightClick="$MKOPush('/add_user')">
 
         </mko-header>

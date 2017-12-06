@@ -24,6 +24,7 @@
     let _totalCount = [0, 0, 0];   //总数
     let _scoTop = 0;
     let _reqCount = 0;
+    let _groupId = '';
     export default {
         props: ['value', 'cur'],
         data() {
@@ -56,7 +57,7 @@
         activated() {
             window.addEventListener('scroll', this.handleScroll);
 
-            if (this.enter) {
+            if (this.enter || (_groupId != this.$store.getters.groupId)) {
                 scrollTo(0, 0);
                 this.bottomAllLoaded = false;
                 _page = 1;
@@ -119,6 +120,7 @@
                         }
                         //                        this.sortList();
                         this.enter = false;
+                        _groupId = this.$store.getters.groupId;
                     }
 
                 });

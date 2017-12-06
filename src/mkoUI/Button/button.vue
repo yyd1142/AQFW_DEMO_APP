@@ -1,6 +1,6 @@
 <template>
     <div class="mko-button" :class="[type?type:'primary',size,className]" :style="sizeStyle" @click="click">
-        <div class="button">
+        <div class="button abs-all-middle">
             <span class="icon" :class="icon" v-show="icon"></span>
             <span class="text">
         <slot>{{text}}</slot>
@@ -61,7 +61,7 @@
     @import "../../config.less";
 
     .mko-button {
-        display: table;
+        /*display: table;*/
         position: relative;
         width: 100px;
         height: 40px;
@@ -69,6 +69,7 @@
         line-height: 16px;
         font-size: 16px;
         letter-spacing: 0;
+        text-align: center;
         color: #fff;
         //禁用
         &.disabled {
@@ -81,6 +82,7 @@
         //size
         &.flex {
             flex: 1;
+            -webkit-flex: 1;
         }
         &.small {
             /*width: 80px;*/
@@ -92,7 +94,7 @@
             margin: 0 auto;
             width: 92.8%;
             height: 40px;
-            &.no-radius{
+            &.no-radius {
                 width: 100%;
             }
         }
@@ -154,9 +156,10 @@
             }
         }
         .button {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
+            /*display: table-cell;*/
+            /*vertical-align: middle;*/
+            /*text-align: CENTER;*/
+            min-width: 100px;
             .icon {
                 display: inline-block;
             }

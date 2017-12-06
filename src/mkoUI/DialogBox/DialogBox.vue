@@ -9,18 +9,11 @@
                 <div class="content text-center" :class="overflow?'flow':null" ref="content" v-html="msg"></div>
                 <div class="mask" v-if="overflow"></div>
             </div>
-            <div class="footer">
-                <div class="btn cancel" @click="close" v-if="cancelBtn">
-                    <div class="line-middle">
-                        <span class="line-middle-text">{{cancelText}}</span>
-                    </div>
-                </div>
-                <div class="btn" @click="confirm" v-if="confirmBtn===undefined||confirmBtn===true">
-                    <div class="line-middle">
-                        <span class="line-middle-text">{{confirmText}}</span>
-                    </div>
-                </div>
-                <!--<mko-button :text="confirmText || '确定'" type="primary" size="normal" @click="confirm"></mko-button>-->
+            <div class="footer" :class="cancelBtn?'double-btn':''">
+                <mko-button class="btn" size="flex" plain @click="close" v-if="cancelBtn">{{cancelText}}</mko-button>
+                <mko-button class="btn" :size="cancelBtn?'flex':'large'" @click="confirm" v-if="confirmBtn===undefined||confirmBtn===true">
+                    {{confirmText}}
+                </mko-button>
             </div>
         </div>
     </div>
@@ -69,6 +62,9 @@
             scrollTo(0, this.pageScrollTop);
         },
         methods: {
+            fr(val){
+                return val !== undefined && val !== false
+            },
             setBackButton() {
                 window.mkoBackButton = {};
                 window.mkoBackButton.bInputData = true;
@@ -139,24 +135,14 @@
             }
             .footer {
                 display: flex;
-                padding: 14px;
+                padding: 14px 0;
+                &.double-btn {
+                    padding: 14px;
+                }
                 .btn {
-                    flex: 1;
-                    width: 100%;
-                    height: 40px;
-                    border-radius: 4px;
-                    font-size: 16px;
-                    letter-spacing: 0;
-                    background-color: @mainBlue;
-                    color: #fff;
                     & + .btn {
                         margin-left: 14px;
                     }
-                }
-                .cancel {
-                    border: 1px solid @mainBlue;
-                    background-color: #fff;
-                    color: @mainBlue;
                 }
             }
         }

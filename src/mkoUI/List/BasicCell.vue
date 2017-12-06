@@ -6,7 +6,7 @@
                     <span class="icon" :class="icon"></span>
                 </slot>
             </div>
-            <div class="title fl no-overflow" :class="{'main-left':main=='left'}">{{title}}</div>
+            <div class="title fl no-overflow" :class="{'main-left':main=='left'}" v-html="title"></div>
             <span class="link-arrow" :class="linkIcon||(fr(active)?'icon-arrow-right':'icon-link-arrow')" v-if="fr(isLink)"></span>
             <div class="value fr no-overflow" :class="{'main-left':main=='left','is-link':fr(isLink),'is-active':fr(active)}">
                 <slot>

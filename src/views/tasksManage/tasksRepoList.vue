@@ -6,7 +6,7 @@
                 <mko-double-cell :title="t.taskName"
                                  :label="`${t.executorName||'--'} ${formatDate(t.actualEndTime||t.actualStartTime,'YYYY-MM-DD')}`"
                                  @click="goInfo(t.taskId, t.type)" is-link v-for="t in list">
-                    <span class="no-overflow">{{t.endTime | formatDate}}</span>
+                    <!--<span class="no-overflow">{{t.endTime | formatDate}}</span>-->
                     <!--<br><span class="no-overflow">设备故障：1</span>-->
                 </mko-double-cell>
             </div>
