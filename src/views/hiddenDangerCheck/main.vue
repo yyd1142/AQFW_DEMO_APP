@@ -3,43 +3,23 @@
         <div class="placeholder-item"></div>
         <mko-header title="风险上报" left-icon="icon-back" @handleLeftClick="back"></mko-header>
         <div class="page-wrap hdc-main-wrap" v-show="onPage==='main'">
-            <div class="info-wrap">
-                <div class="cell">
-                    <div class="title">风险单位</div>
-                    <div class="value">{{ userData.dwName }}</div>
-                </div>
 
-                <div class="cell">
-                    <div class="title">风险位置</div>
-                    <div class="value" :class="{'cell-btn':!formData.yhPosition}" @click="changePage('selPosition')">
-                        {{formData.yhPosition || '选择'}}
-                        <i class="icon iconfont icon-youjiantou"></i>
-                    </div>
-                </div>
-                <div class="yhk-cell" v-show="formData.yhPosition">
-                    <span class="title">详细地址</span>
-                    <input type="text" class="yhk-input" v-model="formData.yhPositionDetail" @input="onInputData" />
-                </div>
-                <!--<mt-cell title="协同部门">
-                                          <span :class="{'cell-btn':!formData.xtSupervise}" @click="onXtPage">{{formData.xtDWName||'选择'}}<i
-                                                class="icon iconfont icon-youjiantou"></i></span>
-                                        </mt-cell>-->
-                <!--<mt-cell class="cell-input" title="处置期限">-->
-                <!--<span :class="{'cell-btn':!formData.limitedTime}" @click="ctrlDatePicker">-->
-                <!--{{formatDate(formData.limitedTime)||'选择'}}<i class="icon iconfont icon-youjiantou"></i>-->
-                <!--</span>-->
-                <!--</mt-cell>-->
+            <div class="data-wrap">
+                <mko-cell title="风险单位" :val="userData.dwName"></mko-cell>
+                <mko-form-cell title="风险位置" :val="formData.yhPosition"
+                               type="sel" edit @click="changePage('selPosition')"></mko-form-cell>
+                <mko-form-cell title="详细地址" v-model="formData.yhPositionDetail"
+                               type="text" edit @input="onInputData" v-show="formData.yhPosition"></mko-form-cell>
             </div>
             <div class="content-wrap">
-                <div class="desc">
-                    <textarea v-model="formData.yhDesc" placeholder="请输入风险描述" @input="onInputData"></textarea>
-                </div>
+                <mko-textarea v-model="formData.yhDesc" type="outer" placeholder="请输入风险描述" @input="onInputData"></mko-textarea>
                 <photo-box :photo-list="photoList" :max='8' @addPhotoEvent="sheetShow=true" @removePhotoEvent="removePhoto()"></photo-box>
             </div>
         </div>
         <div class="footer-wrap" v-show="onPage==='main'">
-            <mt-button class="btn" size="large" :disabled="!formValid" @click="postHideDanger">上报风险</mt-button>
+            <mko-button type="danger" size="large" :disabled="!formValid" no-radius @click="postHideDanger">确认故障</mko-button>
         </div>
+
         <!--选择页面-->
         <sel-position :dwId="groupId" @sel="selPosition" @changePage="backMainPage" v-if="onPage==='selPosition'"></sel-position>
         <!--<sel-level @changePage="onPage='main'" v-show="onPage==='selLevel'"></sel-level>-->
@@ -294,7 +274,7 @@
                 // doUploadSuccess('');
                 this.$getMobileNetworkType(function (result) {
                     if (result == "unknown") {
-                        self.$MKODialog({msg:'当前网络不可用，请确保网络正常...'});
+                        self.$MKODialog({msg: '当前网络不可用，请确保网络正常...'});
                         return;
                     } else if (result == "3G/4G") {
                         let opts = {
@@ -389,101 +369,11 @@
 
     .hdc-main-wrap {
         padding-bottom: 0;
-        .info-wrap {
-            margin-bottom: 14px;
-            .cell {
-                padding: 0 14px;
-                height: 44px;
-                font-size: 14px;
-                background: #fff;
-                position: relative;
-                display: table;
-                width: 100%;
-                .border-top(@borderGray);
-                .title {
-                    margin: 0 auto 0 0;
-                    display: table-cell;
-                    vertical-align: middle;
-                    line-height: 44px;
-                }
-                .value {
-                    text-align: right;
-                    position: absolute;
-                    right: 14px;
-                    top: 0;
-                    bottom: 0;
-                    height: 18px;
-                    margin: auto;
-                }
-                .icon {
-                    font-size: 14px;
-                    margin-left: 5px;
-                    color: #E3E6E7;
-                }
-                .cell-btn {
-                    color: @textBlue;
-                    .icon {
-                        color: @textBlue;
-                    }
-                }
-            }
-        }
         .content-wrap {
-            margin-top: 14px;
-            padding: 11px 0 16px;
-            background: @bgWhite;
-            .desc {
-                margin-bottom: 14px;
-                padding: 0 14px;
-                textarea {
-                    width: 100%;
-                    height: 104px;
-                    font-size: 14px;
-                    display: block;
-                    box-sizing: border-box;
-                    border: 1px solid rgba(216, 216, 216, 0.48);
-                    border-radius: 3px;
-                    outline: none;
-                }
-                .mint-field {
-                    background-image: none;
-                    .mint-cell-wrapper {
-                        background-image: none;
-                        .mint-cell-value {
-                            textarea {
-                                min-height: 100px;
-                            }
-                        }
-                    }
-                }
+            margin-top: 10px;
+            .mko-text-area {
+                padding-bottom: 0;
             }
-        }
-    }
-
-    .yhk-cell {
-        position: relative;
-        width: 100%;
-        height: 44px;
-        background-color: #ffffff;
-        padding: 0 0 0 14px;
-        border-top: 1px solid #ececec;
-        display: table;
-        .title {
-            width: 30%;
-            font-size: 14px;
-            color: #050505;
-            display: table-cell;
-            vertical-align: middle;
-            line-height: 44px;
-        }
-        .yhk-input {
-            width: 70vw - 14px;
-            border-style: none;
-            height: 40px;
-            float: right;
-            font-size: 14px;
-            TEXT-ALIGN: RIGHT;
-            PADDING-RIGHT: 14PX;
         }
     }
 
@@ -493,13 +383,5 @@
         position: fixed;
         z-index: 20;
         margin: AUTO;
-        .btn {
-            background: @redColor;
-            color: @bgWhite;
-            &.is-disabled {
-                background: lighten(@redColor, 10%);
-                opacity: 1;
-            }
-        }
     }
 </style>

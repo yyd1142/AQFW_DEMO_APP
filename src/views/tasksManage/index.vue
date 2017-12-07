@@ -6,7 +6,7 @@
             <div>
                 <mko-double-cell title="任务执行报告" :label="`共完成${repoCount}个任务，${repoCount}个未审核`" is-link
                                  @click="$MKOPush('/tasks_repo')">
-                    <span class="warning">{{repoCount}}</span>
+                    <span :class="repoCount?'text-warning':''">{{repoCount}}</span>
                 </mko-double-cell>
             </div>
 
@@ -16,7 +16,7 @@
                                   v-for="(item,i) in tabItems"></mko-tab-item>
                 </mko-nav-bar>
                 <mko-cell :title="s.name" main="left" :is-link="i<2" @click="go(i)" v-for="(s,i) in taskSurvey" v-if="tabI == 0">
-                    <span class="text-blue" v-if="i<2">{{s.count}}</span>
+                    <span :class="s.count?'text-blue':''" v-if="i<2">{{s.count}}</span>
                 </mko-cell>
                 <mko-cell :title="s.name" main="left" is-link v-for="(s,i) in ajTaskSurvey" v-if="tabI == 1">
                     <span class="text-blue"></span>

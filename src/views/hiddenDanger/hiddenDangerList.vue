@@ -4,26 +4,15 @@
         <mko-header title="风险管理" left-icon="icon-back" right-icon="icon-add" @handleLeftClick="back" @handleRightClick="goHiddenDangerCheck"></mko-header>
         <res-error v-if="resError"></res-error>
         <div class="page-wrap hidden-danger-page-wrap" v-show="!resError" id="pageWrapper">
-            <nav class="hd-tab-wrap">
-                <div class="hd-tab-item" v-for="(item, index) in tabs" @click="tab(item, index)">
-                    <span :class="item.actived" v-text="item.text"></span>
-                </div>
-            </nav>
+            <mko-nav-bar>
+                <mko-tab-item :label="item.text" :activied="item.actived" @handleTabClick="tab(item, index)"
+                              v-for="(item, index) in tabs"></mko-tab-item>
+            </mko-nav-bar>
             <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="bottomAllLoaded" ref="loadmore" :auto-fill="autoFill">
                 <ul class="notice-table-view">
                     <mko-double-cell :title="item.yhDesc || '暂无风险描述'" :val="item.createDate | formatDate" is-link
                                      :label="`上报人：${item.employeeName || '暂无'}（${item.sbDWName || '暂无上报单位'}）`"
                                      v-for="item in hiddenDangers" @click="linkPath('/hidden_danger_info/' + item.id)"></mko-double-cell>
-                    <!--<li class="notice-table-cell" v-for="item in hiddenDangers" @click="linkPath('/hidden_danger_info/' + item.id)">-->
-                        <!--<a>-->
-                            <!--<div class="title">-->
-                                <!--&lt;!&ndash;<i class="not-read-item"  v-if="!item.isRead"></i>&ndash;&gt;-->
-                                <!--{{item.yhDesc || '暂无风险描述'}}-->
-                            <!--</div>-->
-                            <!--<div class="from">上报人：{{item.employeeName || '暂无'}}（{{item.sbDWName || '暂无上报单位'}}）</div>-->
-                            <!--<div class="time">{{item.createDate | formatDate}}</div>-->
-                        <!--</a>-->
-                    <!--</li>-->
                 </ul>
             </mt-loadmore>
         </div>
@@ -36,38 +25,14 @@
 <style lang="less" rel="stylesheet/less" scoped>
     @import "../../config.less";
 
-    .hd-tab-wrap {
-        width: 100%;
-        height: 40px;
-        background-color: #ffffff;
-        margin: 40px + @headerTop auto 0 auto;
-        .hd-tab-item {
-            width: 33.333%;
-            font-size: 14px;
-            color: #333333;
-            float: left;
-            .actived {
-                color: @blueColor;
-                border-bottom: 2px solid @blueColor;
-            }
-            span {
-                width: 44px;
-                text-align: center;
-                display: block;
-                height: 20px;
-                margin: 12px auto 0 auto;
-            }
-        }
-    }
-
     .hidden-danger-page-wrap {
         padding-bottom: 0;
-        margin-top: @headerTop;
+        margin-top: @headerTop + @headerHeight;
     }
 
     .notice-table-view {
         width: 100%;
-        margin: 15px auto 0 auto;
+        margin: 0 auto;
         .notice-table-cell {
             width: 100%;
             height: 50px;

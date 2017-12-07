@@ -1,6 +1,6 @@
 <template>
     <!--输入框组件-->
-    <div class="mko-text-area">
+    <div class="mko-text-area" :class="type">
         <div class="title" v-if="title">{{title}}</div>
         <div class="body" :class="{'has-limit':limitCount}">
             <textarea class="text-area" :placeholder="placeholder||''" v-model="areaValue"></textarea>
@@ -11,7 +11,7 @@
 
 <script>
     export default {
-        props: ['value', 'title', 'placeholder', 'limit-count'],
+        props: ['value', 'title', 'placeholder', 'limit-count','type'],
         data() {
             return {
                 areaValue: ''
@@ -47,6 +47,12 @@
     .mko-text-area {
         background-color: @baseBG02;
         padding: 14px;
+        &.outer{
+            background-color: #fff;
+        }
+        &.inset{
+            background-color: @baseBG02;
+        }
         .title {
             margin-bottom: 14px;
             font-size: 14px;

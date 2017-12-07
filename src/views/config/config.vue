@@ -20,7 +20,7 @@
     @import "../../config.less";
 
     .config-page-wrap {
-        padding-top: 14px;
+        padding-top: 10px;
         .cell-wrap {
             margin-bottom: 14px;
         }

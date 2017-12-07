@@ -2,7 +2,7 @@
     <div>
         <div class="placeholder-item"></div>
         <mko-header title="单位信息" left-icon="icon-back" @handleLeftClick="back"></mko-header>
-        <div class="page-wrap dw-data-wrap" v-if="!notData">
+        <div class="page-wrap" v-if="!notData">
 
             <mko-edit-card edit-disabled>
                 <mko-form-cell title="账号信息" :val="unitItem.unit.userName"></mko-form-cell>

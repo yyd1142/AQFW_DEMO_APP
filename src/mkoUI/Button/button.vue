@@ -156,10 +156,11 @@
             }
         }
         .button {
-            /*display: table-cell;*/
-            /*vertical-align: middle;*/
-            /*text-align: CENTER;*/
-            min-width: 100px;
+            //display: table-cell;
+            //vertical-align: middle;
+            //text-align: CENTER;
+            /*min-width: 100px;*/
+            width: 100%;
             .icon {
                 display: inline-block;
             }

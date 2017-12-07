@@ -299,6 +299,5 @@
     @import "../../config.less";
 
     .tasks-repo-list-wrap {
-        margin-top: 80px;
     }
 </style>

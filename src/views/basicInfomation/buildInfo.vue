@@ -2,7 +2,7 @@
     <div>
         <div class="placeholder-item"></div>
         <mko-header :title="jzItem.jzName||''" left-icon="icon-back" @handleLeftClick="back"></mko-header>
-        <div class="page-wrap dw-data-wrap">
+        <div class="page-wrap">
             <div class="com-data-wrap card" :class="{'is-edit':isEdit.base}">
                 <div class="title-wrap">
                     <div class="title fl">基础信息</div>

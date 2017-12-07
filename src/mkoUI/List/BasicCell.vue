@@ -144,6 +144,7 @@
                 }
                 &.is-link {
                     padding-right: 12px;
+                    color: @baseText02;
                 }
                 &.is-active, .phone {
                     color: @mainBlue;

@@ -10,28 +10,31 @@
         </mko-header>
         <res-error v-if="resError"></res-error>
         <div class="page-wrap address-wrap" v-show="!resError">
-            <mt-navbar class="navbar-wrap" v-model="addressClass" fixed>
-                <mt-tab-item id="1" @click="getData">内部</mt-tab-item>
-                <mt-tab-item id="2">外部</mt-tab-item>
-            </mt-navbar>
+            <!--<mt-navbar class="navbar-wrap" v-model="addressClass" fixed>-->
+            <!--<mt-tab-item id="1" @click="getData">内部</mt-tab-item>-->
+            <!--<mt-tab-item id="2">外部</mt-tab-item>-->
+            <!--</mt-navbar>-->
+
+            <mko-light-nav-bar :tabs="tabs" @active="getActiveTab"></mko-light-nav-bar>
+
             <div class="search-bar-wrap" v-if="isSearchBar">
                 <div class="search-hidden-wrap" @click="isSearchBar = false;"></div>
                 <search-bar v-model="searchValue" @onFocus="listenInput" @onCancelSearch="closeSearchBar" @onClearSearch="clearSearch"></search-bar>
             </div>
 
             <div class="address-list" ref="wrapper" :style="{ height: wrapperHeight - 50 + 'px'}" :class="isSearchBar ? 'has-searchbar-addresslist' : ''">
-                <mt-tab-container v-model="addressClass">
-                    <mt-tab-container-item id="1">
-                        <mko-cell :title="cell.employeeName" :val="cell.phone"
-                                  @click="goInfo('/address_detail/'+cell.id)" v-for="cell in addressShowList"></mko-cell>
-                        <no-data v-if="addressShowList.length <= 0"></no-data>
-                    </mt-tab-container-item>
-                    <mt-tab-container-item id="2">
-                        <div :style="{ height: wrapperHeight - 50 + 'px'}">
-                            <no-data></no-data>
-                        </div>
-                    </mt-tab-container-item>
-                </mt-tab-container>
+                <div v-show="activeTab==1">
+
+                    <mko-cell :title="cell.employeeName" :val="cell.phone" is-link
+                              @click="goInfo('/address_detail/'+cell.id)" v-for="cell in addressShowList"></mko-cell>
+                    <no-data v-if="addressShowList.length <= 0"></no-data>
+                </div>
+                <div v-show="activeTab==2">
+                    <div :style="{ height: wrapperHeight - 50 + 'px'}">
+                        <no-data></no-data>
+                    </div>
+                </div>
+
             </div>
         </div>
         <tabs :class="{'address-tabs':!fixedTabs}" actived="mail"></tabs>
@@ -51,23 +54,27 @@
                 resError: false,
                 noData: false,
                 //config
-                addressClass: "1",
                 searchValue: "",
                 wrapperHeight: 0,
                 fixedTabs: true,
                 //数据
                 addressList: [],
                 addressShowList: [],
-                isSearchBar: false
+                isSearchBar: false,
+                tabs: [
+                    {id: 1, text: '内部', methods: this.getData, default: true},
+                    {id: 2, text: '外部', methods: '',}
+                ],
+                activeTab: 1,
             };
         },
         watch: {
             searchValue: function () {
                 this.searchData();
             },
-            addressClass: function (val) {
-                if (val === '1') this.getData()
-            },
+//            addressClass: function (val) {
+//                if (val === '1') this.getData()
+//            },
             isSearchBar: function (val) {
                 if (!val) {
                     window.mkoBackButton.bInputData = false;
@@ -84,6 +91,9 @@
             });
         },
         methods: {
+            getActiveTab(id){
+                this.activeTab = id;
+            },
             listenInput(val) {
                 this.fixedTabs = !val;
                 if (!val) {
@@ -209,50 +219,8 @@
             }
         }
 
-        .navbar-wrap {
-            top: @headerHeight + @headerTop;
-            z-index: 10;
-            background: #FFFFFF;
-            &:after {
-                content: '';
-                position: absolute;
-                left: 0;
-                bottom: -1px;
-                width: 100%;
-                height: 1px;
-                box-sizing: border-box;
-                transform: scale(1, .5);
-                -webkit-transform: scale(1, .5);
-                transform-origin: 0 0;
-                -webkit-transform-origin: 0 0;
-                border-bottom: 1px solid @baseBorder;
-            }
-            .mint-tab-item {
-                padding: 10px 0;
-                height: 20px;
-                font-size: 14px;
-                &.is-selected {
-                    position: relative;
-                    border-bottom: 0;
-                    color: @textBlue;
-                    .mint-tab-item-label:after {
-                        content: "";
-                        position: absolute;
-                        width: 29px;
-                        bottom: 7px;
-                        left: 50%;
-                        transform: translate(-50%, 0);
-                        -webkit-transform: translate(-50%, 0);
-                        border-bottom: 2px solid @textBlue;
-                    }
-                }
-                .mint-tab-item-label {
-                    line-height: 20px;
-                }
-            }
-        }
         .address-list {
-            margin-top: 40px;
+            /*margin-top: 40px;*/
             &.has-searchbar-addresslist {
                 margin: 80px 0 0 0;
             }

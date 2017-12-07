@@ -90,6 +90,9 @@
                         background: url(/static/icons/resource.png) -568px -86px no-repeat;
                         background-size: @bg-size;
                     }
+                    :active{
+                        opacity: 0.5;
+                    }
                 }
                 .text {
                     margin-top: 2px;

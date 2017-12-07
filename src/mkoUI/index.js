@@ -3,6 +3,7 @@
  */
 import Vue from 'vue'
 import MkoInfoBar from './Bar/InfoBar.vue'
+import MkoLightNavBar from './Bar/LightNavBar.vue'
 import MkoButton from './Button/Button.vue'
 import MkoCheckBox from './Button/CheckBox.vue'
 import MkoNumberButton from './Button/NumberButton.vue'
@@ -11,7 +12,7 @@ import MkoDialogBox from './DialogBox/index.js'
 import MkoFormCell from './Form/FormCell.vue'
 import MkoSelectBox from './Form/SelectBox.vue'
 import MkoTextarea from './Form/Textarea.vue'
-import MkoCell from './List/BasicCell.vue'
+import MkoCell from './List/basicCell.vue'
 import MkoDoubleCell from './List/DoubleCell.vue'
 import MkoMenuHeader from './Menu/MenuHeader.vue'
 import MkoMenuCell from './Menu/MenuCell.vue'
@@ -27,6 +28,7 @@ Vue.use(MkoDialogBox);
 
 export {
     MkoInfoBar,
+    MkoLightNavBar,
     MkoButton,
     MkoCheckBox,
     MkoNumberButton,
@@ -55,6 +57,7 @@ MkoUI.installed = false;
 MkoUI.install = function (Vue, options) {
 
     Vue.component('MkoInfoBar', MkoInfoBar);
+    Vue.component('MkoLightNavBar', MkoLightNavBar);
     Vue.component('MkoButton', MkoButton);
     Vue.component('MkoCheckBox', MkoCheckBox);
     Vue.component('MkoNumberButton', MkoNumberButton);

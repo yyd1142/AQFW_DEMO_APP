@@ -22,6 +22,7 @@
             <slot v-if="isEdit&&type!='sel'">
                 <input class="ipt fr" type="text" :placeholder="holderText||'请完善信息'" v-model="iptData" @focus="focus" @blur="blur" v-if="isEdit&&type=='text'">
                 <input class="ipt fr" type="number" :placeholder="holderText||'请完善信息'" v-model.number="iptData" @focus="focus" @blur="blur" v-if="isEdit&&type=='number'">
+                <input class="ipt fr" type="password" :placeholder="holderText||'请完善信息'" v-model="iptData" @focus="focus" @blur="blur" v-if="isEdit&&type=='password'">
             </slot>
 
             <!--自定义按钮-->
@@ -32,7 +33,10 @@
 
 <script>
     export default {
-        props: ['title', 'val', 'value', 'is-link', 'phone', 'non-text', 'required', 'edit', 'type', 'holder-text'],
+        props: {
+            title: {}, val: {}, value: {}, isLink: {}, phone: {}, nonText: {}, required: {}, edit: {}, holderText: {},
+            type: {String, default: 'text'},
+        },
         data () {
             return {
                 iptData: ''

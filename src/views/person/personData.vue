@@ -2,7 +2,9 @@
     <div>
         <div class="placeholder-item"></div>
         <mko-header title="个人资料" left-icon="icon-back" @handleLeftClick="back" :right-icon-text="isEdit ? '取消' : '编辑'" @handleRightClick="editInfo">
-            <div class="header-person-edit-btn" :class="isValidate?'':'disabled'" slot="custom" @click="saveInfo" v-if="isEdit">保存</div>
+            <div class="header-person-edit-btn" :class="isValidate?'':'disabled'" slot="custom" @click="saveInfo" v-if="isEdit">
+                保存
+            </div>
         </mko-header>
         <res-error v-if="resError"></res-error>
         <div class="page-wrap person-data-wrap" v-show="!resError">
@@ -97,7 +99,7 @@
                 formData: {
                     employeeName: '',
                     phone: '',
-                    IDNumber:''
+                    IDNumber: ''
                 },
                 genderList: [{flex: 1, values: ['男', '女']}],
                 jobTitleList: conf.jobTitleList,
@@ -376,7 +378,7 @@
         line-height: @headerHeight;
         font-size: 16px;
         z-index: 10;
-        &.disabled{
+        &.disabled {
             opacity: 0.5;
         }
     }
@@ -386,9 +388,10 @@
     }
 
     .person-data-wrap {
+        padding-top: 10px;
         padding-bottom: 0;
-        .data-wrap{
-            margin-bottom:14px;
+        .data-wrap {
+            margin-bottom: 10px;
             .avatar-wrap {
                 /*margin: 10px 0;*/
                 width: 44px;

@@ -6,10 +6,7 @@
             <div class="title">一键创建</div>
             <div class="contact">根据你日常巡查习惯进行创建巡查点与设备，<br>请到达巡查点后点击下方拍照按钮添加巡查点，<br>未指定执行人员的巡查点所有人均可执行。</div>
             <div class="photo-btn-wrap mof-clear" @click="takePhoto">
-                <div class="bg-3 abs-all-middle"></div>
-                <div class="bg-2 abs-all-middle"></div>
-                <div class="bg-1 abs-all-middle"></div>
-                <div class="bg-0 abs-all-middle"></div>
+                <div class="bg icon-camera-radar"></div>
                 <div class="icon-camera abs-all-middle"></div>
             </div>
             <div class="next-btn" @click="goAddInfo">跳过</div>
@@ -118,29 +115,27 @@
             margin: 100px auto 0;
             width: 240px;
             height: 240px;
-            [class~="bg"], :not(:last-child) {
-                border-radius: 50%;
-                background-color: @mainBlue;
+            .bg {
+                animation: rotate 3s linear infinite;
+                -moz-animation: rotate 3s linear infinite;
+                -webkit-animation: rotate 3s linear infinite;
+                -o-animation: rotate 3s linear infinite;
             }
-            .bg-0 {
-                width: 110px;
-                height: 110px;
-
-            }
-            .bg-1 {
-                width: 130px;
-                height: 130px;
-                opacity: 0.5;
-            }
-            .bg-2 {
-                width: 180px;
-                height: 180px;
-                opacity: 0.1;
-            }
-            .bg-3 {
-                width: 240px;
-                height: 240px;
-                opacity: 0.2;
+            @keyframes rotate {
+                from {
+                    transform: rotate(0deg);
+                    -ms-transform: rotate(0deg); /* IE 9 */
+                    -moz-transform: rotate(0deg); /* Firefox */
+                    -webkit-transform: rotate(0deg); /* Safari 和 Chrome */
+                    -o-transform: rotate(0deg); /* Opera */
+                }
+                to {
+                    transform: rotate(360deg);
+                    -ms-transform:rotate(360deg); 	/* IE 9 */
+                    -moz-transform:rotate(360deg); 	/* Firefox */
+                    -webkit-transform:rotate(360deg); /* Safari 和 Chrome */
+                    -o-transform:rotate(360deg); 	/* Opera */
+                }
             }
         }
         .next-btn {

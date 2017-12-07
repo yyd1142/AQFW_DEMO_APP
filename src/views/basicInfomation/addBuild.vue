@@ -2,7 +2,7 @@
     <div>
         <div class="placeholder-item"></div>
         <mko-header title="新增建筑信息" left-icon="icon-back" right-icon-text="保存" @handleLeftClick="back" @handleRightClick="saveInfo" :right-font-color="{'disabled-btn':!isValidate}"></mko-header>
-        <div class="page-wrap dw-data-wrap">
+        <div class="page-wrap">
             <div class="com-data-wrap card is-edit">
                 <div class="title-wrap">
                     <div class="title fl">基础信息</div>

@@ -39,7 +39,7 @@ Vue.filter('xunchaDeviceStatusFilter', value => {
         return "处置中";
     } else if (value == 6) {
         return "已排除";
-    } else if(value == 5) {
+    } else if (value == 5) {
         return "风险";
     }
 })
@@ -57,10 +57,12 @@ Vue.filter('xunchaDeviceStatusStyleFilter', value => {
 })
 
 Vue.filter('deviceStatusIconFilter', value => {
-    if (value == 2 || value == 3 || value == 4 || value == 5 || value == 7) {
+    if (value == 2 || value == 3 || value == 5 || value == 7) {
         return "icon-device-danger";
     } else if (value == 6 || value == 1) {
         return "icon-device-succ";
+    } else if (value == 4) {
+        return "icon-device-gray"
     } else if (value == 0) {
         return "icon-device-warn";
     } else {
@@ -69,17 +71,18 @@ Vue.filter('deviceStatusIconFilter', value => {
 })
 
 Vue.filter('deviceStatusColorFilter', value => {
-    if (value == 2 || value == 3 || value == 4 || value == 5 || value == 7) {
+    if (value == 2 || value == 3 || value == 5 || value == 7) {
         return "text-danger";
     } else if (value == 6 || value == 1) {
         return "text-success";
+    } else if (value == 4) {
+        return "base-text-02"
     } else if (value == 0) {
         return "text-warn";
     } else {
         return "text-success";
     }
 })
-
 
 
 Vue.filter('CheckPointPositionStatusFilter', (value) => {
@@ -339,7 +342,7 @@ Vue.filter('frequencyFr', function (value) {
       4://半个月,15号分界线  5://按月,月底分界线
      6://按半年,6月底分界线  7://按年
      */
-    if(!value){
+    if (!value) {
         return '--'
     }
     let _l = {}

@@ -124,6 +124,7 @@
     @import "../../config.less";
 
     .person-page-wrap {
+        padding-top: 10px;
         padding-bottom: 0;
         .data {
             .mko-double-cell {

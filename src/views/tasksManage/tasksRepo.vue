@@ -10,10 +10,8 @@
                     <div class="badge" :class="{'active':tabI==t.value}" v-if="t.value!=6">{{t.repoCount}}</div>
                 </mko-tab-item>
             </mko-nav-bar>
-            <mt-navbar class="navbar-wrap" v-model="taskType" fixed>
-                <mt-tab-item id="2">巡查</mt-tab-item>
-                <mt-tab-item id="1">值班</mt-tab-item>
-            </mt-navbar>
+            <mko-light-nav-bar :tabs="tabs" @active="getActiveTab"></mko-light-nav-bar>
+
             <repo-list :status="5" :type="2" :cur="[tabI,taskType]" v-model="enter" @reqSucc="getRepoData($event,0)" v-show="tabI==5&&taskType==2"></repo-list>
             <repo-list :status="5" :type="1" :cur="[tabI,taskType]" v-model="enter" @reqSucc="getRepoData($event,0)" v-show="tabI==5&&taskType==1"></repo-list>
             <repo-list :status="6" :type="2" :cur="[tabI,taskType]" v-model="enter" @reqSucc="getRepoData($event,1)" v-show="tabI==6&&taskType==2"></repo-list>
@@ -37,7 +35,11 @@
                     {text: '已审核', repoCount: 0, value: 6},
                     {text: '已超期', repoCount: 0, value: 7},
                 ],
-                taskType: '2',
+                tabs: [
+                    {id: 2, text: '巡查', default: true},
+                    {id: 1, text: '值班',}
+                ],
+                taskType: 2,
             }
         },
         watch: {},
@@ -58,6 +60,9 @@
         destroyed(){
         },
         methods: {
+            getActiveTab(id){
+                this.taskType = id;
+            },
             getRepoData(count, index){
                 this.tabItems[index].repoCount += count;
             },
@@ -120,34 +125,9 @@
                 }
             }
         }
-        .navbar-wrap {
-            top: @headerHeight + @headerTop + 40px;
-            z-index: 24;
-            background: #FFFFFF;
-            box-shadow: 0 1px 0 0 @baseBorder;
-            .mint-tab-item {
-                padding: 10px 0;
-                height: 20px;
-                font-size: 14px;
-                &.is-selected {
-                    position: relative;
-                    border-bottom: 0;
-                    color: @mainBlue;
-                    .mint-tab-item-label:after {
-                        content: "";
-                        position: absolute;
-                        width: 29px;
-                        bottom: 7px;
-                        left: 50%;
-                        transform: translate(-50%, 0);
-                        -webkit-transform: translate(-50%, 0);
-                        border-bottom: 2px solid @mainBlue;
-                    }
-                }
-                .mint-tab-item-label {
-                    line-height: 20px;
-                }
-            }
+        .mko-light-nav-bar-wrap {
+            margin-top: @headerHeight+@headerTop;
+            margin-bottom: 10px;
         }
 
     }
