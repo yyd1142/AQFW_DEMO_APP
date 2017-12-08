@@ -15,7 +15,7 @@
             <!--<mt-tab-item id="2">外部</mt-tab-item>-->
             <!--</mt-navbar>-->
 
-            <mko-light-nav-bar :tabs="tabs" @active="getActiveTab"></mko-light-nav-bar>
+            <mko-light-nav-bar :tabs="tabs" v-model="activeTab"></mko-light-nav-bar>
 
             <div class="search-bar-wrap" v-if="isSearchBar">
                 <div class="search-hidden-wrap" @click="isSearchBar = false;"></div>
@@ -91,9 +91,6 @@
             });
         },
         methods: {
-            getActiveTab(id){
-                this.activeTab = id;
-            },
             listenInput(val) {
                 this.fixedTabs = !val;
                 if (!val) {
@@ -220,9 +217,9 @@
         }
 
         .address-list {
-            /*margin-top: 40px;*/
+            margin-top: 10px;
             &.has-searchbar-addresslist {
-                margin: 80px 0 0 0;
+                margin-top: 44px;
             }
             .address-cell {
                 width: 100%;

@@ -10,7 +10,7 @@
                     <div class="badge" :class="{'active':tabI==t.value}" v-if="t.value!=6">{{t.repoCount}}</div>
                 </mko-tab-item>
             </mko-nav-bar>
-            <mko-light-nav-bar :tabs="tabs" @active="getActiveTab"></mko-light-nav-bar>
+            <mko-light-nav-bar :tabs="tabs" v-model="taskType"></mko-light-nav-bar>
 
             <repo-list :status="5" :type="2" :cur="[tabI,taskType]" v-model="enter" @reqSucc="getRepoData($event,0)" v-show="tabI==5&&taskType==2"></repo-list>
             <repo-list :status="5" :type="1" :cur="[tabI,taskType]" v-model="enter" @reqSucc="getRepoData($event,0)" v-show="tabI==5&&taskType==1"></repo-list>

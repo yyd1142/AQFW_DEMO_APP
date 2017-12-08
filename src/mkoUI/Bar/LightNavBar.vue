@@ -10,24 +10,26 @@
 <script>
     export default {
         props: {
-            tabs: {type: Array}
+            tabs: {type: Array},
+            value: {}
         },
         data () {
             return {
                 active: 0,
             }
         },
-        watch: {},
+        watch: {
+            value(val){
+                this.active = val;
+            },
+            active(val){
+                this.$emit('input', val);
+            }
+        },
         computed: {},
         mounted() {
-            if (this.tabs && this.tabs instanceof Array) {
-                for (let item of this.tabs) {
-                    if (item.default) {
-                        this.active = item.id;
-                        return;
-                    }
-                }
-                this.active = this.tabs[0].id || 0;
+            if (this.value || this.value === 0) {
+                this.active = this.value;
             }
         },
         activated(){
