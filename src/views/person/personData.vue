@@ -13,7 +13,7 @@
                     <div :style="{ height: wrapperHeight + 'px'}">
                         <div class="data-wrap">
 
-                            <mko-double-cell title="头像">
+                            <mko-double-cell class="avatar-cell-wrap" title="头像">
                                 <div class="avatar-wrap fr">
                                     <div class="default"></div>
                                     <!--<img class="avatar" src="./logo.png">-->
@@ -392,6 +392,13 @@
         padding-bottom: 0;
         .data-wrap {
             margin-bottom: 10px;
+            .avatar-cell-wrap {
+                .title {
+                    position: relative;
+                    top: 3px;
+                    font-size: 16px;
+                }
+            }
             .avatar-wrap {
                 /*margin: 10px 0;*/
                 width: 44px;
