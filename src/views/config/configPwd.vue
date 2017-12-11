@@ -10,11 +10,12 @@
                     <span slot="button" class="error-text abs-vertical-middle" v-if="formData.newPwd != formData.renewPwd">两次密码输入不一致</span>
                 </mko-form-cell>
             </div>
+            <div class="footer-button">
+                <mko-button size="large" @click="submitPwd()">提交</mko-button>
+            </div>
         </div>
 
-        <div class="footer-button">
-            <mko-button size="large" no-radius @click="submitPwd()">提交</mko-button>
-        </div>
+
     </div>
 </template>
 
@@ -111,7 +112,7 @@
     @import "../../config.less";
 
     .config-pwd-wrap {
-        padding-top:10px;
+        padding-top: 10px;
         .data-wrap {
             position: relative;
             .error-text {
@@ -120,13 +121,10 @@
                 color: @mainDanger;
             }
         }
-
+        .footer-button {
+            margin-top: 14px;
+        }
     }
 
-    .footer-button {
-        margin: auto;
-        position: absolute;
-        width: 100%;
-        bottom: 0;
-    }
+
 </style>
