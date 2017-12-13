@@ -61,8 +61,9 @@
                 scrollTo(0, 0);
                 this.bottomAllLoaded = false;
                 _page = 1;
-                //                this.list = [];
                 _reqCount = 0;
+                this.list_1 = [];
+                this.list_2 = [];
                 this.tpyList(1);
                 this.tpyList(2);
             } else if (this.cur == 1) {
